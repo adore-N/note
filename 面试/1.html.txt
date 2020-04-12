@@ -1,0 +1,75 @@
+js如何设置获取盒模型对应的宽和高？
+1、dom.style.width/height // 只能取到内联样式
+2、dom.currentStyle.width/height // 取到渲染后的样式（只有IE支持）
+3、window.getComputedStyle(dom).width/height // 兼容firefox，chrome，兼容性更好
+4、dom.getBoundingClientRect().width/height // 运行后的宽度。①getBoundingClientRect用于获取某个元素相对于视窗的位置集合。
+getBoundingClientRect()能得到top/right/bottom/left/width/height，②bounding:范围,rect:矩形。③淘宝自适应js里用的就是这个方法
+
+BFC原理/ BFC渲染规则？
+1、BFC元素垂直方向的边距会发生重叠
+2、BFC的区域不会与浮动元素的box重叠（可用于清除浮动）
+3、BFC为一个独立的元素，外面的元素不会影响里面的元素，里面的元素也不会影响外面的元素。
+4、计算BFC高度的时候，浮动元素也会参与计算。
+
+什么是CSS hack？
+针对不同的浏览器或浏览器不同版本写相应的CSS的过 程，就是CSS hack
+
+CSS hack的原理？
+由于不同的浏览器和浏览器各版本对CSS的支持及解析结果不一样，以及CSS优先级对浏览器展现效果的影响，
+我们可以据此针对不同的浏览器情景来应用不同的CSS。
+
+link和@import的区别？
+1、link属于html标签，而@import是css提供的。
+2、页面被加载时，link会同时被加载，而@import引用的css会等到页面被加载完再加载。
+3、import只在IE5以上才能识别，而link是html标签，无兼容问题。
+4、link方式的央视权重高于@import的权重
+
+如何理解标签语义，它有哪些好处？
+1、语义元素清楚地向浏览器和开发者描述其意义。
+2、好处：
+（1）html结构清晰，代码可读性较好。
+（2）有利于SEO，搜索引擎根据标签来确定上下文和各个关键字的权重。
+（3）无障碍阅读，样式丢失的时候能让页面呈现清晰的结构。
+（4）方便其他设备解析，如盲人阅读器根据语义渲染网页
+（5）便于团队维护和开发，语义化更具可读性，代码更好维护，与CSS3关系更和谐
+
+3、属性继承
+（1）所有元素可继承：visibility、cursor
+（2）块级元素可继承：text-indent、text-align
+（3）内联元素可继承：
+①字体系列属性：font、font-family、font-size、font-style、font-variant、font-weight、font-stretch、font-size-adjust
+②除text-indent、text-align之外的文本系列属性：
+letter-spacing、word-spacing、white-space、line-height、color、text-transform、direction
+
+扩展：
+一、不可继承的样式属性：
+1、display
+2、文本属性：vertical-align、text-decoration、text-shadow、unicode-bidi
+3、盒子模型属性：border、padding、margin、width、height
+4、背景属性：background
+5、定位属性：float、clear、position
+6、生成内容属性：content
+7、轮廓样式属性：outlien-style
+8、页面样式属性：size
+9、声音样式属性：pause-before
+
+placeholder的实现？
+1、为input添加一个兄弟节点span，并为span设置绝对定位（父节点为position: relative;），使其位于input之上。
+2、为添加一个属性phText=“手机号码/邮箱地址”。默认状态下，value值为提示文本并且颜色为灰色；获得焦点时，若value值等于phText属性值，
+则value值置空；失去焦点时，若value值为空，则value值为提示文本。
+3、把placeholder值赋给并且颜色置为灰色，然后获得焦点时判断value值等于placeholder值的话，把光标移至最前面
+（this.createTextRange和this.setSelectionRange）。当发生输入操作时，先把value值置为空，然后再接收输入值。
+另外，对于要为其新增一个用来显示提示文本，当发生输入操作时，需要把隐藏，然后把显示出来并让其获得焦点。
+此方案也有一些小缺陷，那就是当用鼠标右键粘贴时会出现bug。
+
+svg和canvas的区别？
+1、canvas时h5提供的新的绘图方法 ；svg已经有了十多年的历史
+2、canvas画图基于像素点，是位图，如果进行放大或缩小会失真 ；svg基于图形，用html标签描绘形状，放大缩小不会失真
+3、canvas需要在js中绘制 ；svg在html正绘制
+4、canvas支持颜色比svg多
+5、canvas无法对已经绘制的图像进行修改、操作 ；svg可以获取到标签进行操作
+
+src与href的区别？
+1、href 是指向网络资源所在位置，建立和当前元素（锚点）或当前文档（链接）之间的链接，用于超链接。
+2、src是指向外部资源的位置，指向的内容将会嵌入到文档中当前标签所在位置；在请求src资源时会将其指向的资源下载并应用到文档内，例如js脚本，img图片和frame等元素。当浏览器解析到该元素时，会暂停其他资源的下载和处理，直到将该资源加载、编译、执行完毕，图片和框架等元素也如此，类似于将所指向资源嵌入当前标签内。这也是为什么将js脚本放在底部而不是头部。
+

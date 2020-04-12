@@ -1,0 +1,1449 @@
+------------------------REACT------------------------
+	介绍:
+		干嘛的：前端框架，把用户界面抽象成一个个的组件，按需组合成页面
+		官网： https://reactjs.org/
+			  http://react.css88.com/
+		不同点：
+				angularJs 	vueJs 	reactJs 			angularTs(2+)
+		控制器	√			-		-						-
+		过滤器	√			√		-						√
+		指令 	√			√		-						√
+		模板引擎 √			√		-						√
+		服务     √          -       -                       √
+
+		jsx     -           √		√						-
+
+
+		共同点：
+			虚拟DOM(angularJs除外  angular有)，数据驱动
+
+	JSX： react的模板语言
+		文件: oo.js | oo.jsx
+		理解1：比喻(js + 类html)		类XML语法(json前身)
+		理解2：jsx是js一个数据类型	var a='<strong></strong>' 字符  var b= <strong></strong>  jsx类型
+
+		语法要求：
+			标签要闭合
+			元素必须要有一个顶层元素
+			变量首字母大写代表组件，小写对应是js数据类型
+			属性，小驼峰命名 tabindex -> tabIndex
+
+	精髓：多组件组合，jsx+函数式编程（运算写成一系列的函数嵌套）
+
+	思想:
+		组件拆分目标:为了复用
+		组件如何拆：单一原则
+		状态应该给谁:
+			尽量给顶层组件(状态提升),->props->子组件
+			可以从 props(属性) 或者 state(状态) 得到，那么它可能不应该在 state(状态) 中
+			方法-》操作数据(数据|状态在哪，方法就应该在哪)
+		props取名：从组件本身的角度来命名, 而不是它被使用的上下文环境
+
+		纯函数:不会试图改变它们的输入，并且对于同样的输入,始终可以得到相同的结果,React
+		组件都必须是纯函数，并禁止修改其自身 props
+			function(a,b){不会随机，不会修改a和b的值，输出可控}
+
+		setState: 是异步的,会将多个 setState() 调用合并为一次更新,所以不能同步依赖上一个setState的值，作为下一个setState的参数
+			解决：
+				1) this.setState(function(prevState,props){})
+				  prevState 抓取之前this.setState的所有状态
+				  props 所有属性
+			      更新会被合并,浅合并
+			    2) 函数节流(异步操作)
+			    3) ev.target......
+		refs绑定的是dom元素,挂载完毕时才可访问
+
+	环境搭建：
+		a)	webpack + webpack-dev-server
+			/ 指向 index所在位置，图片,数据 都指向 /
+			js / css / jsx 相对定位
+
+
+		b) npm install create-react-app	-g   官方脚手架
+		
+
+			创建 react项目
+
+				create-react-app 目录
+
+					可选: yarn eject   解构出所有的配置文件
+
+				yarn start
+
+
+				yarn build 打包
+
+			cra使用参考: https://create-react-app.dev/docs/getting-started
+
+			目录解析:
+				react: 核心包，解析组件
+				react-dom: 编译 -> 浏览器
+				react-scrpts: react的项目环境配置
+
+				manifest.json 生成一个网页的桌面快捷方式时，会以这个文件中的内容作为图标和文字的显示内容
+				registerServiceWorker.js  ==  pwa
+					支持离线访问，所以用起来和原生app的体验很接近,只有打包生成线上版本的react项目时，registerServiceWorker.js才会有效。服务器必须采用https协议
+				对Internet Explorer 9,10和11的支持需要polyfill。
+
+			0. yarn add create-react-app global
+				create-react-app -v 测试
+					如有问题: 配置环境变量 yarn global bin -> 把得到的地址添加到环境变量
+				create-react-app 目录名| .
+					目标目录一定要空
+				yarn start 开发模式
+				yarn build 打包
+
+			更改react环境配置:
+			1.	node_modules\react-scripts\scripts
+			const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3001;
+
+			2.	npm run eject | yarn eject
+			 修改script/start.js
+
+			 报git错误时: git add . -> git commit -m 'init' -> yarn eject
+			 报缺少babel 包: 安装一下
+
+
+			本地资源导入(import) 不可以导入src之外的包
+
+			问题: 前景图片, 相对 和 绝对路径 都指向了 public目录
+			解决：1.模块化导入 src目录里 要在jsx里src的图片
+				  2.相对或者绝对导入public目录下的图片
+
+
+			去除eslint 警告：
+				yarn  eject
+				找到项目下config/webpack.config.js
+				注释关于eslint的导入和rules规则
+
+			打包 + 预览：
+				npm run build | yarn build
+				serve -s build --port 端口 --open
+				serve 服务器命令行工具（npm i serve -g)
+
+				public目录里面的资源会直接copy到build目录，src里面的资源会打包模块化
+
+			help: https://github.com/facebook/create-react-app
+
+
+		c) 第三方脚手架 (yeomen/dva/umi)
+
+	------------------------------------------
+
+	ES6 创建组件：es6+类 |  函数
+
+		import React from 'react';
+
+		class 组件名 extends React.Component{
+			state={}
+			constrctor(props){ //组件有状态 constrctor就出现
+				super(props) //类如果有继承 super就要出现
+					需要在组件构造器内处理传递过来的props时，props参数就出现
+
+				this.state={ // 本地状态
+
+				}
+			}
+			render(){
+				return jsx|string|number|null
+			}
+			方法1(){} 自定义的方法
+			方法2(){}
+		}
+
+	ES5 创建组件： react版本  15
+
+		var React = require('react');
+		let 组件名 = React.createClass({
+		  getInitialState:function(){  //组件状态
+		  	return {
+		  		数据:值
+		  	}
+		  }
+		  render:function(){
+		    return jsx
+		  }
+		});
+
+	使用组件：
+		<HelloWorld/>
+		<HelloWorld></HelloWorld>
+
+	渲染（描画）页面
+		import ReactDom from 'react-dom';
+		var RactDom = require('react-dom');
+
+		ReactDom.render(jsx,插入点)
+	------------------------------------------
+
+	组件属性(props)：
+
+		调用组件：<组件名 属性名=值 属性名2=值2 .. />	传递属性
+		组件内部: {this.props.属性名}   jsx表达式  使用属性
+				  this 代表的是组件本身
+
+		值类型：字符||{表达式}
+		this.props.属性名==array 需要循环
+		arr值：this.props.属性名.map(function(){
+			return html
+		})
+		json {json} 报错， 对象无法直接通过{obj}展示->{obj.key}
+
+	props类型检查
+
+		需要安装  import propsTypes from 'prop-types'
+
+		默认值:		组件.defaultProps={propName:值}
+		类型约定:	组件.propTypes={propsName:使用propsTypes库.类型名}
+
+			propsTypes库.类型名
+			propName: propsTypes.array/bool/func/number/object/string
+		必传参数: propName: propsTypes库.类型名.isRequired
+	------------------------------------------
+	事件:驼峰命名  es6 事件函数内部this会丢失
+
+		<JSX元素 onClick={this.实例方法|函数体}
+
+		修正this的指向
+
+			onClick={this.方法.bind(this,值)}
+			onClick={()=>{this.方法()}}
+			构造器： this.方法=this.方法.bind(this)  √
+			this.方法=()=>{箭头函数定义方法}  √√
+
+		方法(ev)	ev 代理事件对象 ev.target 返回虚拟Vdom √
+	------------------------------------------
+
+	组件状态 (state|数据|私有状态|本地状态)
+		定义：
+			es7：实例属性:state    class App{propname:value}
+			es6：构造器 this.state
+			ES5：getInitialState:fn(){return {状态名:值,xx:oo}}
+		使用： this.state.xxx
+		修改: this.setState(对象|函数)
+
+	列表渲染/条件渲染
+
+	------------------------------------------
+	ref
+		作用：获取jsx元素  获取的是真实dom
+
+		使用：给jsx元素 设置ref属性="名字"
+			this.refs.名字
+
+		何时用:
+			与第三方 DOM 库集成
+			触发命令式动画
+			管理焦点，文本选择或媒体播放
+
+	------------------------------------------------------------------------------------
+
+	受控元素：
+
+		react 默认是单项绑定  defaultValue（非受控）
+
+		value={this.state.数据名}  model->view
+		onChange={this.监听方法}   view->model(  setState )
+		监听方法: this.setState(...)
+
+	处理多个输入元素
+		可以为每个元素添加一个 name 属性(通常和数据名一致)
+		处理函数根据 event.target.name 的值来选择要做什么
+
+		name="inputUserName" name="inputContent"
+		this.setState({[ev.target.name]:ev.target.value})
+	------------------------------------------------------------------------------------
+
+	react 处理 样式:
+
+		1) 在index.html ： 引入  link/style  场景：应用的公共样式  没有经过优化
+		2）index.js： import './css/xx.css'  是全局 注入口（程序) 公共样式
+		2.5) 组件.js  import './css/xx.css'  是全局 注入口（程序) 公共样式
+
+			问题: 选择器冲突，
+			解决：
+				a) 命名空间  BEM  √
+				b) 模块化:
+					引入 import 变量  from './css/xx.module.css' 模块
+					使用 <xx className={变量.类名|id}
+
+					配置1 webpack配置 "style-loader!css-loader?modules" | module:true
+						 问题：所有css都需要模块化使用
+					配置2 改名xx.css -> xx.module.css 需要模块化的才修改,不影响其他非模块化css写法
+
+		jsx引用:
+			className="类名 类名2" className={返回字符}
+			style={{key:value,key:value}}
+				style的属性值，可以不给单位，默认px  子属性小驼峰
+
+
+		3）SCSS 是 Sass 3 引入新的语法
+				安装: node-sass
+				sass：
+					使用换行和缩进
+
+					$bg-color: #939
+					.box
+						background: #bg-color
+
+				scss：
+					使用分号和花括号
+					$bg-color: #399;
+					.box{
+					  background: $bg-color;
+					}
+				定义主题： $theme-color: #300;
+
+				scss for create-react-app脚手架
+					引入:	xx.sass/xx.scss  使用: <xx className="box"
+					引入:	style form xx.module.sass/xx.module.scss  使用: <xx className={style.box}
+
+					引入sass全局变量?
+						1. 局部sass： @import './全局.scss'
+						2. 安装插件全局引入 : sass-resources-loader
+
+							配置修改webpack.config.js一个key
+								use: [
+							              {loader:'style-loader'},
+							              {loader:'css-loader?modules'},
+							              {loader:'sass-loader'},
+							              {
+							                loader: 'sass-resources-loader',
+							                options:{
+							                  resources:'./src/xx/全局主题.scss'
+							                }
+							              }
+							            ]
+							   注意:
+							   		loader:'css-loader?modules'    ?modules 模块化时需要添加
+							   		resources 指向作用域在项目环境下
+
+
+
+	动画
+		css tansition
+
+		第三方动画库 ant.desinge
+
+			https://motion.ant.design/api/queue-anim
+
+			QueueAnim:进退场动画  组件
+
+			QueueAnim组件内部的 一级元素&& 进退场,做动画
+			一级元素要有key，根据编号依次做动画,无key不动画
+			路由离场动画无效
+			包裹路由组件无效(一级元素&& 进退场)
+
+	------------------------------------------------------------------------------------
+	生命周期流程:
+
+		实例化 ->  更新期  -> 销毁时
+
+		实例化:
+
+			es5:
+				1.取得默认属性(getDefaultProps) 外部传入的props
+				2.初始状态(getInitailState)  state状态
+			    3.即将挂载 componentWillMount
+			    4.描画VDOM  render
+			    5.挂载完毕 componentDidMount
+
+			es6:
+				1.取得默认属性(getDefaultProps) 外部传入的props
+				2.初始状态(getInitailState)  state状态
+					1 && 2 都在构造器里面完成
+					constructor(props){
+						super(props) == getDefaultProps
+						直接访问props
+						this.state={} == getInitailState
+						直接使用或者修改state
+						不能使用setState
+
+					}
+			    3.即将挂载 componentWillMount
+			    4.描画VDOM  render
+			    5.挂载完毕 componentDidMount
+			    	才可使用ref
+
+			    	构造器里不能同步使用setState
+			    	构造器里不能异步使用this.state做修改
+
+		更新期:
+			0.props改变 componentWillReceiveProps(nextProps)
+				初始化render时不执行 这里调用更新状态是安全的，并不会触发额外的render调用
+				nextProps 更新后  this.props更新前
+			1.是否更新 shouldComponentUpdate  指视图 return true/false
+			2.即将更新 componentWillUpdate
+			3.描画dom  render
+				不要在这里修改数据
+			4.描画结束 componentDidUpdate
+
+		销毁时:
+			即将卸载 componentWillUnmount
+			可以做一些组件相关的清理工作，例如取消计时器、网络请求等
+
+
+		实例化->存在(更新)->销毁时
+			父套子
+				父更新子更新
+				子更新父不更新
+----------------------------------------------------------
+新生命周期:
+
+	脑图： http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+	实例化 ->  更新期  -> 销毁时
+
+	实例化:
+
+		实例化 constructor()
+
+		渲染前 static getDerivedStateFromProps(nextProps,nextState)
+			无法访问this
+			nextProps,nextState是更新后的
+			必须返回 一个对象，用来更新state 或者 返回 null不更新
+			场景：state 的值在任何时候都取决于 props时
+		渲染中 render()
+			必须return jsx|string|number|null
+			不会直接与浏览器交互:不要操作DOM|和数据
+
+		挂载后 componentDidMount()
+
+	更新期:  props 或 state 发生变化时会触发
+
+		渲染前 static getDerivedStateFromProps(nextProps, nextState)
+		是否渲染 shouldComponentUpdate(nextProps, nextState)
+			是否更新，必须返回true/false
+			首次渲染或使用 forceUpdate() 时不会调用该方法
+			nextProps,nextState更新后的,this.props,this.state 更新前的
+			return false 只阻止当前组件渲染
+		渲染中 render()
+		返回快照 (提交到DOM之前)
+			getSnapshotBeforeUpdate(prevProps, prevState)
+			组件能在发生更改之前从 DOM 中捕获一些信息
+			返回的 值|null 会给 componentDidUpdate
+			prevProps, prevState 更新前 this.props,this.state更新后
+			事例： https://zh-hans.reactjs.org/docs/react-component.html#getsnapshotbeforeupdate
+		更新后 componentDidUpdate(prevProps, prevState,snopshot)
+			snopshot 是 getSnapshotBeforeUpdate构造的返回值
+
+	销毁时:
+		即将卸载 componentWillUnmount
+		可以做一些组件相关的清理工作，例如取消计时器、网络请求等
+	特点：
+		父更新会导致子更新
+
+--------------------------------------------------------------------------------------
+		react路由 4.x
+
+        	资料：
+        		API: https://reacttraining.com/react-router/web/guides/quick-start
+        		CN： http://blog.csdn.net/sinat_17775997/article/details/77411324
+        		redux：https://github.com/reacttraining/react-router/tree/master/packages/react-router-redux
+        	区别：
+        		V4
+        			嵌套式路由（路由配置在组件内部），动态路由，包容性（多路由渲染）
+        			舍去了路由钩子
+        		V3
+        			分离式（统一位置配置），静态路由，排他性（只有一个路由被渲染）
+        	理念：
+        		遵循Just Component的 API 设计理念 万物皆组件，路由规则位于布局和 UI 本身之间
+
+        	安装引入 react-router-dom
+
+        	React Router被拆分成三个包：react-router,react-router-dom和react-router-native。react-router提供核心的路由组件与函数。其余两个则提供运行环境（即浏览器与react-native）所需的特定组件
+
+        	BrowserRouter 使用 HTML5 提供的 history API 来保持 UI 和 URL 的同步
+        	HashRouter 使用 URL 的 hash (例如：window.location.hash) 来保持 UI 和URL 的同步
+
+        	依赖安装引入 react-router-dom
+
+        	提供哪些组件:
+
+        		BrowserRouter  约定模式 为 history
+        		HashRouter   约定模式 为 hash
+        		NavLink     声明式跳转 还可以约定 路由激活状态 | 导航高亮    ~~ push
+        		Link 		声明式跳转    ~~ push
+        		Redirect    重定向    ~~ replace
+        		Route       匹配|展示
+        		Switch      排他性匹配
+        		Prompt      后置守卫
+
+        	结构：
+        		BrowserRouter|HashRouter 路由对象
+        			根组件(App)
+        				NavLink|Link  导航
+        				Route    匹配+展示
+        				Redirect 跳转
+        				404 <Redirect to="/error"/>
+        				默认路由 <Route exact path={match.path} render={fuc}
+
+        					其他组件
+
+        						NavLink|Link  导航
+        						Route    匹配+展示
+        						Redirect 跳转
+        						404 <Redirect to="/error"/>
+        						默认路由 <Route exact path={match.path} render={fuc}
+        	Route 属性
+        		path（string）: 路由匹配路径。（没有path属性的Route 总是会 匹配）；
+        		exact（bool）：
+        			为true时，要求全路径匹配(/home)。V4 的路由默认为“包含”的(/和/home都匹配)，这意味着多个 <Route> 可以同时进行匹配和渲染
+
+        		component：在地址匹配的时候React的组件才会被渲染，route props也会随着一起被渲染
+        		render：这种方式对于内联渲染和包装组件却不引起意料之外的重新挂载特别方便
+        	Link：
+        		to：string/object：要跳转的路径或地址；
+        	NavLink：是<Link> 的一个特定版本
+        		to：string/object：要跳转的路径或地址；
+        		activeClassName（string）：设置选中样式，默认值为 active；
+        		activeStyle（object）：当元素被选中时, 为此元素添加样式；
+        	Switch：该组件用来渲染匹配地址的第一个<Route>或者<Redirect>，仅渲染一个路由，排他性路由,默认全匹配(场景：侧边栏和面包屑，引导选项卡等
+        	Redirect:
+        		<Redirect from="/" to='/home'/> 总是会被重定向
+        	404:	<Route component={Error}/> 总是会匹配
+
+        	参数数据：{history,location,match}==props
+        		传递：
+        			to={match.url+'/001'}
+        			to={`${match.url}/002?a=1&b=2`}
+        			to={{pathname:match.url+'/003',search:'?a=11&b=12',hash:'#a1'}}
+        			<Route path={match.path+'/:aid'} component={Detail}
+        				注意：
+        					url - (浏览器 URL 中的实际路径) URL 匹配的部分。 用于构建嵌套的 <Link>
+        					path - (路由编写的路径) 用于匹配路径模式。用于构建嵌套的 <Route>
+        		接收：
+        			接参数:{match.params.aid}
+        			接数据:{location.search}
+        			接地址:{location.pathname}
+        		注意：
+        			无法从v4 中获取 URL 的查询字符串了。因为没有关于如何处理复杂查询字符串的标准。所以，作者让开发者去选择如何处理查询字符串。推荐query-string库
+        	编程式跳转：
+        		history.push('/user?a=1&b=2')
+        		history.push({pathname:'/user',search:'?a=11&b=22'})
+        		history.replace({pathname:'/user',search:'?a=111&b=222'})
+        		history.go(-1)
+
+
+        	注意:
+        		目标组件需要抓取路由上下文时，当前组件需要被路由跳转所指定
+
+        		<Route component={目标组件}
+        		<Redirect component={目标组件}
+        		<Route render={(props)=>{
+        			...
+        			return <目标组件 {...props} />
+        		}}
+
+        	授权路由：自定义路由
+        		前置守卫
+        			<AuthRoute path="/user" component={User}/>
+        			AuthRoute==授权路由==react组件==自定义路由
+        			条件：返回一个Route 组件
+        				  Route的render函数内部判断加载目标||Redirect组件
+        		数据预载：
+        			AuthRoute 组件构造器存状态和预载数据
+        			DidMount钩子里异步请求，获取状态和数据
+        				fetch(url).then(result=>this.setState({}))
+        			render钩子返回 Route
+        				 <Route {...rest} render={props => Xxx?<Component data={预载数据}
+        				 if(!this.state.hasAuthed) return null;初始渲染时，未发送认证请求，因此不渲染
+        	Prompt:后置守卫,离开后守卫
+        		import { Prompt } from 'react-router-dom'
+        		<Prompt
+                  when={this.state.isBlocking}
+                  message={location=>{return `未保存，是否去向${location.pathname}`}}
+                />
+
+                location: 目标路由向下文的location
+                message: 后面可以跟简单的提示语，也可以跟函数，函数是有默认参数的。
+                when: when的属性值为true时防止跳转；
+
+            子路由使用父路由的展示区(插槽)
+
+            	<Route path="/goods" render={()=>
+        			<Switch>
+        				<Route path="/goods/:id" component={Detail}
+        				<Route path="/goods" component={Goods}
+        			</Switch>
+            	} />
+
+
+        --------------------------------------------------------------------------------
+
+        mock 数据 |  模拟数据 | 搭建web API
+
+        json-server + mock.js
+
+        		前后端分离 api 规范
+
+        		1. 前期定义数据结构（后期不能改)
+        		2. 前期确定传参方式 (后期不能改)
+
+        		json-server
+        			官网:	https://www.npmjs.com/package/json-server
+        			中文: 	https://www.cnblogs.com/fly_dragon/p/9150732.html
+        			json-server把db.json 根节点的每一个key，当作了一个接口名。我们可以根据这个规则来编写测试数据
+
+        			建立的rest api服务默认可以在局域网中通过WIFI访问接口。
+        			可以作为诸如 Express 之类框架的中间件使用
+
+        			实体=数组=列表  可以查询分页...
+        			routes.json 路由
+        			& 左右都为必传参数
+
+        			自定义路由，输出，校验
+
+        		mock.js
+        			独立的 mock server 存在
+        			作为一个数据构造器来使用
+        			不能跨域使用
+        			与某些框架中的路由处理逻辑冲突
+        			无法定义复杂的数据结构
+        			无法自定义较为复杂的路由
+        			数量为1时，检索总是会返回第一条
+        			mockjs的缺点交给json-server
+
+        		简洁:  会用，会改
+
+        			1. mock目录拷贝到项目下
+        			2. 修改package.json
+        				+ scripts 的 key
+        				"mock": "nodemon ./mock/server.js"
+        			3. yarn add json-server --save   安装依赖
+        			4. yarn add mockjs --save        安装依赖
+        			4.5 react添加代理项 去访问mock服务器
+        				  app.use(
+        				    proxy("/mock", {
+        				      target: 'http://localhost:3333',
+        				      changeOrigin: true
+        				    })
+        				  );
+
+        			5. yarn mock           启动mock服务器
+        			6. yarn start          启动react开发服务器
+
+        				组件内部发送请求:  /mock/接口名
+
+
+        			配置自己的数据接口:
+
+        				./mock/db.js
+
+        				'banner|2': [
+        			      {
+        			        // 属性 id 是一个自增数，起始值为 1，每次增 1
+        			        'id|+1': 1,
+        			        title: "@ctitle(4,8)",//标题型中文4到8个字
+        			        sub_title: "@ctitle(6,12)",
+        			        banner: mr.image('750x501', mr.color(), mr.cword(4,10)),//banner不变
+        			        time: "@integer(1553425967486,1553475967486)",
+        			        detail:{
+        			          icon:mr.image('20x20', mr.color(), mr.cword(1,2)),//20X20尺寸
+        			          auth:"@cname()",//百家姓
+        			          content:"@cparagraph(10,40)"//正文
+        			        }
+        			      }
+        			    ]
+----------------------------------------------------------------------------
+创建项目
+
+	create-react-app xxx
+	yarn eject
+
+项目带练
+
+	1. 项目分析,组件安排
+		|-config
+		|-scirpts  CRA配置
+		|-pubilc
+			|- data
+				|- 静态数据
+			|-index.html
+		|-node_modules
+		|-mock
+			|-db.js
+			|-server.js
+		|-src
+			|-library 公司内部库
+				|-jquery.js
+				|-swiper.js
+			|-utils 工具包
+				|-date.js / fillzero.js/...
+			|-layouts 布局
+				|- App/Header/Footer
+			|-components 应用内部基础通用组件
+				|- swiper
+				|- cell
+				|- button
+					 assets
+					 	img
+					 	font
+					 	css
+					 		button.module.css
+					 button.js
+			|-pages
+				|- Home / Follow / Column / User
+				|- Detail / Login / Reg / Error
+			|- assets
+				|- img
+				|- css、sass
+				|- font
+			|- store
+				|- state/reducer/asyncAction
+			Index.js
+	------------------------------------------------
+	2. 布局(切图/mint-ui/elementUI/ant.design),模板移植
+		样式：全局引入
+			src / import
+	------------------------------------------------
+	3. 路由搭建
+	 	样式冲突（命名冲突（错开））
+	 	import 模块名 from '../css/xx.module.css'
+	 	模块名.类名
+	------------------------------------------------
+
+	4. 数据交互
+
+		fetch(url,{配置}).then().catch()
+		axios({配置}).then(数据)
+
+		home-> cell    -> detail 拿到id dataName
+		follow->cell
+		column->cell
+		↓
+		cell -> link    pathname:'detail/'+id,
+	                    query:{dataName:'home'}
+	    ↓
+
+	    detail this.props.location.query.dataName / this.props.match.params.id
+
+	5.	全局方法（过滤事件，补零）
+		|-common
+			date.js
+			fillzero.js
+			...
+			index.js
+				import date/fillzero ..
+				export {
+					date,fillzero
+				}
+		  <Provider store={store}>
+		    <BrowserRouter>
+		      <App/>
+		    </BrowserRouter>
+		  </Provider>
+	------------------------------------------------
+	6. 非状态管理，控制navbar / footbar / loading
+
+		this.props.location.pathname -> navbar / footbar
+
+	6.5 全局loading
+	   pubsub [App订阅,  home/follow/.. 发布]
+	   问题：用户速度切换，this.setState报错
+	   分析：fetch中断--无法中断
+	   解决：
+	   	1.	高光盒（lightBox）√  / 自个维护一个组件属性 this.自定义属性
+	   	2. 	状态管理，数据回来不修改组件，修改状态
+
+    		5.	全局方法（过滤事件，补零）
+    			|-common|utils
+    				date.js
+    				fillzero.js
+    				...
+    				index.js
+    					import date/fillzero ..
+    					export {
+    						date,fillzero
+    					}
+    		------------------------------------------------
+
+    		公共数据管理 | 非状态管理
+
+    			数据放到App
+
+    			控制  Header / Footer /
+
+    				路由检测: pathname的变化
+
+    				this.props.location.pathname -> navbar / footbar
+
+    			全局loading
+
+    			   订阅发布库： App订阅,  组件求数据时发布 | 拦截器发布
+
+
+    			   安装: yarn add pubsub-js -S
+
+    			   使用:
+    			   		订阅:   token = PubSub.subscribe('事件名称', 函数(msg,data));
+    			   				msg == 事件名称
+    			   				data == 传入的数据
+    			   		发布：
+    			   				PubSub.publish('事件名称', '数据');
+    			   		取消订阅:
+    			   				PubSub.unsubscribe(token);  取消指定订阅
+    			   				PubSub.clearAllSubscriptions(); 取消所有订阅 不推荐使用
+
+    ---------------------------------------------------------------------------------------------------
+
+
+    项目经验:
+
+    	问题:	javascript:; 发出警告，认为不安全
+    	解决: 	#
+
+    	问题:	内部的库，是生产环境库， 不支持模块化
+    	解决: 	1 修改库内部，暴露出来      2. npm找一个替代库
+
+
+    	问题:	NavLink | Link 解析后 是一个固定的 a标签
+    	解决: 	css 配合 组件
+
+    	经验:  CRA默认环境  前景图片全部指向public
+    	经验:  模块化引入的资源只能指向src            background: url('../') |  import  '...'
+    	经验:  组件抓取路由上下文
+
+    		<Route component={组件}
+    		<Route component={(props)=> <组件 {...props} />}
+    		export default withRouter(组件)
+    		<div>父组件<子 history={父.history}   props传递
+
+    	经验:  constructor 里面的state 设置 this.state 实例属性修改   setState 对组件状态一个更新
+
+    		  constructor没结束，组件未创建, 只能同步使用this.state, 或者异步使用setState修改
+
+
+
+
+    未解决问题：
+
+    	历史记录模式路由，找不到路由
+----------------------------------------------------------------------
+    	组件通讯:
+
+        	props 禁止修改
+
+        		父到子	props 传递 <Child 属性=数据/>
+
+        		子到父(反向数据流)  props 传递 <Child 属性=父方法/>
+        				{this.props.属性(子数据)}
+
+        		中间人(状态提升)
+
+        		所有 React 组件都必须是纯函数，并禁止修改其自身 props
+
+        	ref: 抓取渲染后的元素
+
+        		React.createRef()
+        			一个 ref 实例在构造函数中创建，并赋值给 this.firstRef
+        				this.firstRef = React.createRef()
+        			在 render() 方法内部，将构造函数中创建的 ref 传递给 jsx
+        				<jsx ref={this.firstRef} />
+
+        		回调引用 (Callback refs)
+
+        			<jsx ref={el => this.实例属性 = el}
+
+        			当组件安装时，将 DOM el元素传递给 ref 的回调
+        			当组件卸载时，则会传递 null。
+        			ref 回调会在 componentDidMount 和 componentDidUpdate 生命周期之前调用
+        			this.实例属性 后期用作访问jsx元素
+
+        		String refs
+        			<jsx ref="r1"
+        			组件: this.refs.r1
+
+        		转发 refs (Forwarding refs)
+
+        			将 ref 通过组件传递给其子节点的技术。它对于可复用组件库和高阶组件（HOC）等情况非常有用
+
+        			this.inputRef = React.createRef()
+
+        			<子组件 ref={this.inputRef} />
+
+        			子组件:
+        				const 子组件 = React.forwardRef((props, ref) => (
+        				  <input type="text"  ref={ref}/>)
+        				);
+
+
+        		https://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&mid=2651556458&idx=1&sn=777fa954624174f179bc5b1effa05ec7&chksm=80255dabb752d4bd250fe267f5c8000020588c29eb1d48195fdb17d9ef214c2ee7344ed751df&mpshare=1&scene=1&srcid=0530RdLJjRNwqhUV20CaQKE4&pass_ticket=R3Tg7aoTqhlXapPxG3nxKPkPWBqps0NbGQpmuF5eonS2JJn%2BA5GbdX2JcadySYoS#rd
+
+        	context组件上下文  越级传递
+
+        		Context 旨在共享一个组件树内可被视为 “全局” 的数据
+        		https://www.jianshu.com/p/b4983246a3dc
+
+        		顶层组件:
+
+        		  //类属性 定义子上下文类型
+        		  static childContextTypes={
+        		    msg: propTypes.string,
+        		    setMsg : propTypes.func
+        		  };
+
+        		  getChildContext(){//返回上下文对象
+        		    return {
+        		      msg:this.state.msg,
+        		      setMsg:this.setMsg
+        		    }
+        		  }
+
+        		下层组件：
+        		  //类属性 接受上下文
+        		  static contextTypes = {
+        		    msg: propTypes.string,
+        		    setMsg: propTypes.func
+        		  };
+
+        		使用:  this.context.msg | this.context.setMsg(数据)
+
+        	订阅发布
+        		b) pub/sub模式 消息通知(观察者模式)  npm install pubsub-js -D
+        		订阅:	token=pubsub.subscribe('消息名',回调函数('消息名',数据))
+        		发布：  pubsub.publish('消息名',数据)
+        		清除指定订阅：pubsub.unsubscribe(token|'消息名'|回调函数名);
+        		清除所有：pubsub.unsubscribeAll()
+
+        		注意：订阅方不存在了，相关的订阅注意清除
+
+        	路由
+
+        	状态管理
+
+        	web存储(localstrage...cookie)
+
+
+        ---------------------------------------------------------------------------------------------------
+
+        函数式组件: 组件是个函数的定义
+
+        	有状态:
+        		hooks
+
+        	无状态
+        		没有state
+
+
+        	class类组件 -> 无状态组件(函数) -> hooks (函数&&有状态)
+
+
+        无状态(没有state)组件 | UI组件 | 哑组件
+
+        		const 组件名=(props)=>(jsx)
+        		const 组件名=props=>jsx
+        		const 组件名=(props)=>{
+        			let xx=props.xx
+        			return jsx
+        		}
+
+        		无状态组件特点：
+        			不能访问this对象(this.ref,this.state  ... )
+        			只能访问props
+        			无需实例化，渲染性能高
+        			this.方法/钩子（生命周期)  也不需要
+
+        ---------------------------------------------------------------------------------------------------
+        状态管理 flux(思想)
+
+        	实现：	vue(vuex) react(redux)
+
+        	状态管理(redux)：可以同一个地方查询状态，改变状态，传播状态
+        	何时用：中大项目,组件状态需要共享，在任何地方都可以拿到，组件需要改变全局状态，一个组件需要改变另外一个组件的状态
+        	思维：
+        			在顶层组件创建store(状态),其他底层组件共享这个store(状态)
+
+        	数据流动：
+        		component->action->reducer->state->component
+        		component: 展示结果(含处理结果代码)
+        		action: 转发的动作,异步请求，
+        		reducer: 业务处理逻辑,copy+更新 + 返回(return)新state
+        		state:	状态收集，更新内部state状态，更新订阅(store.subscribe)state的组件（component）
+
+        		component通过store.dispatch发送action 给 reducer
+
+        		在组件内部 通过 store.getState() 抓state状态  特点 只抓一次
+        				   store.subscribe() 订阅  数据更新，会触发
+        				   getState放在subscribe内部
+        	操作流程：
+        		1. {createStore} from 'redux'
+        		2. 生成默认state defaultState={}
+        		3.	创建reducer
+        			const reducer = (state=defaultState,action)=>{
+        				let {type,payload}=action
+        				swtich type
+        					case XXXXX
+        					更新copy后的state  Object.assign(空,老,新)
+        				default:
+        					return state
+        			}
+        		4. 创建store对象
+        			store = createStore(reducer,state)
+
+        		5. store传递给组件
+        			<顶层组件名 store={store}/>
+
+        		6. 更新，状态获取
+        			组件内部:	this.props.store== store
+        				this.props.store.dispatch({type:xxx,payload:ooo}) 发送action给reducer
+        				this.props.store.subscribe(回调)  订阅 state  更新state时触发
+        				this.props.store.getState() 获取状态，执行一次
+
+
+        	react-redux
+
+        		基于redux思想,专门为react使用redux而生
+
+        	思想:  容器组件, UI组件
+
+        	index.js: 程序主入口
+        		import {Provider} from react-redux
+
+        		<Provider store={redux打造的store}>
+        			<容器组件/>
+        		</Provider>
+
+        	目标组件:
+        		connect(stateFn1,dispathFn2)(UI组件)
+
+
+
+
+        	配合路由4版本是注意：
+        		<Provider store={store}>
+        			<BrowserRouter>
+        				<容器组件/>
+        		</Provider>
+
+        		export default withRouter(connect(
+        		  mapStateToProps,
+        		  mapdispatchToProps
+        		)(App));
+
+        		connect重写了withRouter的shouldComponentUpdate方法，导致其不能够响应location的变化（仅仅响应mapStateToProps里面的变化）
+
+        	异步action + 可复用:	dispatch(asyncAction(xx,xx,xx))  dispatch 默认接受对象
+
+        	异步action + 可复用:	dispatch(asyncAction(xx,xx,xx))   要接受函数
+        		dispatch 要接受函数
+        		需要中间件redux-thunk支持 ,dispatch默认支持对象，不接受函数,中间件用来改装dispatch
+
+        		let store = createStore(
+        		  reducer,
+        		  state,
+        		  applyMiddleware(thunk)  //applyMiddleware是redux API
+        		);
+
+        		asyncAction = (url,type,id) => (dispatch,getState)=>{dispatch1次 + return fetch+then+dispath2次+return data}
+        			外部dispatch调用返回的函数后，返回promise,因此在组件内部可以做一些结果处理业务
+        				action内部需要return fetch
+        				fetch内部需要return data 有定时器会出错
+----------------------------------------------------------------------------
+片段(fragments) :
+	为一个组件返回多个根元素。 可以让你将子元素加到一个分组中，并且不会在DOM中增加额外节点
+	用法:
+		<React.Fragment key="bmw">多个元素</..>
+		<>多个元素</>
+
+高阶组件
+
+	普通组件是将props|state转化成UI(jsx)，然而高阶组件将一个组价转化成另外一个组件
+	高阶是一个函数能够接受一个组件并返回一个新的组件。
+	例如: Redux的connect
+
+
+	function HOC(Component){
+		//react底层语法 对 Component 转换
+		return 转换后的 Component
+	}
+
+	(function HOC2(arg1，arg2){
+		//react底层语法 对 Component 转换
+		return 函数
+	})(参数1,2)(组件)
+
+
+
+
+withRouter： ownProps|Route|props|context
+	把不是通过路由切换过来的组件，通过withRouter， 将 history、location、match 三个对象传入到目标组件 props对象上
+	用法:
+		import {withRouter} from 'react-router-dom'
+		class App extends Component{}
+		export default withRouter(App)
+
+		let Comp = props => (jsx)
+		export default withRouter(Comp)
+
+精髓：多组件组合，jsx+函数式编程（运算写成一系列的函数嵌套）
+
+思想:
+	组件拆分目标:为了复用
+	组件如何拆：单一原则
+	状态应该给谁:
+		尽量给顶层组件(状态提升),->props->子组件
+		可以从 props(属性) 或者 state(状态) 得到，那么它可能不应该在 state(状态) 中
+		方法-》操作数据(数据|状态在哪，方法就应该在哪)
+	props取名：从组件本身的角度来命名, 而不是它被使用的上下文环境
+
+	纯函数:
+
+		不改变输入，没异步,输出可控
+		reducer是一个纯函数
+		React组件都必须是纯函数，并禁止修改其自身 props
+
+	setState是异步的
+
+		会将多个 setState() 调用合并为一次更新
+		所以不能同步依赖上一个setState的值，作为下一个setState的参数
+
+			解决：
+				1) this.setState(function(nextState,nextProps){ return {改后的state}})
+				  nextState 抓取改后this.setState的所有状态
+				  props 所有属性
+			      return 更新会被合并,浅合并
+			    2) 异步操作
+			    3) ev.target......
+
+	ref绑定的是dom元素,挂载完毕时才可访问
+
+------------------------------------------------------------------------------------------------
+
+react 单页滚动条问题
+
+	路由切换，每次切换到页面顶部
+
+		app.vue
+
+			componentWillReceiveProps(nextProps){//props改变时
+			static getDerivedStateFromProps(nextProps){//props改变时
+			    if(this.props.location !== nextProps.location){//当前地址不等于目标地址
+			      window.scrollTo(0,0);//滚动到顶部
+			    }
+			  }
+
+	页面切换出去再切换回来后怎样保持之前的滚动位置
+
+		componentDidMount->window.scrollTo(0,sTop)
+		componentWillUnmount-> sTop = document.documentElement.scrollTop
+		sTop =  模块内部变量 | 类属性
+		参考:https://blog.csdn.net/tujiaw/article/details/77511460
+
+	判断某个组件是否滚动到底部
+	https://blog.csdn.net/tujiaw/article/details/77511460
+
+	参考:
+		https://www.cnblogs.com/yuan-luo/p/9041124.html
+		https://blog.csdn.net/tujiaw/article/details/77511460
+		https://segmentfault.com/q/1010000010619676
+
+
+------------------------------------------------------------------------------------------------
+
+
+await + async   同步的方式写异步的代码  ,避免回调地狱
+
+    let res1 = await axios({配置})
+    let res2 = await axios({配置使用到res1})
+    使用res
+
+    第二次请求会等待第一次请求的结果
+
+    错误捕获 try{}catch(e){}
+
+
+------------------------------------------------------------------------------------------------
+
+异步组件：create-react-app 环境 webpack自动分片打包
+
+	原理: import ("./ChildB.js").then(
+        ChildB=>console.log(ChildB)
+      )
+
+
+    方式2
+
+    	const Child = asyncComponent(()=>import("./Child"))
+
+    	export default function asyncComponent(importComponent) {
+		  class AsyncComponent extends Component {
+		    constructor(props) {
+		      super(props);
+
+		      this.state = {
+		        component: null
+		      };
+		    }
+
+		    async componentDidMount() {
+		      const { default: component } = await importComponent();
+
+		      this.setState({
+		        component: component
+		      });
+		    }
+
+		    render() {
+		      const C = this.state.component;
+		      return C ? <C {...this.props} /> : null;
+		    }
+		  }
+
+		  return AsyncComponent;
+		}
+
+
+	方式3
+
+	  import Loadable from 'react-loadable';
+
+	  const Loading = () => <div>Loading...</div>;
+
+	  const Home = Loadable({
+	  	loader: () => import('./routes/Home'),
+	 	loading: Loading,
+	 	loading:()=>{return null}
+	  });
+
+
+	  路由 <Route path=.. component={Home}/>  路由懒加载
+
+------------------------------------------------------------------------------------------------
+
+UI库: ant.design
+
+	pc:	http://design.alipay.com/develop/web/react/introduce
+
+		1) yarn add antd --save
+		2) yarn add babel-plugin-import --save   按需引入
+		3) webpack loader配置,找到babel-loader  按需引入配置
+			+ options 项目
+			"plugins": [
+	                ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }], // `style: true` 会加载 less 文件 pc
+
+	              ]
+	    4) import {ConfigProvider, DatePicker,Button } from 'antd'; 直接使用直接，之后都是按需引入
+
+	    5) //文案改中文
+			import zhCN from 'antd/lib/locale-provider/zh_CN';
+			import moment from 'moment';
+			import 'moment/locale/zh-cn';
+			moment.locale('zh-cn');
+		组件需要被 <ConfigProvider locale={zhCN}>组件包裹
+
+	touch:	http://design.alipay.com/develop/mobile/introduce
+		1) yarn add antd-mobile --save
+		2) yarn add babel-plugin-import --save   按需引入
+		3) webpack loader配置,找到babel-loader  按需引入配置
+			+ options 项目
+			"plugins": [
+	            ["import", { libraryName: "antd-mobile", style: "css" }] // `style: true` 会加载 less 文件 touch  pc端配置和touch端配置不可并存
+	        ]
+	    4) import { DatePickerView } from 'antd-mobile';
+	       import 'antd-mobile/lib/DatePickerView/style/css';
+
+	       直接使用组件 文案是中文
+	 -----------------------------------------------------------------------------------------
+	 ------------------------------------------------------------------------------------------------
+
+     class App extends React.PrueComponent{}
+
+     PureComponent
+
+     	特点:快
+     		使用PureCompoent是因为它是一个更具性能的Component的版本  (浅比较)
+     		提供了具有浅比较的shouldComponentUpdate方法
+     		当props或者state改变时，PureComponent将对props和state进行浅比较
+     		Component的shouldComponentUpdate构造被调用默认重渲，PureCompoent不一定
+
+     	限制
+     		性能的提高还伴随着一些附加的条件
+     		不能再重写shouldComponentUpdate
+     		不要在`render`方法中创建一个新的函数，对象或者是数组。
+
+     	不渲染的情况:
+     		父组件中改变对象,子组件比较的是引用是否相同		解决： 返回新对象  副作用： 无性能提升
+
+     	场景:
+     		props 是基本类型，state是基本类型+简单符合类型
+     		上方传入prop一直变化的话，或者自身的state常变化 还是建议使用Component，
+     		PureComponent的最好作为展示组件（UI）
+
+     ------------------------------------------------------------------------------------------------
+
+     mobx
+
+     	react全家筒
+     		react / react-dom / react-router-dom / propTypes / antd-animation / redux / react-redux / react-thunk
+
+     	状态管理:
+     		redux + react-redux
+     			中间件: react-thunk(改装disaptch接受函数)
+
+     		mobx + mobx-react
+
+
+     	mobx + mobx-react
+
+     		1） 装饰器(Decorator)  es7 语法  用来装饰变量
+
+     			底层原理(是什么):
+     				是个函数,用来装饰类|类成员
+     				是个语法糖(Object.defineProperty)
+     				Object.defineProperty(target,prop,descriptor): 给对象添加或修改属性的
+     					参数: target目标 prop针对的属性 descriptor针对目标的描述
+
+     				function readonly (target,prop,descriptor){
+     				  descriptor.writable=false;//writable属性是否可以写入
+     				  return descriptor;
+     				}
+
+     			如何实现(怎么用):
+     				@装饰器名 类
+     				@装饰器名 类的实例属性|静态属性
+     				@装饰器名 类的实例方法|静态方法
+     			使用场景(用在哪)
+     				mobx / angluarTs
+
+     		2) 配置（cra脚手架 不支持装饰器语法)
+
+     			安装： yarn add @babel/plugin-proposal-decorators --save
+
+     			配置：package.json
+
+     				babel: {
+     					"presets":...
+
+     					+
+     					"plugins": [
+     					    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+     					 ]
+
+     					....
+     				  }
+
+     			配置： vscode->设置->搜索设置输入：experimentalDecorators->勾上
+     				   webstrom 无需设置
+
+     		3) mobx成员: observable action
+
+     			干嘛的:MobX 的理念是通过观察者模式对数据做出追踪处理，在对可观察属性作出变更或者引用的时候，触发其依赖的监听函数
+     		整体的store注入机制采用react提供的context来进行传递
+
+     			怎么用: 定义类
+
+     			@observable 装饰store类的成员，为被观察者
+     			@action 实例方法, 修改状态，同步异步都修改，不推荐组件内部改
+
+     			用在哪: react vue angular mpvue
+
+
+     		4) mobx-react成员:  inject,observer,Provider
+
+     			Provider: 顶层提供store的服务，Provider store={store}
+
+     			inject: 注入Provider提供的store到该组件的props中，组件内部使用
+     				inject 是一个高阶组件 高阶组件返回的是组件，作用在包装组件
+     					场景:	export default inject('store')(react函数式组件)
+     				@inject 是装饰器，装饰的是类本身和类成员，
+     					@inject('store') class 类组件
+     			observer: 设置当前组件为观察者,一旦检测到store中被监测者发生变化就会进行视图的强制刷新
+     				@observer class 类组件 ..
+     				const 组件=observer((store)=>{jsx})
+
+     		5) 构建
+
+     			程序主入口:<Provider store={store}>所有</.>
+     			store: export default 实例store
+     				   构造器: this.childStore=new ChildStore(this)       this=store
+     			childStore:
+     				构造器: this.store=store  便于任何子store可以访问其他子store
+     				@observable 实例属性
+     				@action 实例方法(){修改实例属性==redux reducer+action}
+
+
+     		6）并入react项目
+
+
+     		坑1:
+     			状态类的实例方法，组件内部解构出一个函数，直接调用时，this丢失，
+     			解决: 实例方法 用箭头函数 || 构造器绑定
+
+     		坑2:
+     			store 实例方法this丢失，组件把实例方法名绑在事件时发生
+     			解决: store实例的构造器内部绑定
+
+
+
+     		mobx 调试工具
+     		redux-devtools
+
+------------------------------------------------------------------------
+react hooks
+
+	一个具有类组件所有功能的函数式组件
+
+	更新react/react-dom
+	版本支持： 16.7.0-alpha 开始支持  16.8.0 第一个正式版
+
+	Hook可让您在不编写类的情况下使用状态和其他React功能
+	只能在顶层调用Hooks 。不要在循环，条件或嵌套函数中调用Hook
+	只能在functional component或者自定义hooks中使用Hooks
+		函数式组件，挂载，更新时 函数都会调用
+	hook在类内部不起作用，没有计划从React中删除类
+
+	State Hook:	状态钩子
+		import { useState } from 'react';
+		const [状态属性, 状态方法] = useState(状态属性的初始值);
+		const [count, setCount] = useState(0);
+		{状态属性}  返回 状态值
+		状态方法(新值) 修改 状态属性
+
+			状态属性、状态方法	可以自由命名,状态变量可以不只一个state变量了，类似mobox类的实例属性
+			状态方法(copy后的新值)
+
+	life钩子： import { useEffect } from 'react'; 生命周期钩子
+		每当 React更新之后，就会触发 useEffect（在第一次 render 和每次 update 后触发）。
+
+		定义：useEffect(函数A,数组)
+			函数A:
+
+		useEffect(()=>{
+			//didMount+didUpdate
+			return ()=>{willUnmount+updated}
+		})
+
+		[] == didMount 告诉 React 你的 effect 不依赖于 props 或 state 中的任何值
+		[state|props] == didUpdate 指定的sate或者props变化时
+
+		推迟运行useEffect直到浏览器绘制完毕，做额外的工作
+		每一个state|props可以拥有一个effect,React 将按照 effect 声明的顺序依次调用组件中的每一个 effect。
+		effect return 的函数B，在需要清除副作用时使用
+
+
+	useRef钩子:
+
+		import { useRef } from 'react';
+
+		let refContainer = useRef(initialValue);
+
+			返回一个可变的ref对象,current属性初始化为传递的参数initialValue
+
+		实现ref
+		<Jsx ref={refContainer} ...
+		refContainer.current.dom操作
+
+	自定义钩子: useXxxXxx
+
+		重用不同组件之间的常见有状态业务逻辑。
+
+		但每次使用自定义钩子时，其中的所有状态和效果都是完全隔离的
+
+		我必须以“ use” 开头命名我的自定义Hook
+
+		自定义Hook是一个JavaScript函数，其名称以“ use” 开头，可以调用其他Hook
+
+笔记整理到11月4号
+
+

@@ -1,0 +1,6 @@
+<!--pages/user/user.wxml-->
+<view class="user">
+  <view class="user_bg">
+      <button class="btn" bindtap="toLogin">登录</button>
+  </view>
+</view>

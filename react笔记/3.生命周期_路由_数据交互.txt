@@ -1,0 +1,300 @@
+---------------------------------------
+ 生命周期流程:
+
+  实例化 ->  更新期  -> 销毁时
+
+  实例化:
+
+   es5:
+    1.取得默认属性(getDefaultProps) 外部传入的props
+    2.初始状态(getInitailState)  state状态
+       3.即将挂载 componentWillMount
+       4.描画VDOM  render
+       5.挂载完毕 componentDidMount
+
+   es6:
+    1.取得默认属性(getDefaultProps) 外部传入的props
+    2.初始状态(getInitailState)  state状态
+     1 && 2 都在构造器里面完成
+     constructor(props){
+      super(props) == getDefaultProps
+      直接访问props
+      this.state={} == getInitailState
+      直接使用或者修改state
+      不能使用setState
+
+     }
+       3.即将挂载 componentWillMount
+       4.描画VDOM  render
+       5.挂载完毕 componentDidMount
+        才可使用ref
+
+        构造器里不能同步使用setState
+        构造器里不能异步使用this.state做修改
+
+  更新期:
+   0.props改变 componentWillReceiveProps(nextProps)
+    初始化render时不执行 这里调用更新状态是安全的，并不会触发额外的render调用
+    nextProps 更新后  this.props更新前
+   1.是否更新 shouldComponentUpdate  指视图 return true/false
+   2.即将更新 componentWillUpdate
+   3.描画dom  render
+    不要在这里修改数据
+   4.描画结束 componentDidUpdate
+
+  销毁时:
+   即将卸载 componentWillUnmount
+   可以做一些组件相关的清理工作，例如取消计时器、网络请求等
+
+
+  实例化->存在(更新)->销毁时
+   父套子
+    父更新子更新
+    子更新父不更新
+
+ 新生命周期:
+
+  脑图： http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+  实例化 ->  更新期  -> 销毁时
+
+  实例化:
+
+   实例化 constructor()
+
+   渲染前 static getDerivedStateFromProps(nextProps,nextState)
+    无法访问this
+    nextProps,nextState是更新后的
+    必须返回 一个对象，用来更新state 或者 返回 null不更新
+    必须要初始化state
+    场景：state 的值在任何时候都取决于 props时
+   渲染中 render()
+    必须return jsx|string|number|null
+    不会直接与浏览器交互:不要操作DOM|和数据
+
+   挂载后 componentDidMount()
+
+  更新期:  props 或 state 发生变化时会触发
+
+   渲染前 static getDerivedStateFromProps(nextProps, nextState)
+
+   是否渲染 shouldComponentUpdate(nextProps, nextState)
+    是否更新，必须返回true/false
+    首次渲染或使用 forceUpdate() 时不会调用该方法
+    nextProps,nextState更新后的,this.props,this.state 更新前的
+    return false 只阻止当前组件渲染
+
+   渲染中 render()
+
+   返回快照 (提交到DOM之前)
+    getSnapshotBeforeUpdate(prevProps, prevState)
+    组件能在发生更改之前从 DOM
+    返回的 值|null 会给 componentDidUpdate
+    prevProps, prevState 更新前 this.props,this.state更新后
+    事例： https://zh-hans.reactjs.org/docs/react-component.html#getsnapshotbeforeupdate
+
+   更新后 componentDidUpdate(prevProps, prevState,snopshot)
+    snopshot 是 getSnapshotBeforeUpdate构造的返回值
+
+  销毁时:
+   即将卸载 componentWillUnmount
+   可以做一些组件相关的清理工作，例如取消计时器、网络请求等
+  特点：
+   父更新会导致子更新
+   子组件更新不会导致父组件更新
+
+ ------------------------------------------------------------------------------------
+
+ 数据交互：
+  cra官方脚手架 静态数据读取时，参考根指向public  '/data' == public/data
+
+  fetch 原生就有
+
+  用法: fetch(url+get数据,{配置}).then(成功函数(res)).catch()
+  res.ok -> true/false 成功/失败
+  res.status - > 状态码
+  res.body 数据 数据流(stream)
+
+  res.text() 转换 文本(string)
+   过程异步： return res.text()
+   同步： res.text().then((data)=>{}) data:转换后的数据
+  res.json() 转  对象
+  配置:
+   method:'POST'  默认get
+   headers:{"Content-type":"application/x-www-form-urlencoded"},
+   body:'a=1&b=2'|URLSearchPrams
+    注意： body数据为字符时，需要携带请求头
+
+  jsonp:  fetch不带jsonp请求  需要依赖第三库
+   npm install fetch-jsonp -D
+   import fetchJsonp from 'fetch-jsonp'
+   用法:
+    fetchJsonp(url+数据,{配置}).then(success(res)).catch(error)
+    特点: 是个promise 返回promise 数据是个流
+    解析：res.json()  -> 流转换数据 是异步
+    配置:
+     timeout: 延时  5000
+     jsonpCallback: 回调函数key callback
+     jsonpCallbackFunction: null
+
+ create-react-app 2.x/3.x 代理
+
+  新版本cra脚手架在package.json中使用proxy只能用字符串了。
+
+  方案1:
+   配置: package.json
+    "proxy":"https://uncle9.top"
+
+   组件： /api/xx ...
+
+  问题： 只能代理一个服务器
+  官网给了新的使用方式，在src下新建文件setupProxy.js加下面代码，无需单独应用，webpack会自动引入文件。
+
+  解决:
+   src/ 创建 setupProxy.js
+
+   const proxy = require('http-proxy-middleware'); //需要安装中间件
+
+   module.exports = function(app) {
+     app.use(
+       proxy("/api", {
+         target: 'https://uncle9.top',
+         changeOrigin: true
+       })
+     );
+     app.use(
+       proxy("/v2", {
+         target: "https://api.douban.com",
+         changeOrigin: true
+       })
+     );
+
+   };
+   ----------------------------具体代码
+   const proxy = require('http-proxy-middleware'); //需要安装中间件
+
+   module.exports = function(app) {
+
+     app.use(
+       proxy("/api", {
+         // target: 'http://11.22.123.255:3000',
+         // target: 'https://uncle9.top',
+         target: 'http://localhost:3000',
+         changeOrigin: true//是否参加虚拟服务器
+       })
+     );
+
+     app.use(
+       proxy("/v2", {//   /v2/movie/in_theaters?start=0&count=10
+         target: "https://douban.uieee.com",
+         changeOrigin: true
+       })
+     );
+
+   };
+
+   组件： /api/xx ... | /v2/...
+ --------------------------------------------------------------------------
+ react路由 4.x
+
+  资料：
+   API: https://reacttraining.com/react-router/web/guides/quick-start
+   CN： http://blog.csdn.net/sinat_17775997/article/details/77411324
+   redux：https://github.com/reacttraining/react-router/tree/master/packages/react-router-redux
+  区别：
+   V4
+    嵌套式路由（路由配置在组件内部），动态路由，包容性（多路由渲染）
+    舍去了路由钩子
+   V3
+    分离式（统一位置配置），静态路由，排他性（只有一个路由被渲染）  ==== Vue的路由模式
+  理念：
+   遵循Just Component的 API 设计理念 万物皆组件，路由规则位于布局和 UI 本身之间
+
+  安装引入 react-router-dom
+
+  React Router被拆分成三个包：react-router,react-router-dom和react-router-native。react-router提供核心的路由组件与函数。其余两个则提供运行环境（即浏览器与react-native）所需的特定组件
+
+  BrowserRouter 使用 HTML5 提供的 history API 来保持 UI 和 URL 的同步
+  HashRouter 使用 URL 的 hash (例如：window.location.hash) 来保持 UI 和URL 的同步
+
+  依赖安装引入 react-router-dom
+
+  提供哪些组件:
+
+   BrowserRouter  约定模式 为 history
+   HashRouter   约定模式 为 hash
+   NavLink     声明式跳转 还可以约定 路由激活状态 | 导航高亮    ~~ push
+   Link   声明式跳转    ~~ push
+   Redirect    重定向    ~~ replace
+   Route       匹配|展示
+   Switch      排他性匹配
+   Prompt      后置守卫
+
+  结构：
+   BrowserRouter|HashRouter 路由对象
+    根组件(App)
+     NavLink|Link  导航
+     Route    匹配+展示
+     Redirect 跳转
+     404 <Redirect to="/error"/>
+     默认路由 <Route exact path={match.path} render={fuc}
+
+      其他组件
+
+       NavLink|Link  导航
+       Route    匹配+展示
+       Redirect 跳转
+       404 <Redirect to="/error"/>
+       默认路由 <Route exact path={match.path} render={fuc}
+  Route 属性
+   path（string）: 路由匹配路径。（没有path属性的Route 总是会 匹配）；
+
+   exact（bool）：
+    为true时，要求全路径匹配(/home)。V4 的路由默认为“包含”的(/和/home都匹配)，这意味着多个 <Route> 可以同时进行匹配和渲染
+
+   component：在地址匹配的时候React的组件才会被渲染，route props也会随着一起被渲染
+   render：这种方式对于内联渲染和包装组件却不引起意料之外的重新挂载特别方便
+
+  Link：
+   to：string/object：要跳转的路径或地址；
+
+  NavLink：是<Link> 的一个特定版本
+   to：string/object：要跳转的路径或地址；
+   activeClassName（string）：设置选中样式，默认值为 active；
+   activeStyle（object）：当元素被选中时, 为此元素添加样式；
+
+  Switch：该组件用来渲染匹配地址的第一个<Route>或者<Redirect>，仅渲染一个路由，排他性路由,默认全匹配(场景：侧边栏和面包屑，引导选项卡等
+
+  Redirect:
+   <Redirect from="/" to='/home'/> 总是会被重定向
+
+    注意:<Route path='/' component={Home}/> 这种写法是模糊匹配,使用严格匹配
+
+
+  404: <Route component={Error}/> 总是会匹配
+
+  参数数据：{history,location,match}==props
+   传递：字符串,对象
+    to={match.url+'/001'}
+    to={`${match.url}/002?a=1&b=2`}
+    to={{pathname:match.url+'/003',search:'?a=11&b=12',hash:'#a1'}}
+    <Route path={match.path+'/:aid'} component={Detail}
+     注意：
+      url - (浏览器 URL 中的实际路径) URL 匹配的部分。 用于构建嵌套的 <Link>
+      path - (路由编写的路径) 用于匹配路径模式。用于构建嵌套的 <Route>
+   接收：
+    接参数:{match.params.aid}
+    接数据:{location.search}
+    接地址:{location.pathname}
+
+   注意：
+    无法从v4 中获取 URL 的查询字符串了。因为没有关于如何处理复杂查询字符串的标准。
+    所以，作者让开发者去选择如何处理查询字符串。推荐query-string库
+
+  编程式跳转：
+   history.push('/user?a=1&b=2')
+   history.push({pathname:'/user',search:'?a=11&b=22'})
+   history.replace({pathname:'/user',search:'?a=111&b=222'})
+   history.go(-1)
+
+   注意:目标组件需要抓取上下文时,当前组件需要被路由跳转所指定

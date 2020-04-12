@@ -1,0 +1,15 @@
+<!--components/product/product.wxml-->
+<view class="item">
+  <image class="poster" src="{{item.image}}"/>
+  <view class="meta">
+    <text class="title">{{item.title}}</text>
+    <view class="artists">
+      导演：
+      <block wx:for="item.auth" wx:key="index"> {{item.auth}} </block>
+    </view>
+  </view>
+  <view>
+    <text class="rating">{{item.rate.average}}</text>
+  </view>
+</view>
+

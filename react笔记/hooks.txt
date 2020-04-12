@@ -1,0 +1,63 @@
+react hooks
+
+	一个具有类组件所有功能的函数式组件
+
+	更新react/react-dom
+	版本支持： 16.7.0-alpha 开始支持  16.8.0 第一个正式版
+
+	Hook可让您在不编写类的情况下使用状态和其他React功能
+	只能在顶层调用Hooks 。不要在循环，条件或嵌套函数中调用Hook
+	只能在functional component或者自定义hooks中使用Hooks
+		函数式组件，挂载，更新时 函数都会调用
+	hook在类内部不起作用，没有计划从React中删除类
+
+	State Hook:	状态钩子
+		import { useState } from 'react';
+		const [状态属性, 状态方法] = useState(状态属性的初始值);
+		const [count, setCount] = useState(0);
+		{状态属性}  返回 状态值
+		状态方法(新值) 修改 状态属性
+
+			状态属性、状态方法	可以自由命名,状态变量可以不只一个state变量了，类似mobox类的实例属性
+			状态方法(copy后的新值)
+
+	life钩子： import { useEffect } from 'react'; 生命周期钩子
+		每当 React更新之后，就会触发 useEffect（在第一次 render 和每次 update 后触发）。
+
+		定义：useEffect(函数A,数组)
+			函数A:
+
+		useEffect(()=>{
+			//didMount+didUpdate
+			return ()=>{willUnmount+updated}
+		})
+
+		[] == didMount 告诉 React 你的 effect 不依赖于 props 或 state 中的任何值
+		[state|props] == didUpdate 指定的sate或者props变化时
+
+		推迟运行useEffect直到浏览器绘制完毕，做额外的工作
+		每一个state|props可以拥有一个effect,React 将按照 effect 声明的顺序依次调用组件中的每一个 effect。
+		effect return 的函数B，在需要清除副作用时使用
+
+
+	useRef钩子:
+
+		import { useRef } from 'react';
+
+		let refContainer = useRef(initialValue);
+
+			返回一个可变的ref对象,current属性初始化为传递的参数initialValue
+
+		实现ref
+		<Jsx ref={refContainer} ...
+		refContainer.current.dom操作
+
+	自定义钩子: useXxxXxx
+
+		重用不同组件之间的常见有状态业务逻辑。
+
+		但每次使用自定义钩子时，其中的所有状态和效果都是完全隔离的
+
+		我必须以“ use” 开头命名我的自定义Hook
+
+		自定义Hook是一个JavaScript函数，其名称以“ use” 开头，可以调用其他Hook

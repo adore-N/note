@@ -1,0 +1,107 @@
+------------------------混合开发------------------------
+web app
+    宿主:浏览器
+	技术： html5 + css + js(库，框架) 编写移动端
+	优点：开发周期短，跨平台
+	缺点：性能一般，默认无法调取设备信息(麦克风，摄像头，通讯录，gps)
+	场景：手机淘宝，京东，网易
+native app
+	java -> android			object-c	-> ios
+	优点：性能高，默认就可以调取设备信息
+	缺点：开发周期长（迭代慢），团队规模大
+	场景：大型游戏，应用
+hybird app
+	h5 -> 搭建页面
+	通过第三方的native库，访问设备信息
+		a) cordova   H5(框架)+cordova  (adobe产品)
+		b) wx_jssdk  H5(框架) + wx_jssdk    (限定) 微信网页   |  微信公众号
+		c) mui + hbuilder + h5+  Dcloud产品
+		d) reactNative
+		e) angular + ionic
+		f) vue + weex
+		...
+----------------------------------------------------------------------------------------
+phoneGap:
+	干嘛的： 第三方的打包工具| 搭建开发环境 | 内部提供 cordova库
+
+	官网： https://phonegap.com/
+
+	安装：
+
+		pc: phonegap desktop   地址:https://github.com/phonegap/phonegap-app-desktop/releases/download/0.4.5/PhoneGapSetup-win32.exe
+
+		移动端: phonegap developer | 测试查看的  | 保证手机和电脑要在同一个网段(连了同一个wifi，同一路由)
+
+	搭建项目环境：
+		1. 打开pc phonegap
+		2. new project
+		3. helloworld
+		4. 打开手机上的 phonegap 链接 pc端 phonegap给出的ip
+		   打开手机上的 浏览器 链接 pc端 phonegap给出的ip
+
+	开发:
+		无框架：使用
+
+		vue:   使用
+
+		API:	http://www.phonegapcn.com/docs/zh/cn/index.html  | https://phonegap.com/
+			Battery Status  电池信息
+			Camera	照相机
+			Contacts 通讯录
+			Device Info 设备信息
+			Device Motion (accelerometer) 重力感应
+			Device Orientation (compass) 罗盘(指南针)
+			Dialogs (notification) 模态框
+			File 文件操作(增删改查)
+			File Transfer 上传
+			Geolocation  地理定位
+			Globalization 全球化
+			InAppBrowser 在app内部开启新窗口
+			Media Capture 采集
+			Network Information  网络状态
+			Splash Screen 欢迎屏幕
+			Status Bar 状态栏
+			Whitelist 白名单
+			Vibration 震动
+
+	打包
+
+		1)	命令行-> 文件 -> 上传到 appstore|应用商城
+			npm i cordova -g
+			cordova build        apk/ipa
+
+		2)  在线打包 phonegap官网在线打包(app就在phonegap网)
+
+			https://build.phonegap.com/ 登录adobe id -> new app
+
+			private 私有包，禁用
+			open-source
+				项目传到github仓库->复制地址-> pull -> ready to build
+			项目传到github仓库
+				1) 登录->new repository->phonegap目录，拖拽(upload file)
+				2) git clone 仓库地址 -> git add (添加到缓存区)-> git commit -m xx (git仓库)
+					git push (丢到远端)
+				问题: 大文件限定
+					命令行: git config --global http.postBuffer 1048576000   配置一次
+					本地仓库目录：
+						.git/config
+							添加 	 [http]
+										postBuffer = 524288000
+					然后把缓存清除
+					git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch <file/dir>' HEAD
+				问题： 码云地址 不接受
+
+
+	VUE + cordova 配置
+
+                   	  方案1： 双服务器 vue8080 cordova3000
+                   	  	api在vue里面写->npm run build -> phonegap/www
+                   	  	修改cpy过来的html,添加一个cordova的库
+                   	  		<script type="text/javascript" src="cordova.js"></script>
+                   	  		<script type="text/javascript" src="app.234234234js"></script>
+
+                   	  方案2： vue 服务器 vue-cordova
+                   	    http://kartsims.github.io/vue-cordova/
+
+                   	cordova打包->app：
+	  https://segmentfault.com/a/1190000010598615

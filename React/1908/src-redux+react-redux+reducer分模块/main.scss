@@ -1,0 +1,52 @@
+@import '@/lib/reset.scss';
+* { touch-action: none; }
+// input { display: block; float: left; }
+html, body, #root, .container {
+  @include rect(100%, 100%);
+}
+
+.container {
+  @include flexbox();
+  @include flex-direction(column);
+  .box {
+    @include flex();
+    @include rect(100%, auto);
+    @include flexbox();
+    @include flex-direction(column);
+    .header {
+      @include rect(100%, 0.44rem);
+      @include background-color(#f66);
+    }
+    .content {
+      @include flex();
+      @include rect(100%, auto);
+      @include overflow();
+    }
+  }
+  .footer {
+    @include rect(100%, 0.5rem);
+    @include background-color(#efefef);
+    ul {
+      @include rect(100%, 100%);
+      @include flexbox();
+      a {
+        @include color(#666);
+        @include flex();
+        @include rect(auto, 100%);
+        @include flexbox();
+        @include flex-direction(column);
+        @include justify-content();
+        @include align-items();
+        span {
+          @include font-size(0.24rem);
+        }
+        p {
+          @include font-size(0.12rem);
+        }
+        &.active {
+          @include color(#f66);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+Express 应用程序生成器: 脚手架 | 命令行工具
+
+安装: 安装到全局 npm install express-generator -g  验证 express -h
+
+创建项目:
+    express -e 项目目录名  | . 表示直接在当前目录创建
+             e : 需要ejs模板引擎
+    express -f 强制在非空目录下创建
+
+    cd 目录
+    npm install 
+    npm start 
+
+参考:http://www.expressjs.com.cn/starter/generator.html

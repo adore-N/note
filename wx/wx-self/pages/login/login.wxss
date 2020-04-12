@@ -1,0 +1,22 @@
+/* pages/login/login.wxss */
+.login{
+  width: 100%;
+}
+.logo{
+  width: 200rpx;
+  height: 200rpx;
+  display: block;
+  margin: 100rpx auto;
+}
+
+.wx{
+  background: #07c160;
+  width: 80%;
+  color: #fff;
+  margin-bottom: 30rpx;
+}
+.douban{
+  background: #fff;
+  border: 1rpx solid #07c160;
+  color: #07c160;
+}

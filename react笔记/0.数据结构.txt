@@ -1,0 +1,7 @@
+八宫格
+{
+	icon:'xxxx',
+	title:'xxx',
+	routeTo: '/xxx'
+
+}

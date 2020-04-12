@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "type":"../../components/type/type"
+  },
+  "navigationBarTitleText": "榜单"
+}

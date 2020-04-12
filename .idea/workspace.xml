@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d1479bec-59a5-4df5-b3e1-cd3188a6c95e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/React/1021/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/jest/cssTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/jest/fileTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/modules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/paths.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/pnpTs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/config/webpackDevServer.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/scripts/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/scripts/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/scripts/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/1.React_ReactDom.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/1.条渲.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/2.es6_es7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/2.refs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/3.受控元素_非受控元素.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/3.组件定义.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/4.style_css的使用.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/4.组件嵌套.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/5.css的模块化.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/5.props类型检测.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/6.props传参.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/6.sass模块化.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/7.this_事件对象.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/8.组件状态state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/9.列渲.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/assets/css/app.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/assets/css/app.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/assets/scss/base.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/assets/scss/home.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1021/src/components/Footer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/jest/cssTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/jest/fileTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/modules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/paths.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/pnpTs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/config/webpackDevServer.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/scripts/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/scripts/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/scripts/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/1.条渲.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/2.refs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/3.受控元素_非受控元素.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/4.style_css的使用.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/5.css的模块化.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/6-1sass的模块化.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/6.sass模块化.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/assets/css/app.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/assets/css/app.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/assets/scss/base.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1022/src/assets/scss/home.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/public/data/1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/public/data/user.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/1.生命周期.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/2.新生命周期.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/3.fetch.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/components/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/components/Detail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/components/Error.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/components/Goods.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/components/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1023/src/components/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/jest/cssTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/jest/fileTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/modules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/paths.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/pnpTs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/config/webpackDevServer.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/db.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/mock/db.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/mock/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/mockTest/db.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/public/data/user.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/scripts/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/scripts/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/scripts/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Car.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Detail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Error.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Goods.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Loading.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/Reg.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/components/User.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/guard/Auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/guard/AuthReg.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1024/src/setupProxy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/jest/cssTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/jest/fileTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/modules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/paths.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/pnpTs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/config/webpackDevServer.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/mock/db.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/mock/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/scripts/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/scripts/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/scripts/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/Car.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/Detail.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/Goods.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/Home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/Login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/Reg.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/User.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/css/public.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/img/bg1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/assets/img/first.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Banner/assets/css/banner.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Banner/assets/js/jquery-1.7.2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Banner/assets/js/swipe.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Banner/banner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Cell/assets/css/cell.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Cell/cell.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Git/Git.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Git/git.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Loading/Loading.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/components/Loading/loading.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/guard/Auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/layouts/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/layouts/Footer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/layouts/Footer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/layouts/Header.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/layouts/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/library/font.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/Car.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/Detail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/ErrorPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/Goods.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/Login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/Reg.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/pages/User.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/setupProxy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/store/actions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/store/reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/store/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/store/types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1025/src/utils/axios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config-overrides.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/jest/cssTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/jest/fileTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/modules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/paths.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/pnpTs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/config/webpackDevServer.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/public/data/user.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/scripts/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/scripts/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/scripts/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/demo/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/demo/Test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/demo/t.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/ref.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/store/actions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/store/reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/store/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1028/src/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/env.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/jest/cssTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/jest/fileTransform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/modules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/paths.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/pnpTs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/webpack.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/config/webpackDevServer.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/mock/db.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/mock/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/public/assets/img/footer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/scripts/build.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/scripts/start.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/scripts/test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/css/base.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/css/footer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/css/headernav.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/css/home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/css/input.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/css/teamdetail.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/assets/img/footer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/components/Banner.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/components/Cell.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/components/TeamCell.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/config/server.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/layouts/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/layouts/Footer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/layouts/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/library/font.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/Contact.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/DesignDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/DesignList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/DesignTeam.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/ErrorPage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/FreeDesign.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/Home.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/Offer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/Phone.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/pages/TeamDetail.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/setupProxy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/store/actions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/store/reducer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/store/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/store/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/store/types.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/React/1031/src/utils/axios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_one/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_one/src/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_one/src/views/Home.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_one/src/views/User.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/babel.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/components/Test.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/store.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/views/Home.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Vue/vue_s/src/views/User.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue_new/src/views/mode1/mode1.router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue_new/src/views/mode1/pages/mode1.index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue_new/src/views/mode1/pages/mode1.second.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue_new/src/views/mode2/mode2.index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue_new/src/views/mode2/mode2.router.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/vue_new/src/views/mode2/mode2.second.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/22.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/33.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/images/44.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/api/api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/api/api.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/api/api.wxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/api/api.wxss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/frame/frame.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/frame/frame.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/frame/frame.wxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/frame/frame.wxss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/wxml/wxml.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/wxml/wxml.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/wxml/wxml.wxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wx/Test/pages/wxml/wxml.wxss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APICloud/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/APICloud/test/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1021/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1021/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1021/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1021/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1022/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1022/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1022/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1022/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1022/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1023/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1023/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1023/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1023/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1023/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1024/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1024/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1024/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1024/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1025/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/React/1025/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1025/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1025/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1025/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1028/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1028/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1028/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1028/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/React/1031/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/App.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/React/1031/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/React/1031/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/React/1031/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vue_one/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vue_one/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vue_one/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vue_one/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vue_one/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vue_one/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vue_one/src/components/HelloWorld.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vue/vue_one/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Vue/vue_one/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue_new/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue_new/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue_new/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue_new/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue_new/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vue_new/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue_new/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue_new/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue_new/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/vue_new/src/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vue_new/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/vue_new/src/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wx/Test/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/wx/Test/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wx/Test/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/wx/Test/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wx/Test/pages/index/index.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/wx/Test/pages/index/index.wxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wx/Test/pages/logs/logs.wxml" beforeDir="false" afterPath="$PROJECT_DIR$/wx/Test/pages/logs/logs.wxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wx/Test/project.config.json" beforeDir="false" afterPath="$PROJECT_DIR$/wx/Test/project.config.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package.json" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/React/1031" />
+  </component>
+  <component name="ProjectId" id="1SbJYB4wtqZVLlvuyKZzhUXyu5X" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="ToolWindowGraphQL.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="D:/stu" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="ts.external.directory.path" value="D:\download\webstrom\WebStorm 2019.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Three\vue_new\src\views\mode1\pages" />
+      <recent name="D:\Three\vue_new\src\views\mode1" />
+      <recent name="D:\Three\Vue\vue_one\src\views" />
+      <recent name="D:\Three\Vue\vue_one\src" />
+      <recent name="D:\Three\Node\public\template\upload" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Three\vue_new\src\views\mode2" />
+      <recent name="D:\Three\vue_new\src\views\mode1" />
+      <recent name="D:\Three\Vue\vue_one\src\views" />
+      <recent name="D:\Three\Node\routes\design" />
+      <recent name="D:\Three\React\1031\src\config" />
+    </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1479bec-59a5-4df5-b3e1-cd3188a6c95e" name="Default Changelist" comment="" />
+      <created>1571826407439</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571826407439</updated>
+      <workItem from="1571826411003" duration="17610000" />
+      <workItem from="1571878833657" duration="7448000" />
+      <workItem from="1571895936651" duration="24420000" />
+      <workItem from="1571962280250" duration="20175000" />
+      <workItem from="1572022675264" duration="3392000" />
+      <workItem from="1572055803717" duration="11530000" />
+      <workItem from="1572160776684" duration="1139000" />
+      <workItem from="1572162417791" duration="5844000" />
+      <workItem from="1572192843932" duration="2537000" />
+      <workItem from="1572224536959" duration="30268000" />
+      <workItem from="1572310905089" duration="26265000" />
+      <workItem from="1572400121868" duration="33240000" />
+      <workItem from="1572484917909" duration="23849000" />
+      <workItem from="1572535008472" duration="4823000" />
+      <workItem from="1572571889347" duration="21805000" />
+      <workItem from="1572657082685" duration="15557000" />
+      <workItem from="1572768439237" duration="11167000" />
+      <workItem from="1572829333819" duration="33343000" />
+      <workItem from="1572916535507" duration="28923000" />
+      <workItem from="1573001680897" duration="18491000" />
+      <workItem from="1573086406602" duration="7592000" />
+      <workItem from="1573106005439" duration="6527000" />
+      <workItem from="1573130137115" duration="3259000" />
+      <workItem from="1573174740450" duration="9332000" />
+      <workItem from="1573279803123" duration="2274000" />
+      <workItem from="1573285323790" duration="476000" />
+      <workItem from="1573431100293" duration="5626000" />
+      <workItem from="1573474162616" duration="1627000" />
+      <workItem from="1573477638977" duration="1367000" />
+      <workItem from="1573484600402" duration="656000" />
+      <workItem from="1573517656462" duration="5339000" />
+      <workItem from="1573524141797" duration="6873000" />
+      <workItem from="1573604537028" duration="4586000" />
+      <workItem from="1573628853179" duration="1427000" />
+      <workItem from="1573694393090" duration="1339000" />
+      <workItem from="1573713605087" duration="599000" />
+      <workItem from="1573778842647" duration="7290000" />
+      <workItem from="1573835481309" duration="353000" />
+      <workItem from="1573835944588" duration="292000" />
+      <workItem from="1573866344137" duration="4317000" />
+      <workItem from="1573970237787" duration="3008000" />
+      <workItem from="1574006930223" duration="579000" />
+      <workItem from="1574040827045" duration="454000" />
+      <workItem from="1574135914203" duration="955000" />
+      <workItem from="1574150512024" duration="11294000" />
+      <workItem from="1574231481893" duration="8306000" />
+      <workItem from="1574338340962" duration="6503000" />
+      <workItem from="1574478743079" duration="4985000" />
+      <workItem from="1574691635927" duration="6010000" />
+      <workItem from="1574777568740" duration="5713000" />
+      <workItem from="1574839716934" duration="8070000" />
+      <workItem from="1575034415078" duration="5867000" />
+      <workItem from="1575123990431" duration="735000" />
+      <workItem from="1575553639419" duration="71000" />
+      <workItem from="1575559315473" duration="2144000" />
+      <workItem from="1575717411496" duration="3121000" />
+      <workItem from="1575782087902" duration="8370000" />
+      <workItem from="1575898444657" duration="48000" />
+      <workItem from="1576593990282" duration="1557000" />
+      <workItem from="1576675683999" duration="37000" />
+      <workItem from="1577112300234" duration="860000" />
+      <workItem from="1579333993797" duration="337000" />
+      <workItem from="1579334456896" duration="38000" />
+      <workItem from="1579334543741" duration="431000" />
+      <workItem from="1579335009665" duration="348000" />
+      <workItem from="1579335473404" duration="460000" />
+      <workItem from="1579335961196" duration="199000" />
+      <workItem from="1579336181483" duration="43000" />
+      <workItem from="1579336246369" duration="577000" />
+      <workItem from="1579336879906" duration="69000" />
+      <workItem from="1579336970572" duration="1075000" />
+      <workItem from="1580114555724" duration="85000" />
+      <workItem from="1586254681402" duration="4000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="353" y="101" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1579336211750">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="353" y="101" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.738@0.0.1366.738" timestamp="1579336211750" />
+    <state x="488" y="153" key="FileChooserDialogImpl" timestamp="1579337446460">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="488" y="153" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1579337446460" />
+    <state x="339" y="165" key="run.anything.popup" timestamp="1580114594772">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="339" y="165" key="run.anything.popup/0.0.1366.738@0.0.1366.738" timestamp="1580114594772" />
+  </component>
+</project>

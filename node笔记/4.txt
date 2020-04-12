@@ -1,0 +1,253 @@
+
+前后端交互流程
+	大后端:
+		前端 - > 地址栏(http[s]请求) -> web服务器（收到) - > nodejs处理请求(返回静态、动态)->请求数据库服务(返回结果)->nodejs(接收)->渲染页面->浏览器（接收页面，完成最终渲染)
+	大前端:
+		前端 - > http[s]请求 -> web服务器（收到) - > nodejs处理请求(返回静态、动态)->请求数据库服务(返回结果)->nodejs(接收)->返回给前端(渲染)->浏览器（接收页面，完成最终渲染)
+
+
+请求发送: jsonp | 地址栏输入|ajax|form|src|href|document.href|location.href|
+
+
+模板引擎:
+
+	前端： dom操作				虚拟dom操作	二次渲染，后期多次渲染， 优点：局部渲染
+		  jq/js/angualrJs		vue/react/.......   渲染页面(数据整合到静态页面)
+	后端：
+		  抓取前端静态页面 + 渲染引擎 + 数据  返回data ->  send(data)
+		  渲染引擎: jade/pug / ejs / ....
+
+	arttemplate  underscore baiduTemplate mustach .......
+
+------------------------------------------------------------
+
+jade|pug: 库  模板渲染是同步的
+
+	侵入式，强依赖
+	jade.renderFile('jade模板文件'，{数据}，{pretty:true});	返回字符
+	jade模板语法
+		父子要缩进
+		属性：  标签(key=value,key2=value)
+		内容:	标签 内容
+
+------------------------------------------------------------
+
+ejs：	模板渲染是异步的
+	非侵入式，温和，弱依赖
+
+	安装+引入 ejs
+	ejs.renderFile('ejs模板',{数据},回调(err,data))	
+		data == str  
+		ejs模板 : 后缀名为ejs的html文件
+
+	ejs模板语法：
+		ejs 结构就是html
+		输出:	<%= 数据名|属性名|变量名 + 表达式 %>
+		语句：	<% 语句 %>  需要被<%  %>  包裹
+		非转义输出:	<%- 数据名|变量名  + 表达式 %>
+
+		<% include common/header.ejs %>
+
+		https://www.npmjs.com/package/ejs
+
+------------------------------------------------------------
+
+
+consolidate 管理多个模板引擎	consolidate
+			
+	安装: npm i consolidate -S
+	注意: ejs 需要安装，但无需引入
+
+	app.set('view.engine','html');	模板最终	输出类型设置
+	app.set('views','./views');		引擎模板目录设置
+
+	app.engine('html',consolidate.ejs);	输出与引擎匹配
+	app.engine('css',consolidate.jade);	输出与引擎匹配
+
+	渲染API：
+	res.render('模板文件名',{数据})   整合页面和数据，完成渲染，发往浏览器
+
+----------------------------------------------------------------------------------------
+
+mysql
+
+	服务：
+		a) 安装wamp|xamp 开启 mysql服务
+		b) 安装mysql 开启服务
+
+	库操作：
+		客户端：软件操作(UI工具)
+			wamp的客户端是phpmyadmin
+			navicat 收费
+			nodeJs(后台管理程序),依赖mysql包
+
+	库操作  编码方式 UUC
+		建|删 库(目录)
+		建:	CREATE DATABASE  `2017-12-6` DEFAULT CHARACTER SET armscii8 COLLATE armscii8_general_ci;
+		建|删|改 表(文件)
+			创建表头(字段头)
+			CREATE TABLE  `2017-12-6`.`user` (
+			`name` VARCHAR( 32 ) NOT NULL ,
+			`age` INT( 3 ) NOT NULL ,
+			`address` VARCHAR( 128 ) NOT NULL
+			) ENGINE = INNODB
+	表操作	增删改查
+		增：
+			INSERT INTO 表 (字段列表) VALUES(值列表)
+			INSERT INTO user (name,age,address) VALUES('苏菲',38,'')
+		删:
+			DELETE FROM 表 WHERE 字段名=值
+			DELETE FROM user WHERE name='alex'
+		改:
+			UPDATE 表 SET 字段名=值 WHERE 字段名=值
+			UPDATE user set name='sufei' WHERE name='苏菲'
+		查:
+			SELECT ? FROM 表
+			SELECT * FROM user  查所有
+
+
+
+mongoDb
+
+	干嘛的：数据库,nosql(非关系型|缓存型)
+
+	场景：解决大规模数据集合多重数据种类
+
+	下载：https://www.mongodb.com/download-center
+	安装：https://www.cnblogs.com/keyi/p/10984514.html
+
+	测试服务端是否启动: 
+		启动客户端: 安装目录\Server\4.0\bin\    mongo 回车
+		手动启动服务端：安装目录\Server\4.0\bin\   mongod 回车
+			port=27017	默认端口
+			mongodb://127.0.0.1:27017	协议+IP+端口
+
+	指定数据存储目录： 需要指定一次
+		mongod --dbpath c:\data\db    db目录要手动创建
+	环境变量：为了在任意盘符下去启动客户端和服务端  mongod服务端|mongo客户端
+		我的电脑->属性->高级配置->环境变量-》 + key:value
+
+	开启客户端: mongo 回车
+
+		UI工具软件: 收费(下载+缴费)
+		原生命令行(shell):	cmd->mongo回车	git bash - > mongo回车     webstrom->dos/linux
+		nodejs: 安装mongodb的包（客户端)
+
+	和mysql对比
+
+	名词
+		mysql			mongoDb
+
+		database(库)		database(库)
+		table(表)		collection(集合)
+		row(一条数据)	document(文档)
+		column(字段)		field(区域)
+		...
+
+	存储方式:
+		mysql 二维表
+		MongoDB json
+	mongodb命令行操作方式：  声明式 | obj.api()
+
+	库操作:
+
+		查: show dbs
+			db 查看当前库
+		建:	use 库名	   没有建，有就切换
+	集合(表)操作:
+		建：db.createCollection('表名',{配置})
+			配置：{size:文件大小,capped:true,max:条数|文档数} capped定量
+			db.表(集合).isCapped() 返回 true/false 是否是定量
+		查：show collections / db.getCollectionNames()
+		删：db.表|集合.drop()
+	文档(row)操作:
+		增：
+			db.集合.save({}) / db.集合.insert({})  添加一条
+			db.insertOne({})
+
+			db.集合.save([{},{}]) / db.集合.insert([{},{}]) 多条
+			insert  不会替换相同ID	save会
+
+		删:
+			db.集合.deleteOne({要删数据条件描述}) db.集合.remove({},true)  一条
+			db.集合.remove({要删数据条件描述}) 多条
+			db.集合.remove({}) 清空表
+		改:
+			db.集合.udpate({查询条件},{替换条件},插入bl,全替换bl)
+			替换后的：
+				{$set:{数据},$inc:{age:1}}
+		查:
+			所有：db.集合.find(条件)
+			条数: db.集合.find().count()
+			去重：db.集合.distinct(key)
+
+			条件
+				{age:22}			age == 22
+				{age:{$gt:22}}		age > 22
+				{age:{$lt:22}}    	age < 22
+				{age:{$gte:22}}		age>=22
+				{age:{$lte:22}}		age<=22
+				{age:{$lte:122,$gte:22}}	age<=122 && age>=22
+				{$or:[{age:22},{age:122}]}	22 or 122
+				{key:value,key2,value2}  value && value2
+				{name:/正则/}
+
+			db.集合.find({条件},{指定要显示列区域})
+				指定要显示列区域: 区域名username:1 显示着个区域，其他不显示
+				指定要显示列区域: 区域名username:0 不显示着个区域，其他显示
+				_id 是默认显示
+
+			限定：
+				db.集合.find().limit(number)  限定
+				db.集合.find().skip(number)	跳过
+				db.集合.findOne() / db.集合.find().limit(1)  查询第一条
+		排
+			升：db.集合.find().sort({key:1,key2:-1})
+			降：db.集合.find().sort({key:-1})
+
+
+		db.集合.find({条件},{指定显示区域}).skip(10).limit(10).sort({key:1})
+		db.insertOne({数据描述})
+
+
+	mongodb 客户端包   mongodb | mongoos
+
+		1.	require('mongodb'); 引入模块  第三方模块
+		2.	创建客户端	mongoCt = mongodb.MongoClient
+		3.	创建链接	mongoCt.connect('协议://地址:端口',回调(err,client))
+		3.5 链库 		client.db('库名')
+		4.	链接集合（表) 	user = db.collection('集合名');
+		5.	user.API()  集合操作		返回 对象
+			one === 1  Many 多个
+
+			增
+				insertOne(对象数据,(err,res)=>{})  res = 对象  
+				insertMany(arr数据,(err,res)=>{}) res = 对象  
+					res.result.n 结果  ok 状态
+					res.ops内容  数组
+					result.insertedId 插入后的id
+
+			删:
+				deleteOne({条件},(err,result)=>{})
+					res.result.n 结果  ok 状态
+					result.deletedCount:1  删除的条数
+			改:
+				updateOne({条件},{更新后},(err,res)=>{})
+				updateMany({条件},{更新后},(err,res)=>{})
+
+					res.result.n 结果  ok 状态
+					res.modifiedCount  修改的条数
+
+					updateMany({条件},{更新后},{配置},(err,res)=>{})
+					
+					配置: upsert:true 插入
+						  projection:true 全局替换
+			查:
+				user.find({条件},{skip:1,limit:1,projection:{key:1}},(err,result)=>{result=对象})
+				user.find({条件},{projection:{key:0}}).toArray((err,result)=>{reulst==arr})
+				user.countDocuments((err,num)=>{num返回数量})
+
+			排序
+				user.find(..).sort({key:-1}).toArray..
+				user.find({},{projection:{},sort:{key:-1}}).toArray..
+		6. client.close() 关闭库链接

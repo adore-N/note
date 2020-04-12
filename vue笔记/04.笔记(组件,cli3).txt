@@ -1,0 +1,138 @@
+
+vue-dev-tools
+	https://github.com/vuejs/vue-devtools
+	1. 	Clone this repo  downloadzip 到桌面
+	2.	npm install  安装依赖
+	3.	npm run build	build目录项目就有各种浏览器的安装包
+	4.	打开 chrome -> 设置->更多工具->扩展应用->开发者模式->加载扩展程序->指向->build目录项目下的chrome
+
+------------------------------------------------------------------------------
+组件：
+
+	Vue根实例表示1个应用，一个应用有若干个组件拼装而成
+
+	使用组件
+
+		<组件名></组件名>
+		<组件名/>  需要模块化环境支持
+
+		<Header></Header>脚手架环境下webpack协助解决了，调用时依然不能小写header
+
+	定义组件
+		定义:
+			a) 	  let 组件变量名= Vue.extend({
+			        template:'<div class="header">我是header组件</div>'
+			      });
+			b)	 let 组件变量名={};		√
+		注册(拼装)
+				a)	Vue.component('组件名',组件变量名);
+					全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生
+			b)	选项
+				components:{
+					组件名：组件变量名	√
+				}
+
+	组件数据
+		data 要是个函数，且要有返回值 object
+		
+		一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝，否则组件复用时，数据相互影响
+
+	组件模板：外部模板,字符模板(行间模板|inline-template)
+		
+		外部模板:
+
+			组件内部: template: '#id名'
+			
+			<script type="x-template" id='id名'
+			<template id='id名'...   √
+
+	单文件组件(.vue)
+		script + template + style
+
+	注意:
+		组件名不可和html同名
+		组件没有el选项，只有根实例存在el
+		组件的模板一定要有根元素
+		组件的data是个函数
+
+	推荐:
+		组件变量名: 大驼峰  XxxXxx
+		组件名:  xx-xx | 大驼峰(模块化环境)
+
+------------------------------------------------------------------------------
+
+vue 工程化模块化自动化开发环境
+	
+	底层： webpack  
+
+	webpack开发命令行工具(node/npm/bower/yarn/nodemon/supervisor)
+
+	vue-cli | 命令行工具 | 脚手架
+
+	vue-cli版本:  vue-cli1.x/2.x      @vue/cli  3.x
+
+cli3 项目环境安装
+
+	vue -V  查看版本 
+	npm unstall vue-cli -g  		非3.x时卸载
+	npm install -g @vue/cli  		装3
+	npm install -g @vue/cli-init 	桥接2 
+
+
+	创建vue项目 (SPA单页面 MPA多页面)
+
+		SPA单页项目:
+			vue create 项目目录
+			选择:
+				https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create
+			cd 项目目录
+			npm run serve
+
+------------------------------------------------------------------------------
+
+es6
+
+	输出
+
+		export default any      默认输出
+		export const 变量 = 值   批量输出
+		export {变量:值,变量n:值}   批量输出
+
+	输入
+
+		import 模块名 from 'address'        模块名 == any
+		import {属性1,属性n} from 'address'  属性 == any
+		import * as 变量 from 'address'     变量 == 对象
+
+	import 会提升， 会预编译（首先运行)
+
+------------------------------------------------------------------------------
+
+vue组件通讯
+
+	父->子  props		√
+		<子组件 :自定义属性="父数据"></..>
+		子组件:
+			选项
+			props:['自定义属性']   props:{自定义属性:{type/default/required/...}}
+		展示:	子模板	{{自定义属性}}
+			    js:  this.自定义属性   this==当前组件
+
+		注意: props是只读的
+
+			特例： 在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变这个对象或数组本身将会影响到父组件的状态
+
+		props命名：
+			props: ['postTitle']
+			<xx :post-title="hello!"></xx>
+
+		单向下行绑定: 父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+			
+
+	实例属性 $root 
+			子组件内部直接找到根实例，访问，操作根data数据
+			this.$root == vm
+			this.$root.实例属性
+			this.$root.$data.实例属性
+			
+------------------------------------------------------------------------------

@@ -1,0 +1,124 @@
+class
+1、class语法相对原型、构造函数、继承更接近传统语法，它的写法能够让对象原型的写法更加清晰、面向对象编程的语法更加通俗
+
+2、class基本语法
+
+class MathHandler{ // MathHandler是一个构造函数，构造函数都有显式原型:prototype
+	constructor(x, y) { // 构造器，java,c#的语法，面向对象高级语言的语法
+		this.x = x;
+		this.y = y;
+	}
+	add() {
+		return this.x + this.y;
+	}
+}
+const m = new MathHandle(1, 2); // 实例，所有实例都会有一个隐式原型:__proto__
+console.log(m.add());
+
+typeof MathHandle  // 'function'
+MathHandle.prototype.constructor === MathHandle; // true
+m.__proto__ === MathHandle.prototype; // true
+
+ promise
+
+1、主要用于异步计算
+2、可以将异步操作队列化，按照期望的顺序执行，返回符合预期的结果,防止回调地狱的出现
+3、可以在对象之间传递和操作promise，帮助我们处理队列
+
+1、promise 有 3 种状态：pending（进行中）、fulfilled（已完成，又称为Resolved） 或 rejected（已失败）。
+状态改变只能是 pending->fulfilled 或者 pending->rejected，状态一旦改变则不能再变。
+2、new promise实例，要return
+3、new promise时要传入函数，函数有resolve、reject两个参数
+4、成功时执行resolve()，失败时执行reject()
+5、then监听结果
+
+jQuery的ajax返回的是promise对象吗？
+jquery的ajax返回的是deferred对象，通过promise的resolve()方法将其转换为promise对象。
+var jsPromise = Promise.resolve($.ajax('/whatever.json'));
+
+promise | async | await | generator
+
+let、const
+1、es5有两种声明变量的方法：var, function
+es6有6种声明变量的方法：var, function, let, const, import, class
+
+let、var的区别？
+1、块级作用域：let定义的变量有块级作用域，var声明的变量只有全局和函数作用域。
+2、变量提升：let不存在变量提升，var存在变量提升。
+3、重复声明：let不允许重复声明，var可以重复声明。
+4、暂时性死区：在代码块内，使用let命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”。
+
+箭头函数
+1、在使用=>定义函数的时候，this的指向是定义时所在的对象，而不是使用时所在的对象；
+2、不能够用作构造函数，这就是说，不能够使用new命令，否则会抛出一个错误。
+3、不能够使用arguments对象。
+4、不能使用yield命令。
+5、当要求动态上下文的时候，就不能够使用箭头函数，也就是this的固定化。
+
+for…of, for…in的区别？
+1、在循环对象属性的时候，使用for…in，在遍历数组的时候的时候使用for…of。
+2、for…in循环出的是key，for…of循环出的是value
+3、for…of是ES6新引入的特性。修复了ES5引入的for…in的不足
+4、for…of不能循环普通的对象，需要通过和Object.keys()搭配使用
+
+总结一下es6其他常用功能？
+1、let、const /'kɑnst/
+const定义常量，常量不能被重新赋值
+
+2、多行字符串/模板变量
+js拼接变量字符串模板
+console.log(`输出：${name}`)
+
+3、解构赋值
+整体数组或对象中拿到其中一个元素或属性值
+// obj
+const obj = {a: 10, b: 20, c:30};
+const {a, c} = obj;
+console.log(a); // 10
+console.log(c); // 30
+// arr
+const arr = ['xxx', 'yyy', 'zzz'];
+const [x, y, z] = arr;
+console.log(x); // xxx
+console.log(z); // zzz
+
+4、块级作用域
+for循环
+// js
+var obj = {a: 100, b: 200};
+for (var item in obj) {console.log(item)};
+console.log(item); // 'b'
+// es6
+const obj = {a: 100, b: 200};
+for (let item in obj) {console.log(item)};
+console.log(item); // undefined
+
+5、函数默认参数
+// js
+function(a, b) {
+	if(b == null) {b = 0;}
+}
+// es6
+function (a, b=0) {
+}
+
+6、箭头函数
+彻底解决了之前函数this指向全局window对象的问题
+function fn() {
+	console.log('real', this); // {a: 100}
+	var arr = [1, 2, 3];
+	// 普通js
+	arr.map(function(item) {
+		console.log('js',this); // window
+		return item + 1;
+	});
+	// 箭头函数
+	arr.map(item => {
+		console.log('es6', this); // {a: 100}
+		return item + 1;
+	});
+}
+fn.call({a: 100})
+
+
+

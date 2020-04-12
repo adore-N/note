@@ -1,0 +1,44 @@
+user集合
+{
+    id: 'xxxx',     string    用户id
+    name: 'xxxx',   string    用户名
+    nickname: 'xxx' string    用户昵称
+    mybooks: 122,   num       我的书籍
+    myideas: 122    num       我的想法
+    mybooksnum:122  num       我的书单
+    icon: 'xxxx/xxx'string    我的头像
+    password:
+    tel:
+}
+books集合
+{
+    name: 'xxx'      string  名字
+    type: ['都市','言情','小说','爱情'....]         array 类型
+    usertype:['男生',女生...]
+    author: 'xxx'   string  作者
+    price: '1123'   string  价格
+    img: 'xx/xx/x'  string  图片
+    intro: 'xxxxxxxxx'      string  简介
+    people: 2222     num  人气
+    fans:  122       num  粉丝
+    grade: 5.3      num   评分
+    detail: {
+        font: '111'     字数
+        size: '11kb'    大小
+        date: '2009-4-5'时间
+    }
+}
+homeTab集合
+{
+    {name: '推荐',path: 'give'},
+    {name: '男生',path: 'man'},
+    {name: '女生',path: 'woman'},
+    {name: '推荐',path: 'tuijian'}
+}
+typesTab集合
+{
+     {name: '推荐',path: 'tuijian'},
+     {name: '推荐',path: 'tuijian'},
+     {name: '推荐',path: 'tuijian'},
+     {name: '推荐',path: 'tuijian'}
+}

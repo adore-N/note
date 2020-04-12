@@ -1,0 +1,34 @@
+<!--pages/home/home.wxml-->
+<view>
+    <view class="slide">
+    <swiper 
+      class='swp' 
+      indicator-dots="true" 
+      autoplay="true" 
+      interval="1000" 
+      duration="100"
+    >
+      <swiper-item
+        wx:for="{{banner.content}}"
+        wx:key="{{item.id}}"
+      >
+        <navigator url="{{'../item/item?key='+banner.key+'&id='+item.id}}">
+          <image class='nav-img' src="{{item.image}}" mode="aspectFill"/>
+        </navigator>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <view class="board">
+    <navigator 
+      wx:for="{{list}}"
+      url="{{'../list/list?key='+item.key}}"
+      wx:key="{{item.key}}"
+    >
+      <view class="board-item">
+        <text class="board-item-title">{{item.title}}</text>
+        <image class="arrow" src="../../images/arrowright.png" mode="aspectFill"/>
+      </view>
+    </navigator>
+  </view>
+</view>

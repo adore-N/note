@@ -1,0 +1,26 @@
+<!--pages/home/home.wxml-->
+<view class="search">
+  <input class="search_input"  type="text" placeholder="搜索" bindfocus="toSearch" bindconfirm="test"></input>
+</view>
+
+<view class="page-section-spacing" wx:for="{{type}}" wx:key="index">
+  <view class="content_top">
+    <text class="content_title">{{item.tag}}</text>
+    <navigator class='content_a' url="{{'../test/test'}}">查看更多 ></navigator>
+  </view>
+  <scroll-view 
+    class="scroll-view_H" 
+    scroll-x="true" 
+    enable-flex="true" 
+    bindscroll="scroll" 
+    tyle="width: 100%">
+      <view class="scroll-view-item_H" wx:for="{{item.data}}" wx:key="index">
+      <navigator 
+        url="{{'../detail/detail?id='+ item.id}}"
+      >
+        <image class="movie_img" src="{{item.cover}}"></image>
+      <text class="movie_name">{{item.title}}</text>
+      </navigator>
+      </view>
+  </scroll-view>
+</view>

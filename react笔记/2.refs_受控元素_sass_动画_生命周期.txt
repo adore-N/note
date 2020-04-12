@@ -1,0 +1,217 @@
+ref
+  作用：获取jsx元素  获取的是真实dom
+
+  使用：给jsx元素 设置ref属性="名字"
+   this.refs.名字
+
+  何时用:
+   与第三方 DOM 库集成
+   触发命令式动画
+   管理焦点，文本选择或媒体播放
+
+ ------------------------------------------------------------------------------------
+
+ 受控元素：
+
+  react 默认是单项绑定  defaultValue（非受控）
+
+  value={this.state.数据名}  model->view
+  onChange={this.监听方法}   view->model(  setState )
+  监听方法: this.setState(...)
+
+ 处理多个输入元素
+  可以为每个元素添加一个 name 属性(通常和数据名一致)
+  处理函数根据 event.target.name 的值来选择要做什么
+
+  name="inputUserName" name="inputContent"
+  this.setState({[ev.target.name]:ev.target.value})
+ ------------------------------------------------------------------------------------
+
+ react 处理 样式:
+
+  1) 在index.html ： 引入  link/style  场景：应用的公共样式  没有经过优化
+  2）index.js： import './css/xx.css'  是全局 注入口（程序) 公共样式
+  2.5) 组件.js  import './css/xx.css'  是全局 注入口（程序) 公共样式
+
+   问题: 选择器冲突，
+   解决：
+    a) 命名空间  BEM  √
+    b) 模块化:
+     引入 import 变量  from './css/xx.module.css' 模块
+     使用 <xx className={变量.类名|id}
+
+     配置1 webpack配置 "style-loader!css-loader?modules" | module:true
+       问题：所有css都需要模块化使用
+     配置2 改名xx.css -> xx.module.css 需要模块化的才修改,不影响其他非模块化css写法
+
+  jsx引用:
+   className="类名 类名2" className={返回字符}
+   style={{key:value,key:value}}
+    style的属性值，可以不给单位，默认px  子属性小驼峰
+
+
+  3）SCSS 是 Sass 3 引入新的语法
+    安装: node-sass
+    sass：
+     使用换行和缩进
+
+     $bg-color: #939
+     .box
+      background: #bg-color
+
+    scss：
+     使用分号和花括号
+     $bg-color: #399;
+     .box{
+       background: $bg-color;
+     }
+    定义主题： $theme-color: #300;
+
+    scss for create-react-app脚手架
+     引入: xx.sass/xx.scss  使用: <xx className="box"
+     引入: style form xx.module.sass/xx.module.scss  使用: <xx className={style.box}
+
+     引入sass全局变量?
+      1. 局部sass： @import './全局.scss'
+      2. 安装插件全局引入 : sass-resources-loader
+
+       配置修改webpack.config.js一个key
+        use: [
+                     {loader:'style-loader'},
+                     {loader:'css-loader?modules'},
+                     {loader:'sass-loader'},
+                     {
+                       loader: 'sass-resources-loader',
+                       options:{
+                         resources:'./src/xx/全局主题.scss'
+                       }
+                     }
+                   ]
+          注意:
+            loader:'css-loader?modules'    ?modules 模块化时需要添加
+            resources 指向作用域在项目环境下
+
+        这里修改的配置文件，修改的有的多,这样的话,及支持模块化，都支持，重要的就是配置文件的修改
+        {
+          test: sassRegex,
+          exclude: sassModuleRegex,
+          use:
+          //     getStyleLoaders(
+          //   {
+          //     importLoaders: 2,
+          //     sourceMap: isEnvProduction && shouldUseSourceMap,
+          //   },
+          //   'sass-loader'
+          // ),
+              [
+                {loader:'style-loader'},
+                {loader:'css-loader'},
+                {loader:'sass-loader'},
+                {
+                  loader: 'sass-resources-loader',
+                  options:{
+                    resources:'./src/assets/scss/base.scss'
+                  }
+                }
+              ],
+          // Don't consider CSS imports dead code even if the
+          // containing package claims to have no side effects.
+          // Remove this when webpack adds a warning or an error for this.
+          // See https://github.com/webpack/webpack/issues/6571
+          sideEffects: true,
+        },
+        // Adds support for CSS Modules, but using SASS
+        // using the extension .module.scss or .module.sass
+        {
+          test: sassModuleRegex,
+          use:
+          //     getStyleLoaders(
+          //   {
+          //     importLoaders: 2,
+          //     sourceMap: isEnvProduction && shouldUseSourceMap,
+          //     modules: true,
+          //     getLocalIdent: getCSSModuleLocalIdent,
+          //   },
+          //   'sass-loader'
+          // ),
+              [
+                {loader:'style-loader'},
+                {loader:'css-loader?modules'},
+                {loader:'sass-loader'},
+                {
+                  loader: 'sass-resources-loader',
+                  options:{
+                    resources:'./src/assets/scss/base.scss'
+                  }
+                }
+              ],
+        },
+
+
+ 动画
+  css tansition
+
+  第三方动画库 ant.desinge
+
+   https://motion.ant.design/api/queue-anim
+
+   QueueAnim:进退场动画  组件
+
+   QueueAnim组件内部的 一级元素&& 进退场,做动画
+   一级元素要有key，根据编号依次做动画,无key不动画
+   路由离场动画无效
+   包裹路由组件无效(一级元素&& 进退场)
+
+ ------------------------------------------------------------------------------------
+ 生命周期流程:
+
+  实例化 ->  更新期  -> 销毁时
+
+  实例化:
+
+   es5:
+    1.取得默认属性(getDefaultProps) 外部传入的props
+    2.初始状态(getInitailState)  state状态
+       3.即将挂载 componentWillMount
+       4.描画VDOM  render
+       5.挂载完毕 componentDidMount
+
+   es6:
+    1.取得默认属性(getDefaultProps) 外部传入的props
+    2.初始状态(getInitailState)  state状态
+     1 && 2 都在构造器里面完成
+     constructor(props){
+      super(props) == getDefaultProps
+      直接访问props
+      this.state={} == getInitailState
+      直接使用或者修改state
+      不能使用setState
+
+     }
+       3.即将挂载 componentWillMount
+       4.描画VDOM  render
+       5.挂载完毕 componentDidMount
+        才可使用ref
+
+        构造器里不能同步使用setState
+        构造器里不能异步使用this.state做修改
+
+  更新期:
+   0.props改变 componentWillReceiveProps(nextProps)
+    初始化render时不执行 这里调用更新状态是安全的，并不会触发额外的render调用
+    nextProps 更新后  this.props更新前
+   1.是否更新 shouldComponentUpdate  指视图 return true/false
+   2.即将更新 componentWillUpdate
+   3.描画dom  render
+    不要在这里修改数据
+   4.描画结束 componentDidUpdate
+
+  销毁时:
+   即将卸载 componentWillUnmount
+   可以做一些组件相关的清理工作，例如取消计时器、网络请求等
+
+
+  实例化->存在(更新)->销毁时
+   父套子
+    父更新子更新
+    子更新父不更新

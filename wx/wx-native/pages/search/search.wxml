@@ -1,0 +1,34 @@
+<!--pages/search/search.wxml-->
+<view class="container">
+
+  <view class="search">
+    <input class='search-input' focus placeholder="请输入搜索内容"/>
+  </view>
+
+  <view class="list">
+    
+    <view class="tips">
+      <view>
+        <image src="/images/loading.gif" mode="aspectFill" class='tips--img'/>
+        <text>刷新中...</text>
+      </view>
+    </view>
+    
+    <navigator url="../item/item">
+      <product></product>
+    </navigator>
+
+    <view class="tips">
+      <view>
+        <image src="/images/loading.gif" mode="aspectFill" class="tips--img"/>
+        <text>玩了命的加载中...</text>
+      </view>
+      <view>
+        <text>没有更多内容了</text>
+      </view>
+    </view>
+
+  </view>
+
+</view>
+

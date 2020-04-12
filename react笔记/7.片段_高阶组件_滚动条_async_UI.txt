@@ -1,0 +1,208 @@
+片段(fragments) :
+	为一个组件返回多个根元素。 可以让你将子元素加到一个分组中，并且不会在DOM中增加额外节点
+	用法:
+		<React.Fragment key="bmw">多个元素</..>
+		<>多个元素</>
+
+高阶组件
+
+	普通组件是将props|state转化成UI(jsx)，然而高阶组件将一个组价转化成另外一个组件
+	高阶是一个函数能够接受一个组件并返回一个新的组件。
+	例如: Redux的connect
+	
+
+
+	function HOC(Component){
+		//react底层语法 对 Component 转换
+		return 转换后的 Component
+	}
+
+	(function HOC2(arg1，arg2){
+		//react底层语法 对 Component 转换
+		return 函数
+	})(参数1,2)(组件)
+
+
+
+
+withRouter： ownProps|Route|props|context
+	把不是通过路由切换过来的组件，通过withRouter， 将 history、location、match 三个对象传入到目标组件 props对象上
+	用法:
+		import {withRouter} from 'react-router-dom'
+		class App extends Component{}
+		export default withRouter(App)
+
+		let Comp = props => (jsx)
+		export default withRouter(Comp)
+
+精髓：多组件组合，jsx+函数式编程（运算写成一系列的函数嵌套）
+
+思想:
+	组件拆分目标:为了复用
+	组件如何拆：单一原则
+	状态应该给谁:
+		尽量给顶层组件(状态提升),->props->子组件
+		可以从 props(属性) 或者 state(状态) 得到，那么它可能不应该在 state(状态) 中
+		方法-》操作数据(数据|状态在哪，方法就应该在哪)
+	props取名：从组件本身的角度来命名, 而不是它被使用的上下文环境
+
+	纯函数:
+
+		不改变输入，没异步,输出可控
+		reducer是一个纯函数
+		React组件都必须是纯函数，并禁止修改其自身 props
+
+	setState是异步的
+
+		会将多个 setState() 调用合并为一次更新
+		所以不能同步依赖上一个setState的值，作为下一个setState的参数
+
+			解决：
+				1) this.setState(function(nextState,nextProps){ return {改后的state}})
+				  nextState 抓取改后this.setState的所有状态
+				  props 所有属性
+			      return 更新会被合并,浅合并
+			    2) 异步操作
+			    3) ev.target......
+
+	ref绑定的是dom元素,挂载完毕时才可访问
+
+------------------------------------------------------------------------------------------------
+
+react 单页滚动条问题
+
+	路由切换，每次切换到页面顶部
+
+		app.vue
+
+			componentWillReceiveProps(nextProps){//props改变时
+			static getDerivedStateFromProps(nextProps){//props改变时
+			    if(this.props.location !== nextProps.location){//当前地址不等于目标地址
+			      window.scrollTo(0,0);//滚动到顶部
+			    }
+			  }
+
+	页面切换出去再切换回来后怎样保持之前的滚动位置
+
+		componentDidMount->window.scrollTo(0,sTop)
+		componentWillUnmount-> sTop = document.documentElement.scrollTop
+		sTop =  模块内部变量 | 类属性
+		参考:https://blog.csdn.net/tujiaw/article/details/77511460
+
+	判断某个组件是否滚动到底部
+	https://blog.csdn.net/tujiaw/article/details/77511460
+
+	参考:
+		https://www.cnblogs.com/yuan-luo/p/9041124.html
+		https://blog.csdn.net/tujiaw/article/details/77511460
+		https://segmentfault.com/q/1010000010619676
+
+
+------------------------------------------------------------------------------------------------
+
+
+await + async   同步的方式写异步的代码  ,避免回调地狱
+
+    let res1 = await axios({配置})
+    let res2 = await axios({配置使用到res1})
+    使用res
+
+    第二次请求会等待第一次请求的结果
+
+    错误捕获 try{}catch(e){}
+
+
+------------------------------------------------------------------------------------------------
+
+异步组件：create-react-app 环境 webpack自动分片打包
+
+	原理: import ("./ChildB.js").then(
+        ChildB=>console.log(ChildB)
+      )
+
+
+    方式2
+
+    	const Child = asyncComponent(()=>import("./Child"))
+
+    	export default function asyncComponent(importComponent) {
+		  class AsyncComponent extends Component {
+		    constructor(props) {
+		      super(props);
+
+		      this.state = {
+		        component: null
+		      };
+		    }
+
+		    async componentDidMount() {
+		      const { default: component } = await importComponent();
+
+		      this.setState({
+		        component: component
+		      });
+		    }
+
+		    render() {
+		      const C = this.state.component;
+		      return C ? <C {...this.props} /> : null;
+		    }
+		  }
+
+		  return AsyncComponent;
+		}
+
+
+	方式3
+
+	  import Loadable from 'react-loadable';
+
+	  const Loading = () => <div>Loading...</div>;
+
+	  const Home = Loadable({
+	  	loader: () => import('./routes/Home'),
+	 	loading: Loading,
+	 	loading:()=>{return null}
+	  });
+
+
+	  路由 <Route path=.. component={Home}/>  路由懒加载
+
+------------------------------------------------------------------------------------------------
+
+UI库: ant.design
+
+	pc:	http://design.alipay.com/develop/web/react/introduce
+
+		1) yarn add antd --save
+		2) yarn add babel-plugin-import --save   按需引入
+		3) webpack loader配置,找到babel-loader  按需引入配置
+			+ options 项目
+			"plugins": [
+	                ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }], // `style: true` 会加载 less 文件 pc
+
+	              ]
+	    4) import {ConfigProvider, DatePicker,Button } from 'antd'; 直接使用直接，之后都是按需引入
+
+	    5) //文案改中文
+			import zhCN from 'antd/lib/locale-provider/zh_CN';
+			import moment from 'moment';
+			import 'moment/locale/zh-cn';
+			moment.locale('zh-cn');
+		组件需要被 <ConfigProvider locale={zhCN}>组件包裹
+
+	touch:	http://design.alipay.com/develop/mobile/introduce
+		1) yarn add antd-mobile --save
+		2) yarn add babel-plugin-import --save   按需引入
+		3) webpack loader配置,找到babel-loader  按需引入配置
+			+ options 项目
+			"plugins": [
+	            ["import", { libraryName: "antd-mobile", style: "css" }] // `style: true` 会加载 less 文件 touch  pc端配置和touch端配置不可并存
+	        ]
+	    4) import { DatePickerView } from 'antd-mobile';
+	       import 'antd-mobile/lib/DatePickerView/style/css';
+
+	       直接使用组件 文案是中文
+
+
+

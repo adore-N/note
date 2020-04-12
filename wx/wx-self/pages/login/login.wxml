@@ -1,0 +1,10 @@
+<!--pages/login/login.wxml-->
+<view class="login">
+  <image class="logo"
+  src="https://img.zcool.cn/community/0176325dcd0687a8012053c0c66560.jpg@260w_195h_1c_1e_1o_100sh.jpg"></image>
+
+  <button class="wx" style="width:80%">微信登录</button>
+  <button class="douban" style="width:80%">已有豆瓣账号登录</button>
+
+  <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">test</button>
+</view>

@@ -1,0 +1,13 @@
+<!--pages/list/list.wxml-->
+<view class="container">
+  <view class="list">
+    <navigator 
+      wx:for="{{list}}"
+      wx:key="{{item.id}}"
+      url="{{'../item/item?id='+item.id+'&api=movie'}}"
+    >
+      <product item="{{item}}"></product>
+    </navigator>
+  </view>
+</view>
+

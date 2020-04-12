@@ -1,0 +1,144 @@
+------------------------VUE------------------------
+	官网：https://cn.vuejs.org
+	API：https://cn.vuejs.org/v2/api/
+
+	思想：
+		小 -> 大
+		封装(函数)->多个封装(文件)==库||框架
+						↓				↓
+					   插件 				插件
+
+					   模块(文件)  分类（目录)->包
+		框架：改变了编码思想   VUE: 数据驱动，一切都是数据,面向数据
+			面向  事件
+			面向  对象
+			面向  数据
+		库:  工具本身不改变编码的方式
+			jquery -> dom		事件驱动
+
+		MVC：html页面里面会出现<%=后台属性%>  {$后台属性$} {{后台属性}} mustache
+			一个思想、是后端产物,是为了前后端分离
+			1. 后台 java(jsp+html)  php(php+html+js)  nodejs(nodejs+ejs)
+			2. 前台 (html+css+js)
+			3. 编辑 (拿着后台给他开发的后台管理页面xxx.com:8008/admin.php)
+			4. 设计
+
+		前端MVC(分离js)：   数据、表现、业务分离
+			
+			model		M  数据  ajax/jsonp/数据解析  可以复用
+				| xx.js
+				...
+			view	    V  视图表现层 展示数据、创建元素，变色，运动 可以复用
+				...
+			control		C  控制层(串业务,事件驱动)  一般不复用
+				...
+
+			function readBaidu(str,callback){..拿着需求str,求数据，调用回调带数据出去.}
+			function writeLi(data,callback){...拿着数据写页面}
+			window.onload=function(){
+				oBtn.onclick=function(){
+					readBaidu('xxx',function(res){
+						writeLi(res);
+						winObj.close()
+					})
+				}
+			}
+		VUE: 是个M V VM框架
+			MVC:衍生出很多变体  MVP MVVM MV*
+			mv  vm~C
+			MVVM M  <-> VM <-> V
+	------------------------------------------------------------
+	基本使用：
+
+		new出来一个Vue的实例，传一堆配置参数，控制一片html
+
+		VM:		响应系统 - > vDOM做标记 ->一个循环周期结束后->操作DOM
+			new Vue   返回  VM
+			new Vue({
+				el:'选择器'  要控制的那片html代码
+				data:{key:value}数据
+				methods:{fnName:fn} 方法
+			})
+		M:	初始化数据
+			data 选项   number/string/boolean/array/json/undefined/null
+		V:  数据绑定   插值表达式|指令|属性
+			{{数据名}}	模板 mustche  插值表达式  声明式渲染
+			v-text="数据名"		vue特有的属性(指令)
+			v-html="strong"		非转义输出
+			v-for="(val,index) in 数据"		val值  index索引	变量数组、对象
+				默认 :key="index"  指定key 是个bmw字符 vue是认得 修改VDom的key值
+				:key="item.id"  指定key 是数据id（唯一性） 修改VDom的key值
+
+				key的优势:  避免数据错乱导致的视图问题,提供性能 
+			属性绑定:
+			v-bind:html属性="数据"	普通的html属性绑定数据
+				:html属性="数据"  简写   title/src/url/.....
+
+			事件：
+				v-on:事件名="方法"
+				   @事件名="方法"	简写
+				   @事件名="方法(参数)"
+				   @事件名="方法($event,参数)"		methods:{方法:function(ev,参数){ev/event}}
+
+				注意：vue提供的选项的值如果是函数时，不可用箭头函数
+
+    ------------------------------------------------------------
+	单向绑定模拟双向绑定:
+		:value="...."   model->view
+		v-on:input="fn($event.value)"  输入时把事件对象的value携带到方法，方法修改了model
+
+	双向绑定：
+		v-model:	创建双向数据绑定(M<->V) , 用在能生产数据的表单元素
+			input/radio/select/.....  绑定的是表单元素的  value值 checked 
+
+	非响应式情况
+
+		数组数据变化：
+			问题:	对数组使用了 非变异 (non-mutating method) 方法（返回的了新数组）
+			解决：   对象合并  
+
+			问题：利用索引直接设置一个根项|修改数组的长度时
+			解决：Vue.set(数组对象, index, value) | vm|this.$set(数组对象, key, value)
+				强制刷新 所有 dom
+		对象的数据变化：
+			问题：data:{a:1}
+					a 数据是响应式的
+					vm.b='qq';  b 属性不是响应式的
+			解决：Vue.set(对象, key, value) | vm|this.$set(对象, key, value)
+				  this.$forceUpdate() //强制刷新
+		如何避免非响应:
+			数据一开始都应该出现在data里面,数组里面永远不要放置简单型数据
+
+
+
+	------------------------------------------------------------
+
+	类属性|方法  和 实例属性|方法
+
+		Vue == 类|静态
+			Vue.protoname
+			Vue.api()  Vue.set(target,key,val)
+
+		vm ==  new Vue({配置}) 返回  实例
+			vm.$protoname
+			vm.$api()
+			vm.show()
+			vm.iptName
+
+		在配置内部  的  this == vm 实例
+			Vue.类方法|类属性
+			vm.$实例方法()|$实例属性  == this.$实例方法()|$实例属性
+			vm==this   this.$set/Vue.set
+
+	------------------------------------------------------------
+
+	课后:
+	
+		1. 整理笔记
+		2. demo跟做
+		3. 留言板扩展
+		4. 看文档->教程
+
+
+
+

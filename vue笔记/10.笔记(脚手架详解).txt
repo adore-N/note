@@ -1,0 +1,275 @@
+vue-cli 脚手架详解  (搭建项目环境)  命令行工具 | 生成器
+
+	内部代码:	webpack + nodejs
+
+	安装: cli3 && cli2
+		0. vue -V   如果是非 3.x.x
+		0.5 npm uninstall vue -g
+		1. npm install -g @vue/cli || yarn global add @vue/cli
+		2. npm install -g @vue/cli-init  ||  yarn global add @vue/cli-init
+
+		可以使用 cli2 命令行 cli3
+
+	cli2:
+
+		安装: npm i vue-cli -g
+
+		创建项目环境:
+			vue init 模板类型 目录|.    webpack-simple|webpack  模板
+			vue init webpack-simple 文件夹名称
+			vue init webpack 文件夹名称
+			cd 目录
+			npm install
+			npm run dev  运行
+			开发....
+			npm run build 打包
+
+		webpack-simple:
+			package.json:  命令行参数
+				修改端口 webpack-dev-server --port 8001 --open 设置端口，开启浏览器
+			webpack.config.js:  修改webpack配置文件
+				devServer
+					port 	端口
+					open  开启浏览器
+					
+		webpack:
+			package.json:
+
+				webpack-dev-server --port 8001 --open 设置端口，开启浏览器
+
+			config/index.js
+					autoOpenBrowser: 开启浏览器
+					useEslint: eslint检查的开启关闭
+					port: 端口
+
+		反向代理:
+			config/index.js
+				proxyTable: {
+			        '/api':{//axios访问 /api/xx ==  target + /api/xx  
+			          target:'http://localhost:3000',
+			          // target:'https://uncle9.top',
+			          changeOrigin:true,//创建虚拟服务器 
+			          // ws:true,//websocket代理
+			        },
+			        '/douban':{// axios 访问 /douban == target + '/douban'
+			          target:'https://douban.uieee.com',
+			          changeOrigin:true,
+			          pathRewrite:{//路径替换
+			            '^/douban':'',// axios 访问/douban/v2/xx == target +'' + /v2
+			          }
+			        }
+			    },
+
+	vue cli3
+
+		官网:	https://cli.vuejs.org/zh/
+		关于旧版本
+			Vue CLI 的包名称由 vue-cli 改成了 @vue/cli。 如果你已经全局安装了旧版本的 vue-cli (1.x 或 2.x)，你需要先通过 npm uninstall vue-cli -g 或 yarn global remove vue-cli 卸载它。
+
+		安装cli3 ：
+			npm install -g @vue/cli | yarn global add @vue/cli
+			npm install -g @vue/cli-init  和cli2 命令行 并用 (后续在cli3下指向一切cli2操作)
+
+		创建项目:
+			vue create xxx / .
+				删除默认配置:		.vuerc     C:\Users\Admin
+			
+			vue ui 		图形UI形式
+
+
+		打包:	构建目标
+			npm run build
+			npx vue-cli-service build
+			vue-cli-service build   需要安装vue-cli-service 命令行?
+
+			index.html 会带有注入的资源和 resource hint
+			第三方库会被分到一个独立包以便更好的缓存
+			小于 10kb 的静态资源会被内联在 JavaScript 中
+			public 中的静态资源会被复制到输出目录中
+
+		Index.html 文件
+			插值:
+				使用 lodash template 语法插入内容
+				<link rel="icon" href="<%= BASE_URL %>favicon.ico">
+				打包后	->  <link rel=icon href=/favicon.ico>
+			Preload:
+				 是一种 resource hint，用来指定页面加载后很快会被用到的资源，所以在页面加载的过程中，我们希望在浏览器开始主体渲染之前尽早 preload。 vue 自动生成
+				 <link href=/css/app.8c41b469.css rel=preload as=style>
+			Prefetch:
+				用来告诉浏览器在页面加载完成后，利用空闲时间提前获取用户未来可能会访问的内容。
+				 Vue CLI 应用会为所有作为 async chunk 生成的 JavaScript 文件 (通过动态 import() 按需 code splitting 的产物) 自动生成 prefetch 提示。
+
+
+		资源安排:
+
+			相对路径 指向assets开发目录
+			绝对路径 指向public目录
+
+			在 JavaScript 被导入或在 template/CSS 中通过相对路径被引用。这类引用会被 webpack 处理。
+			放置在 public 目录下或通过绝对路径被引用。这类资源将会直接被拷贝，而不会经过 webpack 的处理。
+
+			url-loader 将小于 10kb 的资源内联，以减少 HTTP 请求的数量
+
+			推荐 资源放置到assets:
+				脚本和样式表会被压缩且打包在一起，从而避免额外的网络请求。
+				文件丢失会直接在编译时报错，而不是到了用户端才产生 404 错误。
+				最终生成的文件名包含了内容哈希，因此你不必担心浏览器会缓存它们的老版本
+			何时使用 public 文件夹
+				你需要在构建输出中指定一个文件的名字。
+				你有上千个图片，需要动态引用它们的路径。
+				有些库可能和 webpack 不兼容，这时你除了将其用一个独立的 <script> 标签引入没有别的选择。
+
+		安装CLI插件:  vue官网 找vue-cli-plugin-插件名  生成器
+				vue add axios	/指向public
+				vue add router / vue add vuex
+					可以安装包，并创建文件(插件配置的基本小样)
+
+				npm i axios vue-router vuex -D
+					需要自行编写配置
+
+				vue add animate 没有vue-plugin-animate-> npm i animate.css
+				vue add swipe   没有 -> npm i vue-swipe
+
+				注意:
+					vue add 的设计意图是为了安装和调用 Vue CLI 插件。这不意味着替换掉普通的 npm 包。对于这些普通的 npm 包，你仍然需要选用包管理器。
+
+					CLI 插件都会包含一个 (用来创建文件的) 生成器和一个 (用来调整 webpack 核心配置和注入命令的) 运行时插件
+		配置
+
+			修改启动端口:
+				a) package.json->scripts->vue-cli-service serve --port 8001 --open
+				b) node_modules/@vue/cli-service/lib/options
+				c) vue.config.js  √
+
+			css模块化:
+				@vue/cli-service/lib/options
+					css: {
+					    extract: false,
+					    modules: true, //css模块化
+					    	使用：
+					    		style标签 添加module属性 
+					    		模板:$style.类|id  
+					    		组件:this.$style  返回所有的类和id的集合
+					    	场景: scoped/moudle 对css内部import css时无效时
+
+					  }
+			vue.config.js
+					参考：https://github.com/vuejs/vue-cli/tree/dev/docs/zh/config
+						  https://cli.vuejs.org/zh/config/
+
+					module.exports={
+					  css: {
+					    extract:false,//css分离 生产环境下是 true，开发环境下是 false
+					    modules: true, //开启css模块化
+					    loaderOptions:{//向 CSS 相关的 loader 传递选项
+					      css: {
+					        // 这里的选项会传递给 css-loader
+					      },
+					      postcss: {
+					        // 这里的选项会传递给 postcss-loader
+					      }
+					    }
+					  },
+					  devServer:{
+					    // proxy: 'http://localhost:3000',//告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:4000。
+					    // host: '0.0.0.0',
+					    port: 8003,
+					    open: true,
+					    // https: false,
+					    // proxy: null, // string | Object
+					  },
+					  lintOnSave:false, //关闭esling警告
+					  lintOnSave: process.env.NODE_ENV !== 'production', //生产构建时禁用
+					  productionSourceMap:false, //打包不携带map文件
+
+					  cli3 代理
+					  proxy:{//代理是从指定的target后面开始匹配的，不是任意位置；配置pathRewrite可以做替换
+					      '/api':{//axios访问 /api ==  target + /api  
+					        target:'https://uncle9.top',
+					        changeOrigin:true,//创建虚拟服务器 
+					        ws:true,//websocket代理
+					      },
+					      '/douban':{// axios 访问 /douban == target + '/douban'
+					        target:'https://api.douban.com',
+					        changeOrigin:true,
+					        pathRewrite:{//路径替换
+					          '^/douban':'',// axios 访问/douban/v2 == target + /v2
+					        }
+					      }
+					    }
+					}
+	
+	SCSS
+		sass：
+			使用换行和缩进
+
+			$bg-color: #939
+			.box
+				background: #bg-color
+
+		scss：
+			使用分号和花括号
+			$bg-color: #399;
+			.box{
+			  background: $bg-color;
+			}
+		scss for vue-cli3脚手架 需要安装node-sass / sass-loader
+			引入:	<style lang="scss"  使用: <xx class="box"
+			引入:	<style lang="scss" module  使用: <xx class={$style.box}
+			引入:	<style lang="scss" scope  使用: <xx class=box
+
+		引入sass全局变量?
+			定义主题： $theme-color: #300 -> base.scss -> assets
+			配置webpack：
+			1） Vuevue.config.js
+				module.exports = {
+				  css: {
+				    loaderOptions: {
+				      sass: {
+				        data: `
+				          @import "@/assets/css/base.scss";
+				        `
+				      }
+				    }
+				  }
+				}
+			2） node_modules/@vue/cli-service/lib/options.js
+				css: {
+				    // extract: true,
+				    // modules: false,
+				    // localIdentName: '[name]_[local]_[hash:base64:5]',
+				    // sourceMap: false,
+				    loaderOptions: {
+				      sass: {
+				        data: `
+				          @import "@/assets/css/base.scss";
+				        `
+				      }
+				    }
+				  }
+
+		scss for vue-cli2脚手架 
+			需要安装node-sass / sass-loader
+			配置: 在build文件夹下的webpack.base.conf.js的rules里面添加配置
+			  {
+		        test: /\.scss$/,
+		        loaders: ["style-loader", "css-loader", "sass-loader"]
+		      }
+
+			使用:	<style lang="scss"  使用: <xx class="box"
+			使用:	<style lang="scss" module  使用: <xx class={$style.box}
+			使用:	<style lang="scss" scope  使用: <xx class={box}
+
+		引入sass全局变量?
+			定义主题： $theme-color: '#300' -> base.scss -> assets
+			安装: sass-resources-loader
+			配置webpack： 在build/utils.js中修改配置
+			scss: generateLoaders('sass').concat(
+			  {
+			    loader: 'sass-resources-loader',
+			    options: {
+			      resources: path.resolve(__dirname, '../src/assets/scss/base.scss')  //注意自己的路径
+			    }
+			  }
+			),
+-----------------------------------------------------

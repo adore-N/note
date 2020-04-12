@@ -1,0 +1,11 @@
+/* pages/search/search.wxss */
+.search{
+  background: #07c160;
+  padding: 0  10px 10px 10px;
+}
+.search_input{
+  background: #fff;
+  border-radius: 5px;
+  font-size: 12px;
+  text-align: center;
+}

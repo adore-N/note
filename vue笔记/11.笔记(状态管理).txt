@@ -1,0 +1,82 @@
+状态管理  store
+
+	场景：	打算开发中大型应用
+
+	特点:   集中式数据管理, 一处修改，多处使用
+
+	思维:
+											store
+					this.$store.commit('increment')	-> mutations
+					this.$store.dispatch('jia')		-> actions
+				     mapActions() ->actions							mapGetters('类型')->getters
+				学生			代课老师			校长		 	财务     	版主任		学生
+			components - >  actions		->  mutations -> state  <- getters	<-	components
+				发送请求      处理			修改状态
+							  业务逻辑		修改state			   读取state
+							  异步
+							  							state<-$store.state <-  学生
+	-----------------------------------------------------------------------------
+	配置：
+		1. 安装 vuex 包
+		2. 引入 
+		3. use 插件
+		4. 注册到根
+
+		5. 配置状态管理的角色
+		actions/mutations/state/getters =    {}
+
+	------------------------------------------------------------------------------
+	mapActions/mapGetters  执行后， 返回来的是对象
+		对象:	{incremen:fn,decrement:fn,xx,xx}
+
+		mapGetters 用来接管 computed的
+			computed:mapGetters(['类型1','类型2'])
+		mapActions 用来接管 methods的
+			methods:mapActions(['类型1','类型2'])
+	------------------------------------------------------------------------------
+	this.$store.commit('类型',参数/负载/payload) -> mutations
+	this.$store.dispatch('类型',参数/负载/payload)  -> actions
+	this.$store.dispatch({type:类型,payload:负载})
+	const actions = {
+		类型:({store,commit},负载)=>{}
+	}
+	const mutattions = {
+		类型:(state,负载)=>{}
+	}
+	const getters = {
+		类型:(state)=>{}
+	}
+	const state={}
+
+	<xx @click="请求类型(负载)" 
+
+
+状态管理 - 项目 
+
+	路由监听：数据观测|检测 watch   找一个根组件
+	拦截器：修改state
+
+路由守卫
+
+	同步前置守卫条件: user->同步->state
+
+	login: dispatch -> actions -> mutations -> 修改state
+						 ↓ 回执
+					 目标组件
+
+	actions可以返回promise给调用dispatch的组件
+		actions:return axios(..).then(commit(...))
+		组件: this.$dispatch(..).then(()=>{业务})
+
+	注销：
+		删除 cookie
+		清空 状态state.user 数据
+
+
+状态管理数据永久存储方案
+	
+	与 cookie/localstrage同步
+
+	login -> 写入 状态state|localstrage
+	强刷 -> 读取localsrage | 同步 到 状态state
+

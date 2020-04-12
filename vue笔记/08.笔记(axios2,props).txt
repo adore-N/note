@@ -1,0 +1,47 @@
+------------------------------------------------------------
+axios2
+
+	串行 有关联
+		axios->prams->data(需要参数)->axios->params
+
+	并行 无关联
+
+		axios->data
+		axios->data
+		axios->data
+
+	.all 处理多次请求
+
+		axios.all([aioxs(1), axios(2)])
+		  .then(axios.spread(function (1, 2) {
+		    1 代码1号请求的结果  == res
+		  }));
+
+	拦截器
+		https://github.com/axios/axios
+------------------------------------------------------------
+
+路由props形式接参：  松耦合 组件便于不依赖路由，单独测试
+	
+	布尔: {path:..,component:...,props:true}
+
+	回调:
+		模板:	{{id|a|b}} 
+		组件:  props:['id','a','b'] 
+		路由配置: props:(route)=>({id:route.params.id, ...route.query})
+
+------------------------------------------------------------
+
+props 属性校验
+
+	props:['自定义属性']  
+
+	props:{
+		
+		自定义属性:{type/default/required/validator},
+
+		自定义属性2:{type/default/required/validator},
+
+	}
+
+------------------------------------------------------------

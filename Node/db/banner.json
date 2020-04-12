@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5da1e2aad28e3d1eec94f8b8"},"title":"这是第一张广告","url":"/images/banner1.jpg","detail":"主要是双十一活动","time":"123333"}
+{"_id":{"$oid":"5da1e337d98a581eec31b5f5"},"title":"这是第一张广告","url":"/images/banner2.jpg","detail":"主要是双十一活动","time":"123333"}
+{"_id":{"$oid":"5da1e33ad98a581eec31b5f6"},"title":"这是第一张广告","url":"/images/banner3.jpg","detail":"主要是双十一活动","time":"123333"}
+{"_id":{"$oid":"5da1e33dd98a581eec31b5f7"},"title":"这是第一张广告","url":"/images/banner4.jpg","detail":"主要是双十一活动","time":"123333"}

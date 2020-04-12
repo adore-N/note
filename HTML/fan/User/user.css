@@ -1,0 +1,22 @@
+.user{padding: 0 .3rem}
+.user .user_top{display: flex;justify-content: space-between;height: 2.5rem;
+    align-items: center;
+}
+.user .user_top img{width: 1.5rem;height: 1.5rem;border-radius: 50%;}
+.user .user_top .user_name{flex: 1;margin-left: .3rem;}
+.user .user_top .user_name p{font: 700 .32rem/.32rem '';color: #111;}
+.user .user_top .user_name i{display: block;margin-top: .2rem;
+    height: .3rem;background: #111;color: #fff;width: 1rem;text-align: center;
+}
+.user h3{font-size: .34rem;line-height: .5rem;margin-top: .3rem;}
+.user ul{margin-top: .2rem;}
+.user ul li{}
+.user ul li a{display: block;font: .3rem/.6rem '';color: #111;}
+.user ul li b{margin-left: 4.5rem;}
+
+
+
+
+
+
+

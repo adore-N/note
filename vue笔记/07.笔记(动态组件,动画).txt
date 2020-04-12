@@ -1,0 +1,78 @@
+动态组件:
+	动态组件： 组件动态化(数据化)，在不同组件之间进行动态切换,component自身不会渲染
+	<component is="'组件名'"></component>
+	<component :is="数据"></component>
+
+缓存组件:
+	keep-alive 包裹了目标组件，对目标组件缓存，不会触发卸载挂载，但会触发activated/deactivated
+	keep-alive 不给属性时，默认内部出现过得组件所组成的视图，都会被缓存
+	初始缓存第0个组件
+
+
+	属性:
+		：include: ['组件名','组件名2']  加入一部分
+		：exclude: ['组件名','组件名2']  排除一部分
+		：max = 数字   最多可缓存的组件数
+			最多可以缓存多少组件实例。一旦这个数字达到了，在新实例被创建之前，已缓存组件中最久没有被访问的实例会被销毁掉（卸载挂载）。
+
+	组件钩子:
+		activated  活动组件  被缓存时起效果
+		deactivated 非活动组件
+
+	场景:
+		keep-alive 包裹 component | router-view
+
+
+vue动画
+
+	动画组件: transition|transition-group	谁做动画，就包着谁
+
+	组件属性:
+		name =  "动画名"
+		mode="out-in|in-out"
+		enter-class = "类名"
+		enter-active-class = "类名"
+		leave-class = "类名"
+		leave-active-class = "类名"
+	样式：
+		.动画名-enter{..}  入场前(打哪来)
+		.动画名-enter-active{..} 入场后(来了停哪)
+		.动画名-leave{..} 离场前
+		.动画名-leave-active{..} 离开场后(到哪去)
+
+	事件:
+		@before-enter="方法(el)"   el==做动画的元素(原生)
+		@enter="方法"
+		@after-enter="方法"
+		@before-leave="方法"
+		@leave="方法"
+		@after-leave="方法"
+
+	1) css3
+		transition：无跳变
+			.动画名-enter{..} 打哪来1   +   .动画名-leave-active{..} 到哪去4
+		animation：有跳变
+			.动画名-enter-active{指定入场} 来了停哪2 + .动画名-leave-active{指定离场}到哪去4
+	2) css库 animate.css
+		同 animation 有跳变
+	3) js库 动画名  需要设定初始位置
+		下载 velocity.js   http://velocityjs.org/
+		使用:	Velocity(el,{css属性},{配置})
+				move(obj,{样式},{complete,progress,time,over})
+				$(obj).animate({样式},{配置})
+
+		配置:
+			duration: 毫秒   事件
+			easing: 动画类别 ''
+			Queue
+			complete:fn()
+			progress:fn
+			loop: 1 次  true无限
+			delay: 毫秒 延时
+			display:'none/block' 动画结束时是否可见
+		注意：
+			leave(el,done){}
+
+	transition-group:
+		一组动画
+		transition-group 包着一组元素  ，每个元素要有key  其他的同transition

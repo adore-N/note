@@ -1,0 +1,22 @@
+
+user:{
+	name:'xxx',
+	nickname:'xxx'
+	password:'xxx',
+	age:xxx,
+	icon:'xxx',
+}
+
+goodsinfo:{
+	name:'xxxx',
+	info:"xxxxxx"
+	price:1233
+	img:'./../...'
+}
+
+环境搭建	:cli3,vue-router,axios...插件
+项目目录分析:页面:
+			组件:
+			压缩文件:css/js/images
+			配置文件:路由,数据交互
+			过滤器:时间,补零

@@ -1,0 +1,112 @@
+vue组件通讯2
+
+	逐层传递
+
+		父->子  
+			props父子		使用场景: 电商 (松耦合)
+			$parent 子抓父 	使用场景: 通用组件（紧耦合)
+
+			vue-router
+
+		子->父  
+			自定义事件  使用场景: 电商 (松耦合)
+
+			$ref 引用dom元素/$children 父抓子   使用场景: 通用组件（紧耦合)
+
+		兄弟->兄弟
+			兄弟A->自定义事件->中间人(父)->props->兄弟B
+
+		爷->孙
+
+			A->...-> C
+			A作为祖先传递，C作为后代接受
+			<中间层组件 v-bind="$attrs" v-on="$listeners"></..>
+			$attrs 如果中间层组件没有接受props,给c的是所有props
+			$listeners 如果中间层组件没有触发,给c的是所有自定义事件
+		
+
+	集中式管理
+
+		订阅发布模式（第三方库 pubsub ）
+		
+		公共总线(vue)
+
+		$root(vue)
+			子组件内部直接找到根实例，访问，操作根data数据
+			this.$root == vm
+
+		web存储(cookie,localstroge/session)
+
+		存库: mysql /  mongodb
+		
+		状态管理(observe/get/set)  ->数据网上存->根实例->浏览器(但是不存在,cookie,storage)-> 一个单例实例
+
+	永久: 存库 , 前端文件存储(localstroge,cookie),后端文件存储(writeFile)
+	临时：状态管理,订阅发布模式,公共总线(vue),$root(vue)
+
+	-----------------------------------------------------
+
+	父->子  props		√
+		<子 :自定义属性="父数据"></..>
+		子组件:
+			选项
+			props:['自定义属性']   props:{自定义属性:{type/default/required/...}}
+		展示:	子模板	{{自定义属性}}
+
+		注意: props是只读的
+
+		props命名：
+			props: ['postTitle']
+			<xx post-title="hello!"></xx>
+		单向下行绑定: 父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+			在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变这个对象或数组本身将会影响到父组件的状态
+	子->父  事件(自定义)
+		<子 @自定义事件="父方法"></..>
+		子:		this.$emit('自定义事件',子.数据名)
+		父:		methods-> 父方法(接受数据){处理}
+
+		始终使用 kebab-case 的事件名
+
+	父子之间共享数据和方法
+		<子 ref="自定义子名称"></..>
+
+		父访问子:	this.$refs.自定义子名称.数据名/方法()
+		子访问父:	this.$parent.数据名/方法()
+
+		$refs 只会在组件渲染完成之后生效，并且它们不是响应式的,避免在模板或计算属性中访问 $refs
+
+	公共总线  new Vue()=bus  bus.$emit()/$on()
+		
+		let bus = new Vue();		返回  Vue对象
+
+		bus.$emit('自定义的事件名',数据)
+        bus.$on('自定义的事件名',function(接){处理})
+
+
+函数式组件
+	意义： 无状态(data) ，也没有实例 (没有 this 上下文)。也没有生命周期方法,只是函数，所以渲染开销也低很多
+	调用:
+		<子 :msg1="msg1" :msg2="msg2" title="bmw">
+	定义:
+		<template functional>
+			提供所有 prop 的对象: {{props}}/{{props.msg1/2/title}}
+			对父组件的引用parent: <button @click="parent.show">调用父方法</button>
+
+内容分发
+	组件内部:	<slot name=槽名 | <slot></..>
+	<组件名><template #槽名>内容 | <组件名><template v-slot:槽名>内容
+	父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译
+
+
+ref 
+	对 vue 元素 引用
+
+	<组件 ref="c1"
+
+	this.$refs.c1  引用 组件
+
+
+	<div ref="d1">
+
+	this.$refs.d1  引用 dom
+

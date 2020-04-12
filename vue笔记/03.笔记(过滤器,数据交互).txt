@@ -1,0 +1,107 @@
+------------------------------------------------------------
+过滤器(filter) | 管道： 就是个函数
+
+	场景： 格式数据
+
+	currency / number / date/...   vue1.x
+
+	vue2.x 取消了自带过滤器,  需要用户自行封装
+
+	使用：	{{ 数据名 | 过滤器名(参数1,参数2)}}             |  == 管道符
+			v-xxx="数据名 | 过滤器名(参数1,参数2)"
+			:属性="数据| ... "
+	定义:
+			a) Vue.filter('过滤器名称',函数(要过滤的元数据,参数1,参数n))
+			b) 选项
+				filters:{
+					过滤器名称:函数
+					过滤器名称2:函数(要过滤的元数据,参数)
+				}
+
+--------------------------------------------------------------
+
+数据交互解决方案：
+
+	ajax函数 | $.ajax()
+		XMLHttpRequest | ActiveXObject
+
+	promise
+		
+		promise 封装 XMLHttpRequest
+
+		vue-resource axios 
+			resource 自带jsonp的
+			axios 没有jsonp
+
+	fetch()  返回 是一个promise
+
+	vue-resource   下载安装引入   vue1.x 推荐	支持jsonp
+		使用:	返回的是promise对象
+		this.$http.get('url地址?key=value&key=value').then(succFN,errorFn)
+		this.$http.get('url地址',{配置}).then(succFN,errorFn)
+		this.$http.post('url地址',{数据},{配置}).then(succFN,errorFn)
+		this.$http.jsonp('url地址',{配置}).then(succFN,errorFn)
+
+			配置:
+				params: {key:value}  携带数据  get
+				headers: {}  携带请求头
+				method：'get' get/post/.....   string
+				timeout: number  超时
+				progress：fn   进度
+				credentials: false  是否携带跨源凭证
+				emulateJSON：true post请求是需要携带的请求头
+				jsonp:'回调函数键' 默认是callback
+			响应：
+				body      返回的数据  对象  (JSONP.parse)
+				bodyText  返回的数据  文本格式  toString
+
+	axios	下载安装引入	vue2.x推荐	
+
+		希望可以this.$http 去使用axios，需要 配置: Vue.prototype.$http=axios;
+
+		this.$http|axios({配置}).then(成功回调(res)).catch(失败回调(res))
+		this.$http|axios.get(url,{配置}).then(成功回调(res)).catch(失败回调(res))
+		this.$http|axios.post(url,pollfill).then(成功回调(res)).catch(失败回调(res))
+		...
+		this.$http|axios.api(url,pollfill).then(成功回调(res)).catch(失败回调(res))
+
+
+		post请求:
+			pollfill = new URLSearchParams() -> params.append('a', 111);
+			this.$http|axios.post(url,pollfill).then(成功回调(res)).catch(失败回调(res))
+
+			this.$http|axios({
+				url:'',
+				method:'post',
+				data:pollfill
+			})
+
+		配置:
+			url:'' 地址
+			method: '' 提交姿势
+			params：{} 数据携带在地址栏里面
+			data:{} 非地址栏数据
+		res:
+			data:  数据  string|objct|UrlSearchParams|formData
+
+
+	解决跨域
+
+		前端解决:
+
+
+		后的解决:
+
+			node
+				接口响应时：
+			 	逐条.	res.setHeader('Access-Control-Allow-Origin', req.headers.origin); 允许跨越
+			 	整体.	cors 中间件
+			 		app.use(cors({
+					  "origin": ["http://localhost:8001","http://localhost:5000","http://localhost:8080"],  //允许所有前端域名
+					  "credentials":true,//允许携带凭证
+					  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE", //被允许的提交方式
+					  "allowedHeaders":['Content-Type','Authorization']//被允许的post方式的请求头
+					}));
+
+			php：
+				逐条  header('Access-Control-Allow-Origin:*');

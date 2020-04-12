@@ -1,0 +1,104 @@
+vant:
+	安装: npm i vant -S
+	全局引入所有：
+		import Vant from 'vant';
+		import 'vant/lib/index.css';
+		Vue.use(Vant);
+
+		全局使用: <van-xxx></van-xxx>
+
+	按需引入:
+		npm i babel-plugin-import -S
+
+		// 对于使用 babel7 的用户，可以在 babel.config.js 中配置
+		module.exports = {
+		  plugins: [
+		    ['import', {
+		      libraryName: 'vant',
+		      libraryDirectory: 'es',
+		      style: true
+		    }, 'vant']
+		  ]
+		};
+
+		局部使用:
+			import { Button, Cell } from 'vant';
+			components:{Button,Cell}
+			<Button></Button>
+
+		全局使用
+			import { Button } from 'vant';
+			Vue.use(Button); 
+
+			<van-xxx></van-xxx>
+	布局:
+		24列栅格 | flex
+
+	app: Tabbar 标签栏
+	home: Search 搜索/轮播/Tab 标签页
+	category: Tab 标签页
+	follow: pull-refresh 下拉刷新 / 单元格 cell
+	column: Popup 弹出层
+	detail: NavBar 导航栏/栅格布局
+	ShopCart: NavBar 导航栏/SwipeCell 滑动单元格>Card 卡片->stepper步进器/SubmitBar 提交订单栏/
+	user: flex布局/van-tag标记/Panel 面板/cell-group 单元格组/ icon图标
+	login: NavBar 导航栏/field输入框
+	reg: van-uploader 文件上传
+
+	
+	修改组件默认样式：
+		查看元素，查询相关样式名，style里面二次重写
+
+		scope 影响
+			css解决： .a >>> .b { /* ... */ }   深度选择器
+			Sass解决: .a{ /deep/ .b{} }
+
+	内置样式：
+
+	坑：
+		布局 使用van-row gutter="20" 时页面高度增加
+
+组件式开发： props/event/slot
+
+		input:
+			label	输入框左侧文本	String
+	        placeholder	当前输入的值	String | Number
+	        type	可设置为原生类型, 如 number password	String	text
+	        border	是否显示内边框	Boolean	true
+	        round 是否为圆形按钮 false
+
+	       	组件上使用v-model
+
+				调用: <子 v-model="父数据"
+					  <子 :value="父数据" @on-input="父数据 = $event"
+				子:	{
+				      props: ['value'],  // value 等于 父组件绑定的value,
+				      template:`
+				        <input
+				          :value="value"
+				          @input="$emit('on-input', $event.target.value)" 触发父组件input事件，传当前输入值
+				        >
+				      `
+				    }
+		
+
+		button
+		
+			props
+		      type	类型，可选值为 primary info warning danger	| default
+		      text	按钮文字	String | 按钮
+		      
+		      size	尺寸，可选值为 mini	| block | default
+		      square 是否为方形按钮 false
+		      round 是否为圆形按钮 false
+
+		      icon	图片链接，	String | ''
+		
+		
+history模式的vue路由，强刷无法访问的问题
+
+
+声明式调用: 封装->引入->注册->调用
+api的方式调用
+
+函数式调用  | 传参是调用

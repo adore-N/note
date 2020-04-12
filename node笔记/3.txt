@@ -1,0 +1,185 @@
+﻿express
+
+	http://www.expressjs.com.cn/
+	干嘛的：nodejs库，不用基础做起，工作简单化
+	类似：koa
+
+	express特点：
+		二次封装，非侵入式，增强形
+
+	express搭建服务
+		express=require('express')
+		server=express()   ~~ http.createServer()
+		server.listen(端口,地址,回调)    localhost ~~ 127.0.0.1 
+	静态页面托管
+		server.use(express.static('./wwww'));
+
+	接口响应:
+		各种请求姿势: get/post/put/delete/....
+			server.请求姿势API(地址,处理函数)
+
+			server.get(url,(req,res,next)=>{})
+			server.post(url,(req,res,next)=>{})
+			.....
+			
+			jsonp请求 == get请求 
+				server.get('/jsonp接口',(req,res,next)=>res.jsonp(数据)
+				设置回调函数的key: server.set('jsonp callback name', '设定回调函数键');  默认callback
+
+		参数接受: req == 请求体
+			req.query 获取地址栏的数据
+		  	req.body 获取非地址栏的数据  依赖中间件
+		  		中间件使用:body-parser  1. npm install body-parser  2. require('body-parser')   3. app.use(中间件())
+		  	req.params 获取动态接口名
+		  	req.method 获取前端提交方式
+		
+	发送给浏览器： res == 响应体
+		任何类型: res.send(any)	~~ res.write + end
+				  res.end(string|buffer)
+		JSON: res.json(json)
+		jsonp: res.jsonp(响应数据) 响应数据-》jsonp请求时的回调函数
+		404	: res.status(404).send({error:1,msg:"Sorry can't find that!"})
+		静态页面: res.sendFile(path.resolve('public/error.html'))//渲染纯 HTML 文件
+		  	
+	后端跳转：	res.redirect(url) ~~ get
+		
+	处理一部分接口 共有业务逻辑：
+
+		server.all('/admin/*',(req,res,next)=>{}) all匹配全路径 处理所有HTTP 需要next 延续后续
+
+	use: 安装中间件 | 路由 
+		server.use(地址,中间件|路由|函数体)
+
+	中间件(middleware)： 不处理自定义业务，只处理请求   到     结束响应  的中间部分
+			body-parser
+			中间件:	npmjs.com   查看使用方式
+			body-parser			获取post数据，限定大小，约定返回数据类xx.urlencode({limit:xx})
+
+	扩展:
+
+		Request 对象 - request 对象表示 HTTP 请求，包含了请求查询字符串，参数，内容，HTTP 头部等属性。常见属性有：
+
+			req.app：当callback为外部文件时，用req.app访问express的实例
+			req.baseUrl：获取路由当前安装的URL路径
+			
+			req.cookies：Cookies
+			req.fresh / req.stale：判断请求是否还「新鲜」
+			req.hostname / req.ip：获取主机名和IP地址
+			req.originalUrl：获取原始请求URL
+			req.path：获取请求路径
+			req.protocol：获取协议类型
+			req.route：获取当前匹配的路由
+			req.subdomains：获取子域名
+			req.accepts()：检查可接受的请求的文档类型
+			req.acceptsCharsets / req.acceptsEncodings / req.acceptsLanguages：返回指定字符集的第一个可接受字符编码
+			req.get()：获取指定的HTTP请求头
+			req.is()：判断请求头Content-Type的MIME类型
+
+		Response 对象 - response 对象表示 HTTP 响应，即在接收到请求时向客户端发送的 HTTP 响应数据。常见属性有：
+
+			res.app：同req.app一样
+			res.append()：追加指定HTTP头
+			res.set()在res.append()后将重置之前设置的头
+			res.cookie(name，value [，option])：设置Cookie
+				opition: domain / expires / httpOnly / maxAge / path / secure / signed
+			res.clearCookie()：清除Cookie
+			res.download()：传送指定路径的文件
+			res.get()：返回指定的HTTP头
+			res.location()：只设置响应的Location HTTP头，不设置状态码或者close response
+			res.render(view,[locals],callback)：渲染一个view，同时向callback传递渲染后的字符串，如果在渲染过程中有错误发生next(err)将会被自动调用。callback将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。
+			res.sendFile(path [，options] [，fn])：传送指定路径的文件 -会自动根据文件extension设定Content-Type
+			res.set()：设置HTTP头，传入object可以一次设置多个头
+			res.status()：设置HTTP状态码
+			res.type()：设置Content-Type的MIME类型
+
+------------------------------------------------------------------------------------------------------------
+
+
+cookie-parser 后端给前端种cookie
+cookie-session 后端给前端种cookie,保留一份在服务上
+cookie-session-token 后端给前端种cookie,保留一份在服务上
+	用户和服务器交互通过什么?   http协议,http是无状态的
+		通过IP(公司环境)
+		通过浏览器保存一些信息，每次访问服务器带过去
+			如何保存信息给浏览器:
+				1. 前端种cookie/localstorage
+				2. 后端种: 前端请求后端，后端给前端种cookie(加了密)的同时，在服务器上生成seesion
+		服务器给浏览器种只种cookie:  cookie-parser
+		服务器给浏览器种cookie的同时在服务器上生成seesion:  cookie-session
+
+	安装+引入
+		种:  req.session.key=value  
+		读： req.session.key
+		删:  delete req.seesion.key | req.session.key = undefined/null
+		
+------------------------------------------------------------------------------------------------------------
+
+multer:  文件上传
+
+	multer->文件名会随机->fs模块改名->path系统模块解析磁盘路径
+
+	文件上传：前端表单->后端接收到文件本身->保存到服务器上->给数据库记录文件一些信息->库返回给nodejs相关信息->nodejs返回给前端
+			前端: <input type=file enctype="multipart/form-data" name="icon"
+			后端：multer 接受 form-data编码数据 
+
+		配置
+		let multer  = require('multer');	引入
+		let objMulter = multer({ dest: './upload' });	实例化  返回 multer对象
+			dest: 指定 保存位置（存到服务器)
+		app.use(objMulter.any());  	any 允许上传任何文件
+
+		req.file	一个
+		req.files	数组
+			fieldname: 表单name名
+			originalname: 上传的文件名
+			encoding： 编码方式
+			mimetype: 文件类型
+			buffer: 文件本身
+			size：尺寸
+			destination: 保存路径
+			filename： 保存后的文件名  不含后缀
+			path：	保存磁盘路径+保存后的文件名 不含后缀
+
+--------------------------------------------------------------
+fs模块:  操作是异步的
+	fs.rename('当前文件','该后的文件名',(err)=>{});
+	fs.renameSync('当前文件','该后的文件名');
+--------------------------------------------------------------
+
+path 系统模块
+
+	磁盘路径:
+
+		编码:
+			windows:  'c:\\user\\admin\\a.jpg'
+			mac: ~/desktop/1901   √
+		UI: 
+			windows: c:\user\admin
+			mac: ~/desktop/1901
+
+		path.parse('c:\\wamp\\xx.png');	磁盘路径(str -> obj)
+			{
+			   root: 'c:\\', 盘符
+			   dir: 'c:\\wamp', 目录
+			   base: 'xx.png',  文件名
+			   ext: '.png', 扩展名
+			   name: 'xx' 	文件，不含扩展名
+			}
+		path.join('磁盘路径1','磁盘路径2')
+			__dirname 魔术变量  返回当前文件所在的磁盘路径
+
+
+		path.dirname == __dirname   当前文件位置
+
+		path.resolve('磁盘路径1',2,3,4'磁盘路径n') 合并磁盘片段,右到左找根，左到右拼接，没有找到根，以当前文件路径为根
+
+
+--------------------------------------------------------------
+
+
+
+
+
+
+
+

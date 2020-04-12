@@ -1,0 +1,13 @@
+<!--pages/splash/splash.wxml-->
+<view class="container">
+  <swiper class="splash" indicator-dots>
+    <swiper-item
+      wx:for="{{movies}}"
+      wx:key="{{index}}"
+    >
+      <image src="{{item.image}}" class="slide-image" mode="aspectFill"/>
+      <button wx:if="{{index===movies.length-1}}" class="start" bindtap="clickHandler">立即体验</button>
+    </swiper-item>
+  </swiper>
+</view>
+

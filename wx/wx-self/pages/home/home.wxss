@@ -1,0 +1,49 @@
+/* pages/home/home.wxss */
+.search{
+  background: #07c160;
+  padding: 0  10px 10px 10px;
+}
+.search_input{
+  background: #fff;
+  border-radius: 5px;
+  font-size: 12px;
+  text-align: center;
+}
+.content_top{
+  display: flex;
+  justify-content: space-between;
+  height: 100rpx;
+  align-items: center;
+}
+.content_title{
+  font: 700 34rpx/100rpx '';
+}
+.content_a{
+  font: 30rpx/100rpx '';
+  color: #07c160;
+  padding-right: 20rpx;
+}
+
+.page-section-spacing{
+  margin-left: 20rpx;
+}
+.scroll-view_H{
+  display: flex;
+  height: 300rpx;
+  justify-content: space-between;
+}
+.scroll-view-item_H{
+  height: 300rpx;
+  margin-right: 20rpx;
+}
+
+.movie_img{
+  width: 170rpx;
+  height: 250rpx;
+  display: block;
+}
+.movie_name{
+  display: block;
+  font: 28rpx/50rpx '';
+  text-align: center;
+}

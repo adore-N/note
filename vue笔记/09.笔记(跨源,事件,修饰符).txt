@@ -1,0 +1,89 @@
+跨源凭证
+	
+	ajax跨源请求数据，默认不提供凭据(cookie,http认证，客户端SSL证明)
+
+	使用携带跨源凭据|反向跨域
+
+		前端: 携带
+			a)	逐条允许 axios({})
+				withCredentials: true,//携带跨源凭证
+			b) axios.defaults.withCredentials=true 统一携带
+
+		后端：允许携带
+			a) 逐条允许
+				res.setHeader('Access-Control-Allow-Credentials', true);
+			b) 中间件统一配置(cors)
+
+-----------------------------------------------------------------------------
+
+1. 找模板 html+css+js
+2. node接口 改装
+
+-----------------------------------------------------------------------------
+
+事件：
+	绑定行间事件:		<xx v-on:事件名="方法名($event,参数)"
+					<xx @事件名="方法名($event,参数)"
+	原理:
+		<div onclick="事件名()"   行间
+
+		obj.addEventListener('type',fn,false) 绑定
+		obj.attchEvent('type',fn) 绑定
+		obj.onclick=fn2  事件句柄
+
+		vue事件是事件绑定
+
+	绑定行间事件:		<xx v-on:事件名="方法名($event,参数)"
+					<xx @事件名="方法名($event,参数)"
+	绑定自定义事件:
+
+		绑定：vm|组件.$on( '自定义事件名'|['自定义事件名1','自定义事件名2'], 回调(参数) )
+			  <自定义组件  @|v-on:自定义事件
+		销毁：vm.$off( '自定义事件名'|['自定义事件名1','自定义事件名2'])
+		触发: vm.$emit(自定义事件名,参数)
+
+		自定义事件名：	使用 kebab-case 的事件名
+
+		场景： 在一个组件实例上手动侦听事件时
+
+		特点:  只有绑定方才可以触发
+			   自定义的组件 触发自定义的事件需要native修饰符
+			   自定义组件 可以使用v-on或@自定义事件
+
+	事件对象:
+		事件对象可以不传递，需要传递的场景:传参数同时使用事件对象时
+		show($event,参数)
+
+	冒泡：默认冒泡
+		$event   ev|event.cacelBubble=true ev.stopPropagation()
+		@click.stop 修饰符
+	默认行为:
+		event|ev.preventDefault();   @事件.prevent
+
+修饰符：
+	事件|自定义事件修饰符: @click.stop.prevent
+		capture: 使用事件捕获模式
+		self:	点到时才触发，不是从内部元素触发的
+		once：  只会触发一次
+		passive： onScroll事件 结束时触发一次，不会频繁触发，移动端使用
+		native  作用与自定义组件
+
+	按键修饰符:	@keyup.left/13
+		系统键	.ctrl
+				.alt
+				.shift
+				.meta
+				exact 严格默认   @键盘事件.修饰符1.修饰符2.exact    只有1+2才可触发
+
+	鼠标按钮修饰符：
+		.left
+		.right
+		.middle
+
+	表单修饰符: 
+		v-model.lazy   :  	确认时才修改model数据
+		v-model.number :	提取数子
+		v-model.trim :	 删除前后空格
+
+-----------------------------------------------------------------------------
+

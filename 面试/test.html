@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--    <canvas id="myCanvas" width="200" height="300"></canvas>-->
+
+<!--    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">-->
+<!--        <polygon points="100,10 40,180 190,60 10,60 160,180"-->
+<!--                 style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />-->
+<!--    </svg>-->
+<input type="button" value="抽奖" id="btn" >
+</body>
+<script type="text/javascript">
+    // var c=document.getElementById("myCanvas");
+    // var cxt=c.getContext("2d");
+    // cxt.fillStyle="#FF0000";
+    // cxt.fillRect(0,0,150,75);
+
+
+    // function* f() {
+    //     yield 'hello';
+    //     yield setTimeout(()=>console.log(1),3000);
+    //     yield '1111';
+    //     return 'cccc'
+    // }
+    //
+    // var a = f();
+    //
+    // console.log(a)
+    //
+    // console.log(a.next())
+    //
+    // a.next()
+    // console.log(a.next())
+
+    // function draw(count) {      //抽奖模拟
+    //     setTimeout(function(count){
+    //         console.log(`还剩余${count}次机会！`);
+    //     }, 1000);
+    // }
+    //
+    // function generatorDraw(count) {        // 生成generator函数
+    //     while (count > 0) {
+    //         count --;
+    //         yield draw(count);
+    //     }
+    // }
+    //
+    // let beginDraw = generatorDraw(3);  // 这个3一般是从服务端获取   开始调用；
+    //
+    // // const btn = document.createElement('button');
+    // // btn.innerText = '抽奖';
+    //
+    // var btn = document.getElementById('btn');
+    // btn.addEventListener('click', function(){
+    //     console.log(1);
+    //     beginDraw.next();
+    // });
+    // document.body.addpendChild(btn);
+
+    var a = 1;
+    function b() {
+        a=10;
+        return;
+        function a() {
+
+        }
+    }
+    b();
+    console.log(a)
+
+
+    for (var i = 1;i<3;i++){
+        setTimeout(function () {
+            console.log(i)
+        },0)
+    }
+
+    var foo = "hello";
+    (function () {
+        var bar = 'world';
+        alert(foo+bar+"111111")
+    })()
+    alert(foo+bar)
+
+</script>
+</html>

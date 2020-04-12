@@ -1,0 +1,140 @@
+第三方组件/插件库 
+	pc:
+	   element-ui  饿了么  管理端
+	   iview  个人
+
+	touch:
+		mint-ui   饿了么
+		vant   有赞   电商√
+		vue-material
+		muse-ui
+		VUX
+		cube-ui
+		vonic
+		Vue-Carbon 
+		YDUI
+
+	通用：
+		bootstrap4/3
+		ameizi
+
+	业务：
+		
+		用户端:
+
+			设计师提供 设计稿   -》 生成ui库
+
+		管理端:
+			pc  推荐ui库
+	
+	elementUI:
+		官网:http://element.eleme.io
+
+		安装+全局引入
+
+		安装:	npm i element-ui -S
+
+		全局引入:
+			import ElementUI from 'element-ui';
+			import 'element-ui/lib/theme-chalk/index.css';
+
+			Vue.use(ElementUI);
+
+		按需引入:
+
+			npm install babel-plugin-component -D
+
+			修改babel配置 baberc|babel.config.js
+
+			添加:
+				"plugins": [
+				    [
+				      "component",
+				      {
+				        "libraryName": "element-ui",
+				        "styleLibraryName": "theme-chalk"
+				      }
+				    ]
+				  ]
+
+			a) 全局使用:   所有应用内部组件直接使用 <el-button></..>
+				import { Button } from 'element-ui';
+				Vue.component(Button.name, Button); | Vue.use(Button)
+
+			b) 组件内部使用： 只有当前组件可使用
+				import { Select, Option } from 'element-ui';
+				components:{
+				    'bulala':Select,
+				    [Option.name]:Option,
+				  },
+	
+	mintUI:  
+		官网: https://mint-ui.github.io
+
+		安装:	npm i mint-ui -S
+		
+		全局引入:
+			
+			import Mint from 'mint-ui';
+			import 'mint-ui/lib/style.css'
+			Vue.use(Mint);
+
+		按需引入全局使用: npm install babel-plugin-component -D
+
+			import { Button } from 'mint-ui';
+			Vue.component(Button.name, Button);
+
+			babel.config.js配置: 添加
+
+			"plugins": [
+		      [
+		        "component", 
+		        {
+		          "libraryName": "mint-ui",
+		          "style": true
+		        }
+		    ]
+		    
+		组件内部引入： 只有当前组件可使用
+				import { Button } from 'mint-ui';
+				components:{
+				    //'bulala':Button,
+				    [Button.name]:Button,
+				  },
+	
+	vant:
+		安装: npm i vant -S
+		全局引入所有：
+			import Vant from 'vant';
+			import 'vant/lib/index.css';
+
+			Vue.use(Vant);
+
+			全局使用: <van-xxx></van-xxx>
+
+		按需引入:
+			npm i babel-plugin-import -S
+
+			// 对于使用 babel7 的用户，可以在 babel.config.js 中配置
+
+			module.exports = {
+			  plugins: [
+			    ['import', {
+			      libraryName: 'vant',
+			      libraryDirectory: 'es',
+			      style: true
+			    }, 'vant']
+			  ]
+			};
+
+			局部使用:
+				import { Button, Cell } from 'vant';
+				components:{Button,Cell}
+				<Button></Button>
+
+			全局使用
+				import { Button } from 'vant';
+				Vue.use(Button); 
+
+				<van-xxx></van-xxx>
+

@@ -1,0 +1,125 @@
+组件通讯:
+
+	props 禁止修改
+
+		父到子	props 传递 <Child 属性=数据/>
+
+		子到父(反向数据流)  props 传递 <Child 属性=父方法/>
+				{this.props.属性(子数据)}
+
+		中间人(状态提升)
+
+		所有 React 组件都必须是纯函数，并禁止修改其自身 props
+
+	ref: 抓取渲染后的元素
+
+		React.createRef()
+			一个 ref 实例在构造函数中创建，并赋值给 this.firstRef
+				this.firstRef = React.createRef()
+			在 render() 方法内部，将构造函数中创建的 ref 传递给 jsx
+				<jsx ref={this.firstRef} />
+
+		回调引用 (Callback refs)
+
+			<jsx ref={el => this.实例属性 = el}
+			当组件安装时，将 DOM el元素传递给 ref 的回调
+			当组件卸载时，则会传递 null。
+			ref 回调会在 componentDidMount 和 componentDidUpdate 生命周期之前调用
+			this.实例属性 后期用作访问jsx元素
+
+		String refs
+
+			<jsx ref="r1"
+			组件: this.refs.r1
+
+		转发 refs (Forwarding refs)
+
+			将 ref 通过组件传递给其子节点的技术。它对于可复用组件库和高阶组件（HOC）等情况非常有用
+
+			this.inputRef = React.createRef()
+
+			<子组件 ref={this.inputRef} />
+
+			子组件:
+				const 子组件 = React.forwardRef((props, ref) => (
+				  <input type="text"  ref={ref}/>)
+				);
+
+
+		https://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&mid=2651556458&idx=1&sn=777fa954624174f179bc5b1effa05ec7&chksm=80255dabb752d4bd250fe267f5c8000020588c29eb1d48195fdb17d9ef214c2ee7344ed751df&mpshare=1&scene=1&srcid=0530RdLJjRNwqhUV20CaQKE4&pass_ticket=R3Tg7aoTqhlXapPxG3nxKPkPWBqps0NbGQpmuF5eonS2JJn%2BA5GbdX2JcadySYoS#rd
+
+	context组件上下文  越级传递
+
+		Context 旨在共享一个组件树内可被视为 “全局” 的数据
+		https://www.jianshu.com/p/b4983246a3dc
+
+		顶层组件:
+
+		  //类属性 定义子上下文类型
+		  static childContextTypes={
+		    msg: propTypes.string,
+		    setMsg : propTypes.func
+		  };
+
+		  getChildContext(){//返回上下文对象
+		    return {
+		      msg:this.state.msg,
+		      setMsg:this.setMsg
+		    }
+		  }
+
+		下层组件：
+		  //类属性 接受上下文
+		  static contextTypes = {
+		    msg: propTypes.string,
+		    setMsg: propTypes.func
+		  };
+
+		使用:  this.context.msg | this.context.setMsg(数据)
+
+	订阅发布
+		b) pub/sub模式 消息通知(观察者模式)  npm install pubsub-js -D
+		订阅:	token=pubsub.subscribe('消息名',回调函数('消息名',数据))
+		发布：  pubsub.publish('消息名',数据)
+		清除指定订阅：pubsub.unsubscribe(token|'消息名'|回调函数名);
+		清除所有：pubsub.unsubscribeAll()
+
+		注意：订阅方不存在了，相关的订阅注意清除
+
+	路由
+
+	状态管理
+
+	web存储(localstrage...cookie)
+
+
+---------------------------------------------------------------------------------------------------
+
+函数式组件: 组件是个函数的定义
+
+	有状态:
+		hooks
+
+	无状态
+		没有state
+
+
+	class类组件 -> 无状态组件(函数) -> hooks (函数&&有状态)
+
+
+无状态(没有state)组件 | UI组件 | 哑组件
+
+		const 组件名=(props)=>(jsx)
+		const 组件名=props=>jsx
+		const 组件名=(props)=>{
+			let xx=props.xx
+			return jsx
+		}
+
+		无状态组件特点：
+			不能访问this对象(this.ref,this.state  ... )
+			只能访问props
+			无需实例化，渲染性能高
+			this.方法/钩子（生命周期)  也不需要
+
+---------------------------------------------------------------------------------------------------

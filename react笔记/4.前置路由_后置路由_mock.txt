@@ -1,0 +1,216 @@
+react路由 4.x
+
+	资料：
+		API: https://reacttraining.com/react-router/web/guides/quick-start
+		CN： http://blog.csdn.net/sinat_17775997/article/details/77411324
+		redux：https://github.com/reacttraining/react-router/tree/master/packages/react-router-redux
+	区别：
+		V4
+			嵌套式路由（路由配置在组件内部），动态路由，包容性（多路由渲染）
+			舍去了路由钩子
+		V3
+			分离式（统一位置配置），静态路由，排他性（只有一个路由被渲染）
+	理念：
+		遵循Just Component的 API 设计理念 万物皆组件，路由规则位于布局和 UI 本身之间
+
+	安装引入 react-router-dom
+
+	React Router被拆分成三个包：react-router,react-router-dom和react-router-native。react-router提供核心的路由组件与函数。其余两个则提供运行环境（即浏览器与react-native）所需的特定组件
+
+	BrowserRouter 使用 HTML5 提供的 history API 来保持 UI 和 URL 的同步
+	HashRouter 使用 URL 的 hash (例如：window.location.hash) 来保持 UI 和URL 的同步
+
+	依赖安装引入 react-router-dom
+
+	提供哪些组件:
+
+		BrowserRouter  约定模式 为 history
+		HashRouter   约定模式 为 hash
+		NavLink     声明式跳转 还可以约定 路由激活状态 | 导航高亮    ~~ push
+		Link 		声明式跳转    ~~ push
+		Redirect    重定向    ~~ replace
+		Route       匹配|展示
+		Switch      排他性匹配
+		Prompt      后置守卫
+
+	结构：
+		BrowserRouter|HashRouter 路由对象
+			根组件(App)
+				NavLink|Link  导航
+				Route    匹配+展示
+				Redirect 跳转
+				404 <Redirect to="/error"/>
+				默认路由 <Route exact path={match.path} render={fuc}
+
+					其他组件
+
+						NavLink|Link  导航
+						Route    匹配+展示
+						Redirect 跳转
+						404 <Redirect to="/error"/>
+						默认路由 <Route exact path={match.path} render={fuc}
+	Route 属性
+		path（string）: 路由匹配路径。（没有path属性的Route 总是会 匹配）；
+		exact（bool）：
+			为true时，要求全路径匹配(/home)。V4 的路由默认为“包含”的(/和/home都匹配)，这意味着多个 <Route> 可以同时进行匹配和渲染
+
+		component：在地址匹配的时候React的组件才会被渲染，route props也会随着一起被渲染
+		render：这种方式对于内联渲染和包装组件却不引起意料之外的重新挂载特别方便
+	Link：
+		to：string/object：要跳转的路径或地址；
+	NavLink：是<Link> 的一个特定版本
+		to：string/object：要跳转的路径或地址；
+		activeClassName（string）：设置选中样式，默认值为 active；
+		activeStyle（object）：当元素被选中时, 为此元素添加样式；
+	Switch：该组件用来渲染匹配地址的第一个<Route>或者<Redirect>，仅渲染一个路由，排他性路由,默认全匹配(场景：侧边栏和面包屑，引导选项卡等
+	Redirect:
+		<Redirect from="/" to='/home'/> 总是会被重定向
+	404:	<Route component={Error}/> 总是会匹配
+
+	参数数据：{history,location,match}==props
+		传递：
+			to={match.url+'/001'}
+			to={`${match.url}/002?a=1&b=2`}
+			to={{pathname:match.url+'/003',search:'?a=11&b=12',hash:'#a1'}}
+			<Route path={match.path+'/:aid'} component={Detail}
+				注意：
+					url - (浏览器 URL 中的实际路径) URL 匹配的部分。 用于构建嵌套的 <Link>
+					path - (路由编写的路径) 用于匹配路径模式。用于构建嵌套的 <Route>
+		接收：
+			接参数:{match.params.aid}
+			接数据:{location.search}
+			接地址:{location.pathname}
+		注意：
+			无法从v4 中获取 URL 的查询字符串了。因为没有关于如何处理复杂查询字符串的标准。所以，作者让开发者去选择如何处理查询字符串。
+			推荐query-string库
+	编程式跳转：
+		history.push('/user?a=1&b=2')
+		history.push({pathname:'/user',search:'?a=11&b=22'})
+		history.replace({pathname:'/user',search:'?a=111&b=222'})
+		history.go(-1)
+
+
+	注意:
+		目标组件需要抓取路由上下文时，当前组件需要被路由跳转所指定
+
+		<Route component={目标组件}
+		<Redirect component={目标组件}
+		//介入方式
+		<Route render={(props)=>{
+			...//可以写业务逻辑
+			return <目标组件 {...props} />
+		}}
+
+	授权路由：自定义路由
+		前置守卫
+			<AuthRoute path="/user" component={User}/>
+			AuthRoute==授权路由==react组件==自定义路由
+			条件：返回一个Route 组件
+				  Route的render函数内部判断加载目标||Redirect组件
+		数据预载：
+			AuthRoute 组件构造器存状态和预载数据
+			DidMount钩子里异步请求，获取状态和数据
+				fetch(url).then(result=>this.setState({}))
+			render钩子返回 Route
+				 <Route {...rest} render={props => Xxx?<Component data={预载数据}
+				 if(!this.state.hasAuthed) return null;初始渲染时，未发送认证请求，因此不渲染
+
+
+	Prompt:后置守卫,离开后守卫
+		import { Prompt } from 'react-router-dom'
+		<Prompt
+          when={this.state.isBlocking}
+          message={location=>{return `未保存，是否去向${location.pathname}`}}
+        />
+
+        location: 目标路由向下文的location
+        message: 后面可以跟简单的提示语，也可以跟函数，函数是有默认参数的。
+        when: when的属性值为true时防止跳转；
+
+    子路由使用父路由的展示区(插槽)
+
+    	<Route path="/goods" render={()=>
+			<Switch>
+				<Route path="/goods/:id" component={Detail}
+				<Route path="/goods" component={Goods}
+			</Switch>
+    	} />
+
+
+--------------------------------------------------------------------------------
+
+mock 数据 |  模拟数据 | 搭建web API
+
+json-server + mock.js
+
+		前后端分离 api 规范
+
+		1. 前期定义数据结构（后期不能改)
+		2. 前期确定传参方式 (后期不能改)
+
+		json-server
+			官网:	https://www.npmjs.com/package/json-server
+			中文: 	https://www.cnblogs.com/fly_dragon/p/9150732.html
+			json-server把db.json 根节点的每一个key，当作了一个接口名。我们可以根据这个规则来编写测试数据
+
+			建立的rest api服务默认可以在局域网中通过WIFI访问接口。
+			可以作为诸如 Express 之类框架的中间件使用
+
+			实体=数组=列表  可以查询分页...
+			routes.json 路由
+			& 左右都为必传参数
+
+			自定义路由，输出，校验
+
+		mock.js
+			独立的 mock server 存在
+			作为一个数据构造器来使用
+			不能跨域使用
+			与某些框架中的路由处理逻辑冲突
+			无法定义复杂的数据结构
+			无法自定义较为复杂的路由
+			数量为1时，检索总是会返回第一条
+			mockjs的缺点交给json-server
+
+		简洁:  会用，会改
+
+			1. mock目录拷贝到项目下
+			2. 修改package.json
+				+ scripts 的 key
+				"mock": "nodemon ./mock/server.js"
+			3. yarn add json-server --save   安装依赖
+			4. yarn add mockjs --save        安装依赖
+			4.5 react添加代理项 去访问mock服务器
+				  app.use(
+				    proxy("/mock", {
+				      target: 'http://localhost:3333',
+				      changeOrigin: true
+				    })
+				  );
+
+			5. yarn mock           启动mock服务器
+			6. yarn start          启动react开发服务器
+
+				组件内部发送请求:  /mock/接口名
+
+
+			配置自己的数据接口:
+
+				./mock/db.js
+
+				'banner|2': [
+			      {
+			        // 属性 id 是一个自增数，起始值为 1，每次增 1
+			        'id|+1': 1,
+			        title: "@ctitle(4,8)",//标题型中文4到8个字
+			        sub_title: "@ctitle(6,12)",
+			        banner: mr.image('750x501', mr.color(), mr.cword(4,10)),//banner不变
+			        time: "@integer(1553425967486,1553475967486)",
+			        detail:{
+			          icon:mr.image('20x20', mr.color(), mr.cword(1,2)),//20X20尺寸
+			          auth:"@cname()",//百家姓
+			          content:"@cparagraph(10,40)"//正文
+			        }
+			      }
+			    ]
+视频看到10分钟

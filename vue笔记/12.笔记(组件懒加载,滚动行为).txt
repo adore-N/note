@@ -1,0 +1,100 @@
+7组件懒加载 | 异步路由 | 分片(块)打包 | code splitting
+
+	原理: 利用webpack对代码进行分割是懒加载的前提，懒加载就是异步调用组件，需要时候才下载,
+		  
+		  webpack分片 会识别 两种语法:  
+		  	
+		  	import(组件)  返回promise
+		  	require(组件)
+
+		  告诉webpack把组件打包成块，告诉路由激活时触发一个函数，函数再加载组件,加载时会请求组件的块代码，插入到html当中
+
+	import() 语法
+
+
+		import(目标组件地址).then(res=>res是加载后的组件)
+
+	require语法
+		require([组件1,组件2])  加载多个
+		require([组件1,组件2],response)  response=加载结果 看需要传入
+
+	
+	webpack配置:
+
+		output:
+
+			chunkFilename:'chunks/[name]-[chunkhash:8].js',//build之后的代码更便于识别
+
+	    vue-cli3 
+
+	    	node_modeules/@vue/lib/config/prod.js
+
+
+
+	路由配置:
+
+		const home =()=>import(/* webpackChunkName: "groupname-home" */ "../components/home.vue");
+
+		webpackChunkName: "groupname-home" 给块命名 | 同名会拆到一个块，可减少请求次数
+
+		注意在cli2:
+
+			import() 导入 需要安装 babel-plugin-syntax-dynamic-import
+
+		
+			配置 babelrc  "plugins": ["syntax-dynamic-import"]
+
+
+	组件内部注册异步组件:
+		const navbar =()=>import(/* webpackChunkName: "group-home" */ "./components/navbar.vue");
+		navbar 不异步的话，代码会打到app.js,而不是home块或者navbar块
+
+------------------------------------------------------
+
+滚动行为
+	VueRouter({scrollBehavior})
+	scrollBehavior(to,from,savedPosition){
+		return { x: 0, y: 0 }//对于所有路由导航，简单地让页面滚动到顶部
+	}
+
+	滚动到之前位置:
+		模块变量: let top=0 | 存到 cookie | store | vue根
+		destroyed:	top=document.documentElement.scrollTop;  
+		mounted:	document.documentElement.scrollTop=top;	
+
+------------------------------------------------------
+
+mapMutations | mapActions  接管了methods
+	
+mapState | mapGetters 接管了 computed
+
+
+------------------------------------------------------
+
+vue + echarts
+  npm i echarts --save
+  import echarts from 'echarts'
+  使用echartsAPI
+  	实例化: instance=echarts.init(dom元素);
+  	渲染: instance.setOption(数据)
+  	API: instance.showLoading()/hideLoading()/ on('事件名',方法)
+
+------------------------------------------------------
+
+百度地图
+  vue + 百度地图
+  http://lbsyun.baidu.com/
+
+    1 注册百度账号
+    2 申请成为百度开发者  注册   浏览器端
+    3 获取服务密钥（ak） http://lbsyun.baidu.com/apiconsole/key?application=key
+    4 使用相关服务功能
+
+    vue的index.html cdn加入 库
+      <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0933b0c4da0af91731e5dd9ffbc58511">
+    
+    组件里面使用：
+      注意：地图的id要有，元素要有高
+
+      API:http://lbsyun.baidu.com/cms/jsapi/reference/jsapi_reference.html
+      demo：http://lbsyun.baidu.com/jsdemo.htm#a1_2

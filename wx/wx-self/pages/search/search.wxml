@@ -1,0 +1,22 @@
+<!--pages/search/search.wxml-->
+<view class="search">
+  <input class="search_input" type="text" placeholder="搜索"  bindconfirm="toSearch"></input>
+</view>
+
+<view class="search_list">
+
+  <view class="search_box">
+    <navigator 
+      wx:for="{{searchData}}"
+      wx:key='index'
+      url="{{'../detail/detail?id='+item.id+'&api=music'}}"
+    >
+      <product item="{{item}}"></product>
+    
+    </navigator>
+
+
+  </view>
+
+
+</view>

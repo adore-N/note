@@ -1,0 +1,232 @@
+名词解释：
+
+	服务器系统: windows linux unix  centos
+
+	curl:  centos系统下自带命令行工具  ~~ git
+	yum:   centos系统下自带命令行工具  ~~ npm
+
+	NVM：   安装好node10+  自带npm(npx,nvm),  切换包的版本
+	serve：  是一个本地电脑上搭建 生产环境的web服务器 命令行工具
+
+
+部署阿里云（centos+nodejs+mongodb)
+
+	vue 打包->dist    copy -> node项目>public   -> 服务器上
+	前端工程|后端工程|库文件 -》 云服务上面
+
+	服务器类型:  部署阿里云（centos + nodejs + mongodb + vue)
+
+
+简洁:
+	----------------------------------
+	一、买服务器(机器)
+		1. 学生特惠24：
+			https://promotion.aliyun.com/ntms/act/campus2018.html?spm=5176.230344.1224685.2.3b84443e9LLgUu
+			云服务器ECS
+		2.  支付宝-》注册-》实名认证填写身份证的信息-》ecs
+		3.  重设密码（登录密码）:  
+				ecs服务器->实例->更多->重置实例密码
+				用户名默认: root
+				重启实例
+	二、使用finalShell连接服务器
+		1. 安装 finalShell
+		2. 启动 finalShell
+			新建会话：
+				主机：公网IP
+				端口 ： 22
+				用户身份验证:
+					用户名：root
+					密码: 登录密码
+
+	三、給服务器安装环境（node + vue访问json）
+		
+		1、安装node 
+			curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
+			yum install -y nodejs
+			检测: node -v  
+
+	四、上传代码(前端|后端)
+		1. vue 打包:			npm run build  -> dist
+		2. 创建空的node环境:		express -s .
+		3. dist里面的文件  copy -> node的public下面
+		4. 把node项目 -》 拖拽到 finalSheel>/usr/local/创建目录/
+
+		5. http://公网ip:3000
+			问题：服务器代码数据库都已上传，但是访问不了
+			分析: 很可能是3000端口不能被使用，
+			解决: 找到 管理->安全组-》配置规则-》添加规则-》端口范围（3000/3000）,授权对象(0.0.0.0/0)
+
+			
+			问题:	finalSheel关闭后：服务停止 浏览器就不可以访问了
+
+			解决: 给服务器安装 管理工具
+					npm i pm2 -g
+					cd /usr/local/你的目录
+					pm2 start ./bin/www 
+			浏览器访问项目即可
+		 
+	----------------------------------
+
+
+高级：
+
+	----------------------------------
+	一、买服务器(机器)
+		1. 成人特惠： https://promotion.aliyun.com/ntms/act/qwbk.html?spm=5176.8112568.420890.1.67ae9ed5edEDHe
+		   云服务器ECS
+		2.  支付宝-》注册-》实名认证填写身份证的信息-》ecs
+		3. 手动停止服务器 ----> 初始化磁盘 ---> 重设密码（登录密码 root/Guliguli123）
+	二、使用finalShell连接服务器
+		1. 安装 finalShell
+		2. 启动 finalShell
+			新建会话：  SSH连接
+				主机：公网IP
+				端口 ： 22
+				用户身份验证:
+					用户名：root
+					密码: 登录密码
+	三、給服务器安装环境（node + mongodb）
+		1、安装node 
+			curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -
+			yum install -y nodejs
+			检测: node -v  
+
+				使用NVM安装多版本(可选)
+				2.1    yum install git
+				2.2    git clone https://github.com/cnpm/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`
+				2.3    echo ". ~/.nvm/nvm.sh" >> /etc/profile
+				2.4  source /etc/profile
+				2.5  cd /
+				2.6  nvm list-remote
+				nvm install vx.x.x
+				nvm use vx.x.x
+
+				安装解压文件模块
+					yum install unzip
+				安装文件传输工具(可选)
+					yum -y install lrzsz 
+
+	四、上传代码(前端|后端)
+		1. vue 打包: npm run build
+		2. 本地测试生成环境
+			npm i serve -g
+			serve -s dist -l 8080
+
+			问题 ： 生成环境下 不能访问 3000
+			原因  : 生成环境下代理是无效的
+			解决: 服务器端 安装ngnix  来完成代理
+		3. 拷贝 dist ->  node的public下面   + 本地测试(启动node服务)
+		4. 整合好的node 拖到 finalShell 下面
+		5. npm i + npm start
+
+		6. 问题:  没有库
+
+	六、給服务器安装mongodb服务
+
+			安装mongodb
+			yum install mongodb-server mongodb -y
+			 
+			创建数据库目录和日志目录
+			mkdir -p /data/mongodb
+			mkdir -p /data/logs/mongodb
+			 
+			启动数据库
+			mongod --fork --dbpath /data/mongodb --logpath /data/logs/mongodb/nodeapp.log
+			 
+			创建远程数据库（与本地操作一样）可选
+				use 库、db.集合.save、
+	七、本地数据库copy到远程库
+		
+		本地出库:	
+			需要先导出本地的数据 -> json
+
+			mongoexport -h 127.0.0.1 -d 库名 -c 集合名 -o 输出路径/xx.json
+
+		上传: json -> finalShell上传到远端磁盘 -》 远端
+
+		远端入库:  
+			json -> 导入数据库
+			mongoimport -d 远端库 -c 集合 -file 服务器json路径/xx.json
+	----------------------------------
+
+	问题0:  关闭finalShell ,服务断了
+
+			安装pm2, nodejs服务器管理器 (npm i pm2 -g)
+			启动服务器:pm2 start 启动文件.js 
+			浏览器访问项目即可
+			如果想停掉服务器: pm2 stop all
+		 
+			Pm2扩展：https://blog.csdn.net/chengxuyuanyonghu/article/details/74910875
+
+	问题1：如果关闭xshell之后，再次打开发现之前安装的模块都无效了，
+		分析： 安装了多版本node环境导致
+		解决：
+			a) 输入nvm ls 查看可用的node的版本，-->手动指向nvm use当前使用的node版本
+			b) 使用nvm install vx.x.x，之后使用nvm alias default vx.x.x可以不用每次进入服务器都要nvm use了***
+
+	问题2：可以有多个app？使用一个实例？
+		分析：app指向不同端口就好了
+		解决：app指向不同端口，安全组里添加多个端口，pm2 进入到对应服务器位置，逐个启动，如果端口重复，先启用的应用会占用端口
+
+	问题3：本地代码对应有哪些变动
+		mongodb://localhost:27017 可不用动，远端访问的也是localhost
+		io(‘http://localhost:3000’)->io(‘http://服务器ip:3000’)
+
+		    	  
+	问题4： 不想要端口可以？，
+		分析：使用http协议默认的80端口
+		解决： 修改本地的端口号指向80,安全组添加80
+
+
+	问题5： 不使用ip，使用网址
+		分析： 是一个IP和域名关联的过程
+
+		解决： 必须得用于一个已经备过案的域名(未备案不可使用一级域名和端口省略)
+			域名购买:
+				https://promotion.aliyun.com/ntms/act/domainbrand.html?spm=5176.8112568.483655.2.67ae9ed5edEDHe
+			备案: 特惠专区-》域名与网站->域名新手多重礼（实名，备案15工作日）
+			域名解析:
+				域名-》解析-》添加记录->记录值(ip)
+					www：解析后的域名为www.aliyun.com。
+					@：直接解析主域名 aliyun.com。
+					二级域名：如：abc.aliyun.com，填写abc。
+		问题6： 不备案有什么影响
+			小程序上线时不能部署
+			没有域名不便于宣传
+			无法使用https安全协议访问
+
+		问题7： 启用https访问
+			SSL证书->获取https免费证书->配置(node服务器使用https模块响应)
+			
+			获取https免费证书：
+				https://yq.aliyun.com/articles/221596?spm=5176.10695662.1996646101.searchclickresult.1dec5d98Oy3WNE
+
+			下载： 证书通过后->下载 other类型的 xx.key/xx.pem 下载到-> bin/www
+
+			配置:  
+
+				node配置： bin/www
+
+				var https = require('https');
+				const fs = require('fs');
+				const port=443;		
+				app.set('port', port);
+
+				const options = {
+				  key: fs.readFileSync('./bin/1826016_uncle9.top.key'),//指向key
+				  cert: fs.readFileSync('./bin/1826016_uncle9.top.pem'),
+				}; 
+				var server = https.createServer(options,app);//查看nodejs.cn>https模块
+
+				安全组规则：添加443 
+					
+
+		问题8: 如何添加二级域名 xx.uncle9.top
+			域名->管理->域名解析
+		问题9： 如何在浏览器访问uncle9.top是自动跳转到https
+			https://blog.csdn.net/chwshuang/article/details/52443274
+
+
+
+	阿里云服务器 ECS 部署lamp：centos+apache+mysql+php安装配置方法 （centos7）
+		https://www.cnblogs.com/mike-mei/p/7554591.html

@@ -1,0 +1,95 @@
+
+状态管理 flux(思想)
+
+	实现：	vue(vuex) react(redux)
+
+	状态管理(redux)：可以同一个地方查询状态，改变状态，传播状态
+	何时用：中大项目,组件状态需要共享，在任何地方都可以拿到，组件需要改变全局状态，一个组件需要改变另外一个组件的状态
+	思维：
+			在顶层组件创建store(状态),其他底层组件共享这个store(状态)
+
+	数据流动：
+		component->action->reducer->state->component
+		component: 展示结果(含处理结果代码)
+		action: 转发的动作,异步请求，
+		reducer: 业务处理逻辑,copy+更新 + 返回(return)新state
+		state:	状态收集，更新内部state状态，更新订阅(store.subscribe)state的组件（component）
+
+		component通过store.dispatch发送action 给 reducer
+
+		在组件内部 通过 store.getState() 抓state状态  特点 只抓一次
+				   store.subscribe() 订阅  数据更新，会触发
+				   getState放在subscribe内部
+	操作流程：
+		1. {createStore} from 'redux'
+		2. 生成默认state defaultState={}
+		3.	创建reducer
+			const reducer = (state=defaultState,action)=>{
+				let {type,payload}=action
+				swtich type
+					case XXXXX
+					更新copy后的state  Object.assign(空,老,新)
+				default:
+					return state
+			}
+		4. 创建store对象
+			store = createStore(reducer,state)
+
+		5. store传递给组件
+			<顶层组件名 store={store}/>
+
+		6. 更新，状态获取
+			组件内部:	this.props.store== store
+				this.props.store.dispatch({type:xxx,payload:ooo}) 发送action给reducer
+				this.props.store.subscribe(回调)  订阅 state  更新state时触发
+				this.props.store.getState() 获取状态，执行一次
+
+
+	react-redux
+
+		基于redux思想,专门为react使用redux而生
+
+	思想:  容器组件, UI组件
+
+	index.js: 程序主入口
+		import {Provider} from react-redux
+
+		<Provider store={redux打造的store}>
+			<容器组件/>
+		</Provider>
+
+	目标组件:
+		connect(stateFn1,dispathFn2)(UI组件)
+
+	配合路由4版本是注意：
+		<Provider store={store}>
+			<BrowserRouter>
+				<容器组件/>
+		</Provider>
+
+		export default withRouter(connect(
+		  mapStateToProps,
+		  mapdispatchToProps
+		)(App));
+
+		connect重写了withRouter的shouldComponentUpdate方法，导致其不能够响应location的变化（仅仅响应mapStateToProps里面的变化）
+
+	异步action + 可复用:	dispatch(asyncAction(xx,xx,xx))  dispatch 默认接受对象
+
+	异步action + 可复用:	dispatch(asyncAction(xx,xx,xx))   要接受函数
+		dispatch 要接受函数
+		需要中间件redux-thunk支持 ,dispatch默认支持对象，不接受函数,中间件用来改装dispatch
+
+		let store = createStore(
+		  reducer,
+		  state,
+		  applyMiddleware(thunk)  //applyMiddleware是redux API
+		);
+
+		asyncAction = (url,type,id) => (dispatch,getState)=>{dispatch1次 + return fetch+then+dispath2次+return data}
+			外部dispatch调用返回的函数后，返回promise,因此在组件内部可以做一些结果处理业务
+				action内部需要return fetch
+				fetch内部需要return data 有定时器会出错
+
+		https://blog.csdn.net/yuanyuanispeak/article/details/78842963
+		C:\Users\user\Desktop\react\actions-redux-thunk-promise.js

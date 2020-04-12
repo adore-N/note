@@ -1,0 +1,193 @@
+
+课程介绍
+	
+
+	------------------------三阶段大纲------------------------
+
+	1. nodejs
+		给jquery|vue|react|小程序 搭建后端接口
+	2. vue 基础
+	3. vue 项目 + 高级
+	4. vue 项目 + 扩展
+	5. react 基础
+	6. react 项目  + 高级 + 扩展
+	7. react 项目  + 混合开发(codova,jssdk,公众号,ReactNative)
+	8. 小程序 (原生|mpvue|taro) + 项目
+	9. 模拟面试/项目答辩/面试课
+
+	就业周的安排:
+		1 模拟面试/项目答辩/面试课(就业老师|完善简历)
+			模拟面试(所有老师): 准备纸质简历-》办公室|会议室
+			项目答辩(项目经理): 教室
+				线上项目 2
+				兴趣DEMO
+		2 同上
+		3 面试
+		4 offter
+		5 人找不到了
+
+
+学习方法
+	
+	1. 态度
+
+	2. 记住思想为荣，记住API为耻
+
+		思想：
+			底层原理（是什么）
+			实现过程（怎么用）
+			应用场景（用在哪）
+
+	3. 傻傻跟着老师学（50个要求）
+	4， 掌握技能： 问问题方式  | 查询资料能力 | 掌握思想
+	5. 忌负显正
+
+老师特点：
+	1. 语速快
+	2. 声音小
+	3. 平
+
+
+杨智 （九叔）
+
+
+
+------------------------NODEJS------------------------
+
+	基础
+		介绍
+			干嘛的： 写后台管理程序
+			目标：数据服务，文件服务，web服务
+			类似：	php  .net   java(jsp) ....
+		优势：
+			性能高，方便、入门难度低、大公司都在用（BAT）
+		劣势：
+			服务器提供的相对较少
+			能用的上的学习资料少，对程序员的要求高了
+		环境：nodejs + web服务器 + 数据库
+			nodejs:
+				安装：
+					官网：https://nodejs.org/en/ | http://nodejs.cn/
+					镜像：http://npm.taobao.org/
+					nodejs 环境 	npm 环境
+					测试环境： 命令行(运行->cmd)->node -v
+		版本：
+			Vx(主).x(子).x（修正） 包(目录)->模块(文件)
+			主版本： 变化了，1/3的API发生巨变 , 使用方式变化了
+			子：	API没有删减，使用方式没变化,内部实现发生了变化
+			修正版：什么都没变，处理一下bug
+
+			V6.8.x   稳定
+			V6.9.x 非稳定版
+			Vx.x.x-beta 测试
+			vx.x.x-rc  测试稳定
+			vx.x.x-alpha  测试稳定
+
+		编写：
+			IDE  (有RUN环境,真实服务器)
+
+				Hbuild / webstorm / 
+
+			编辑器
+				atom / vscode / sublime text / 
+
+			node命令行
+
+		运行：
+			1  dos:		win+r->cmd回车->cd 目录-> node 文件名.js | node 文件名
+						webstrom->terminal(ALT+f12)	 | run
+						vscode->终端
+						当前目录->右键->git bash-> node 文件名
+			2  linux/centos(git):  
+						终端->cd 目录-> node 文件名.js | node 文件名
+		node命令行:  
+			dos-> node 回车-> 编写+运行
+			测试API的可用度
+			
+			注意：
+				DOM/BOM 不可用
+				ECMA 可用
+	------------------------------------------------------------------------------
+	web服务构成
+		web服务器: apache , ngnix , tomcat   localhost -> www.abc.com
+		数据库: mysql | sqlserver | mongoDB | orangcle
+			数据库: 数字|字符
+			磁盘（硬盘) 文件本身(图，视频,PDF)   文件服务器
+		后台管理程序:
+			nodejs,java........
+	------------------------------------------------------------------------------
+	前后端交互流程
+		大后端:
+			用户 - > 地址栏(http[s]请求) -> web服务器（收到) - > nodejs处理请求(返回静态、动态)->请求数据库服务(返回结果)->nodejs(接收)->渲染页面->浏览器（接收页面，完成最终渲染)
+		大前端:
+			前端 - > http[s]请求 -> web服务器（收到) - > nodejs处理请求(返回静态、动态)->请求数据库服务(返回结果)->nodejs(接收)->返回给前端(渲染)->浏览器（接收页面，完成最终渲染)
+
+	------------------------------------------------------------------------------
+	nodejs搭建web服务器:  
+
+		1） 引入http模块	require('http')
+		2)	server/app = http.createServer(函数(req,res));//创建服务   返回http对象
+				req 请求  浏览器->服务器
+					req.url  地址   提取get数据
+					req.on('data|end') 提取post数据 所有的http[s]都会触发end事件
+	  			res 响应  服务器->浏览器
+	  				响应头设置:	res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
+	  				res.write(字符/数据<string><buffer>)
+	  				res.end() 结束响应
+
+		3) 	监听：
+			server.listen(端口，[地址]，[回调])    回调：监听成功，回调一次
+				端口: 1-65535	1024以下系统占用   80
+				地址: 虚拟localhost  真实域名xx.duapp.com
+
+		小提示：
+			更新后,需要每次服务器自动重启
+			推荐: supervisor | nodemon   命令行工具
+			npm install supervisor -g  | npm install nodemon -g
+			node js文件 -> supervisor js文件 | nodemon js文件
+
+		静态资源托管:
+		
+			什么是静态资源： css/html/js/图片/json/字体..
+			
+			前端资源请求:
+				href/src/url()/locaction.href
+
+			后端资源读取：
+				fs.readFile(文件名,[编码],回调(err,data));
+					err 错误 null没有错误
+					data 数据,buffer流
+
+		动态数据请求: 
+			前台: get/post/put/delete/ajax/jsonp.....
+			后台：http[s] 请求 ， 处理方式方式
+				address:	req.url  抓取 get请求的数据  字符 切/url模块
+				body:	req.on('data',(chunk)=>{CHUNK==每次收到的数据buffer})
+						req.on('end',()=>{	接收完毕 字符 切/querystring })
+			推荐: postman https://www.getpostman.com/downloads/
+
+	------------------------------------------------------------------------------
+	url模块	
+		作用： 处理 url
+		url.parse(str,true)  str -> obj  返回 对象  true 处理query->obj
+
+		obj参数		http://localhost:8002/aaa?username=sdfsdf&content=234234#title4
+		  protocol: 'http:',	协议
+		  slashes: true,	双斜杠
+		  auth: null,   作者
+		  host: 'localhost:8002',  主机 www.baidu.com
+		  port: '8002',	端口
+		  hostname: 'localhost',  baidu
+		  hash: '#title',	哈希（锚)
+		  search: '?username=sdfsdf&content=234234',	数据
+		  query: 'username=sdfsdf&content=234234',	数据
+		  pathname: '/aaa',	文件路径
+		  path: '/aaa?username=sdfsdf&content=234234',	文件路径
+		  href: 'http://localhost:8002/aaa?username=sdfsdf&content=234234#title'
+
+		url.format(obj)  obj -> str   返回str
+	------------------------------------------------------------------------------
+	querystring 模块 
+		作用： 处理查询字符串(?key=value&key2=value2)
+		querystring.parse(str) -> obj
+		querystring.stringify(obj) -> str

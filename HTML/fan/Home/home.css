@@ -1,0 +1,61 @@
+html{
+    background-image: url('../img/背景3.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.top h3{
+    height: .62rem;
+    width: 6rem;
+    background-color: #933506;
+    margin: .4rem auto;
+    font-size: .34rem;
+    color: #fff;
+    line-height: .62rem;
+    padding-left: .2rem;
+}
+
+.footer{height: 1.2rem;border-top: .01rem solid #999;display: flex;justify-content: space-around;align-items: center;
+        position: fixed;bottom: 0;left: 0;right: 0; background: #fff;
+}
+.footer_tab{
+    width: .6rem;height: 1rem;
+}
+.footer_tab a{display: block;width: 1.2rem;height: 1rem;color: #999;text-align: center;}
+.footer_tab a span{color: #999;font-size: .26rem;display: block;}
+.footer_tab a i{display:block;width: .5rem;height: .5rem;
+            margin: 0 auto;
+            background-size: .5rem .5rem;
+}
+.footer_tab a i.i1{background-image: url('../img/我的服务.png');}
+.footer_tab a i.i2{background-image: url('../img/测评大厅.png');}
+.footer_tab a i.i3{background-image: url('../img/会员中心.png');}
+
+.home .home_box{
+    width: 5.4rem;
+    height: 2rem;
+    /* background: rgba(233, 233, 233, .3); */
+    background-image: url('../img//按钮\ 凸起.png');
+    background-size: 5.4rem 2rem;
+    background-repeat: no-repeat;
+    margin: auto;
+    margin-bottom: .2rem;
+    overflow: hidden;
+    color: #fff;
+    border-radius: .1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.home .home_box p{font: .4rem/2rem '';color: #fff;margin: .1rem auto;}
+.home .home_box img{width: 1.13rem;height: 1.13rem;margin: .1rem auto;}
+
+
+
+
+
+
+
+
+
+
+

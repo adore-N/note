@@ -1,0 +1,206 @@
+路由
+
+	SPA: single page application   单页面应用
+
+	特点： 速度快，数据ajax请求，通过路由，页面不会整体重载
+	实现:  路由 ->  根据url的不同，加载组件
+
+	区别：https://www.cnblogs.com/nangezi/p/9201226.html
+
+
+	使用流程：
+	
+		-1. 安装 : npm i vue-router -S
+		0.	import VueRouter from 'vue-router' -> Vue.use(VueRouter) 安装|注册到全局
+		1. 使用路由 (去哪)
+			<router-link to="/home">首页</router-link>
+	  		<router-view>展示区</router-view>
+	  		router-link 组件属性
+	  			to="/home" 
+				tag='li' 指定编译后的标签
+				active-class='类名' 指定激活后的样式
+		2. 配置路由(建立组件和请求的对应关系)	数组
+			[{path:'/home',component:home},,{}]
+			path 路径
+		
+			component: 指向的组件变量名
+		3. 创建路由(传递配置)
+			router = new VueRouter(配置)
+			配置:	{routes:数组}
+		4. 顶层|根组件，注册路由 （路由控制页面组件的加载）
+			选项
+				router(选项):router (router对象)
+		子路由：children
+			routes=[
+				{},
+				{
+					path:xx
+					component:xx
+					children:[  子路由
+						{}
+						..
+					]
+				},
+				{}
+			]
+
+		动态路由配置:
+			{path:'xx/:参数变量',component:xx}
+
+		传递参数 and 数据
+
+		router-link to='xx/参数?a=1&b=2'
+		router-link :to='{name:'xx',params:{id:1},query:{a:2,b:3}}'
+
+
+		接收参数和数据
+			模板:	{{$route.params|query|path}} 
+				组件: this.$route.xxx
+		
+
+
+		编程式跳转:
+
+			this.$router.push({name:'...'})   添加一个路由 （记录到历史记录)
+			this.$router.replace({name:'...'})   替换一个路由 （不记录到历史记录)
+			this.$router.go(-1|1)|goBack()  回退/前进  history.go|goBack
+
+		模式:
+			mode:  hash | history
+
+			new VueRouter({mode:xx})
+
+
+
+		导航守卫: 路由授权|守卫
+
+			全局守卫/路由独享的守卫/组件内的守卫
+
+			beforeRouteEnter(to,from,next){}	前置守卫,进入
+				to 目标路由
+				from 当前路由
+				next 是个函数  next() == next(true)  运行跳转
+							   next(false) 不让跳转
+							   next('字符路径')/next({对象路径}) 重定向
+
+			beforeRouteLeave(to,from,next){}  后置守卫,离开
+
+		路由数据预载:
+			beforeRouteEnter(to,from,next){
+				1. 数据附加到目标路由上 to.query.数据名=值
+				2. next( _this => _this.属性="拿到的数据")   √
+			}
+
+
+项目1
+
+	0.	技术栈:	vue-cli3 + vue-router + axios + vue-aniamte + vuex .....   全家桶  + nodejs + express + mongodb
+
+	1. 环境搭建(vue-cli +  vue-router + axios + vuex == 全家桶)
+
+	2. 目录分析(组件安排)
+		dist
+			|-...
+		public      静态资源 非压缩
+			|-data:
+				|-数据.json
+				....
+		src
+			|-assets  资源  压缩
+				|-js
+				|-css
+				|-image
+			|-pages
+				|-	home.vue / follow.vue / column.vue / user.vue
+				|-  detail.vue / login.vue / reg.vue
+				|-	
+			|-filters
+				date.js
+				fillzero.js
+				...
+			|-plugins 插件配置
+				axios
+				router
+			|-components
+				|- Header.vue / Footer.vue
+				|- loading.vue / error.vue
+				|- silder.vue /  list.vue
+
+			|-store
+				|-index.js
+				|-actions.js
+				|-mutations.js
+				|-getters.js
+				|-state.js
+				|-types.js
+
+			main.js
+			App.vue
+
+		package.json
+
+	3. 布局
+		准备工作: 
+			移动端(设置视口,设置字体比例，基础样式normal，base)
+		资源引入: 
+			a) index.html引入  不优化
+			b) main.js  引入 优化
+			c) 组件 引入 优化
+		资源指向:
+			相对路径 以src为根
+			绝对路径 以public为根
+		
+		a) 切图(需要设计稿)
+
+			css特点：
+				style-loader 插入到style标签(先插入下层组件样式)
+				样式会继承父组件
+
+			css 规划问题:
+				a) css命名空间    √	BEM
+					BEM: block 区域块  element 元素  midiler 描述|状态
+					
+					例： .search
+					 	 .search__input
+					 	 .search__input--focus
+					 	 .search__input--change
+					 	 .search__button
+
+					 	 .home-search
+					 	 .follow-search
+
+				b) css模块化(10.8日10:00原理介绍)
+						style: <style module>
+					    模板:  <div :class="$style.选择器名"....
+					    组件js:  this.$style
+
+					    $style.选择器名
+					    	选择器名: 支持  class id   开头
+				c) <style scoped> 独立样式作用域
+				
+		b) UI库	(bootstrap/elementUI pc端 /vant / mintUI移动端 / 妹子UI/ant.design/weex)
+		
+		注意
+
+			01 全局资源 在主入口文件(index.html)引入
+			02 全局资源 主程序(main.js|app.vue) 
+			03 自执行脚本，跟着要控制的元素走 
+			04 私有资源，进入组件内部
+			
+
+	4. 路由搭建
+
+		css 冲突:
+			所有组件css 插入到 style标签，选择器会有机会出现重名
+		解决：
+			1)	css命名空间   BEM√
+				
+			3)	scoped 独立样式作用域
+				style 标签 计入scoped属性
+
+	5. 数据交互： 
+
+		home(axios)->porps(list,dataName)->list         -> 路由传递参数和数据-> detail(参数->axios)
+		follow(axios)->porps(list,dataName)->list
+
+		全局过滤器:	Vue.filter('name',varname)

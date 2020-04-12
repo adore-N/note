@@ -1,0 +1,184 @@
+公众号
+
+	申请:	微信公众平台->注册->订阅号->填入身份相符信息(基本信息  2 选择类型  3 信息登记  4 公众号信息)
+
+			申请时邮箱，是未来的公众号的账号
+			申请时填入的管理员微信号:  未来管理公众号时，需要用到并扫码进入
+
+    	为什么要公众号:
+
+	    被关注:
+	      可以实时推送一些信息
+	      希望利用微信推广个人(订阅号)，企业(企业号|服务号)
+	      使用微信一些基本功能(摇一摇周边,投票，微信小店,微信支付)
+	      希望调取设备信息
+
+	    操作: 公众平台->注册(公众号:订阅号，企业号)
+	       注册：基本信息  2 选择类型  3 信息登记  4 公众号信息
+	       		留一个邮箱，登录密码, 微信号(日后管理员)
+	       登录: user/pass -> 微信扫一下(注册时填入微信号)
+
+微信网页开发 jssdk
+
+	条件: 真实域名 端口443， 开发出来的是网页 , 必须通过微信的产品进入
+
+		1. 搞个服务器(百度云)   端口: 443
+
+		2. 双端适配(服务端,微信端)
+
+		3. 开发: 抄jssdk的 API
+			找到开发文档：  微信端-》公众号-》开发->开发者工具->开发者文档(API)->微信网页开发->微信js-sdk说明文档
+
+
+	部署百度云：
+
+		申请：
+
+			百度一个“百度云” -》  注册账号 -》 登录(可以使用百度账号) -》 控制台
+
+	      购买空间:
+
+	        计算-》应用引擎BAE->部署列表->添加部署->配置环境
+
+	        	添加部署： 创建应用-》创建环境-》后付费-》支付
+
+	        	配置环境： 部署列表-》设置-》自动发布打开
+
+	        	代码上传:
+
+	        		SVN：	右键svn-checkout -> 修改 -> svn-commit
+	        		GIT:	复制仓库地址 -> git clone -> 修改 -> git add . ->git commit -m '描述' -> git push
+
+	      数据库购买:
+	      		mysql: 数据库-》RDS-》创建实例-》支付
+
+	      		管联：
+	      			BAE应用-》设置-》关联RDS-》创建关联->选择你创建的库
+	      		配置:
+	      			1） rds配置-》网络连接 -> 公网访问 -> 开通
+	      			2) rds配置>账号管理>创建账号|你创建库
+	      			3） 应用 要关联到数据库  找到要用库的应用->设置-》关联RDS-》创建关联
+
+	      		访问:
+	      			node访问
+		      			var connection = mysql.createConnection({
+						  host     : '网络连接 域名',//主机名
+						  user     : 'rds配置>账号管理>你创建的账号',//用户
+						  password : 'rds配置>账号管理>你创建的密码',//密码
+						  database : 'rds配置>数据库管理>你创建的库'//库名
+						  port: 网络连接 端口
+						});
+					php:
+
+
+	      注意:
+
+	        SVN密码不对：
+	        	保存其他svn地址的密码,需要清空密码
+	          	C:\Users\你的用户名\AppData\Roaming\Subversion\auth  -> 清空当前目录所有
+	        node的服务器端口，不可变 (18080)
+	        node入口文件可变，要修改app.conf,不要修改app.conf,就不要修改入口server.js这个名字
+
+
+	双端适配:
+
+		1)	服务器端配置:   bulala.bceapp.com
+
+	    提供文件：
+	      wx_sample.php 	后台验证   define("TOKEN", "bulala");
+	      MP_verify..txt 	验证文本 不要打开
+	      hello world 示例代码
+	      	sample.php  ->  index.php       添加 开发秘钥
+
+	    验证文件如何拿到:
+		  wx_sample.php  下载一个
+		  MP_verify..txt
+		    微信端-》公众号设置->功能设置->JS接口安全域名-》设置
+		  hello示例代码  下载
+		    微信端-》公众号-》开发->开发者工具->开发者文档(API)->微信网页开发->微信js-sdk说明文档->拉到最后
+
+
+		2)	微信端配置:  登录公众号管理平台
+
+
+			a) 订阅号|企业号配置   结果是： 部分API可用
+
+			  1) 拿到开发秘钥: 开发->基本配置
+			  2）设置校验文件位置: 开发->基本配置->服务器配置
+			  	 URL:  xx.duapp.com/xx/wx_sample.php
+			      Token:  xxxx        Token 对应 wx_sample.php 里面token
+			      随机生成key:  一旦生成，请快速提交
+			  2) 设置安全域名：
+			  	公众号设置->功能设置->JS接口安全域名->填入  后台域名(不含http)
+
+			b) 测试号配置        结果是： 所有的API可用，但是限于开发和学习，只有管理员和部分信任的微信账号可访问
+
+				1) 拿到开发秘钥: 开发者工具->公众平台测试账号->获取测试秘钥-》填写到hello示例代码>sample.php里面(yourAppID,yourAppSecret)
+
+			    2) 设置校验文件位置
+			    	http://xx.域名 .com/php/wx_sample.php
+			    	token: wx_sample.php里面的token
+
+			    3) 设置安全域名
+			    	xxx.域名.com
+
+
+
+		注意事项:
+
+			调试:
+			    {errMsg:'config,fail'}
+			    	订阅号
+			    	jsApiList 数组:	没有使用api，ready里面为空  时
+			    		解决: jsApiList[''] ready里面加了代码  ios   安卓fail
+			    {errMsg:'config,ok'}
+
+			其他产品 -> uncle9.bceapp.com  可以查看，就不可以访问api
+
+
+vue + jssdk
+
+	jssdk的api在vue组件的 methods或者构造函数里面调用
+
+	vue浏览器入口(index.html)
+
+		index.html 与 index.php 合并
+
+		<?php
+			require_once "./php/jssdk.php";
+			$jssdk = new JSSDK("wxcfc056111e4f47c2", "660175f98e2f06105ed18b5cfc1b1cc1");
+			$signPackage = $jssdk->GetSignPackage();
+		?>
+
+		<!DOCTYPE html>
+		<html lang="en">
+
+		<head>
+		  ...
+		  <link rel="icon" href="<%= BASE_URL %>favicon.ico">  vue 打包收注入的css和icon
+		  ...
+		</head>
+
+		<body>
+		  <div id="app"></div>
+		  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+		  <script>
+		    wx.config({
+		      debug: true,
+		      appId: '<?php echo $signPackage["appId"];?>',
+		      timestamp: <? php echo $signPackage["timestamp"];?>,
+		      nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+		      signature: '<?php echo $signPackage["signature"];?>',
+		      jsApiList: [
+		        'chooseImage', 'scanQRCode', 'onMenuShareTimeline', 'onMenuShareAppMessage'
+		        // 所有要调用的 API 都要加到这个列表中
+		      ]
+		    });
+		  </script>
+
+		  <!-- built files will be auto injected vue打包后注入的js-->
+
+		</body>
+
+		</html>

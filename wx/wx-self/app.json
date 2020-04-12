@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/board/board",
+    "pages/user/user",
+    "pages/test/test",
+    "pages/detail/detail",
+    "pages/search/search",
+    "pages/login/login"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#07c160",
+    "navigationBarTitleText": "首页",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "type": "components/type/type"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/app.png",
+        "selectedIconPath": "images/app1.png"
+      },
+      {
+        "pagePath": "pages/board/board",
+        "text": "榜单",
+        "iconPath": "images/media1.png",
+        "selectedIconPath": "images/media.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/name.png",
+        "selectedIconPath": "images/name1.png"
+      }
+    ]
+  }
+}

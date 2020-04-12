@@ -1,0 +1,13 @@
+<!--pages/board/board.wxml-->
+<view class="container1">
+  <view class="list">
+    <navigator 
+      wx:for="{{list}}"
+      wx:key="{{item.id}}"
+      url="{{'../detail/detail?id='+item.id}}"
+    >
+      <type item="{{item}}"></type>
+    </navigator>
+  </view>
+</view>
+

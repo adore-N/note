@@ -1,0 +1,232 @@
+------------------------REACT------------------------
+	介绍:
+		干嘛的：前端框架，把用户界面抽象成一个个的组件，按需组合成页面
+		官网： https://reactjs.org/
+			  http://react.css88.com/
+		不同点：
+				angularJs 	vueJs 	reactJs 			angularTs(2+)
+		控制器	√			-		-						-
+		过滤器	√			√		-						√
+		指令 	√			√		-						√
+		模板引擎 √			√		-						√
+		服务     √          -       -                       √
+
+		jsx     -           √		√						-
+
+
+		共同点：
+			虚拟DOM(angularJs除外  angular有)，数据驱动
+
+	JSX： react的模板语言
+		文件: oo.js | oo.jsx  
+		理解1：比喻(js + 类html)		类XML语法(json前身)
+		理解2：jsx是js一个数据类型	var a='<strong></strong>' 字符  var b= <strong></strong>  jsx类型
+		
+		语法要求：
+			标签要闭合
+			元素必须要有一个顶层元素
+			变量首字母大写代表组件，小写对应是js数据类型
+			属性，小驼峰命名 tabindex -> tabIndex
+		
+	精髓：多组件组合，jsx+函数式编程（运算写成一系列的函数嵌套）
+
+	思想:
+		组件拆分目标:为了复用
+		组件如何拆：单一原则
+		状态应该给谁:
+			尽量给顶层组件(状态提升),->props->子组件
+			可以从 props(属性) 或者 state(状态) 得到，那么它可能不应该在 state(状态) 中
+			方法-》操作数据(数据|状态在哪，方法就应该在哪)
+		props取名：从组件本身的角度来命名, 而不是它被使用的上下文环境
+		
+		纯函数:不会试图改变它们的输入，并且对于同样的输入,始终可以得到相同的结果,React
+		组件都必须是纯函数，并禁止修改其自身 props
+			function(a,b){不会随机，不会修改a和b的值，输出可控}
+
+		setState: 是异步的,会将多个 setState() 调用合并为一次更新,所以不能同步依赖上一个setState的值，作为下一个setState的参数
+			解决：
+				1) this.setState(function(prevState,props){})
+				  prevState 抓取之前this.setState的所有状态
+				  props 所有属性
+			      更新会被合并,浅合并
+			    2) 函数节流(异步操作)
+			    3) ev.target......
+		refs绑定的是dom元素,挂载完毕时才可访问
+
+	环境搭建：
+		a)	webpack + webpack-dev-server
+			/ 指向 index所在位置，图片,数据 都指向 /
+			js / css / jsx 相对定位
+
+
+		b) npm install create-react-app	-g   官方脚手架
+
+			创建 react项目
+
+				create-react-app 目录
+
+					可选: yarn eject   解构出所有的配置文件
+
+				yarn start
+
+
+				yarn build 打包
+
+			cra使用参考: https://create-react-app.dev/docs/getting-started
+
+			目录解析:
+				react: 核心包，解析组件
+				react-dom: 编译 -> 浏览器
+				react-scrpts: react的项目环境配置
+
+				manifest.json 生成一个网页的桌面快捷方式时，会以这个文件中的内容作为图标和文字的显示内容
+				registerServiceWorker.js  ==  pwa
+					支持离线访问，所以用起来和原生app的体验很接近,只有打包生成线上版本的react项目时，registerServiceWorker.js才会有效。服务器必须采用https协议
+				对Internet Explorer 9,10和11的支持需要polyfill。
+
+			0. yarn add create-react-app global
+				create-react-app -v 测试
+					如有问题: 配置环境变量 yarn global bin -> 把得到的地址添加到环境变量
+				create-react-app 目录名| .
+					目标目录一定要空
+
+					yarn eject   解构出所有的配置文件(可选)
+
+				yarn start 开发模式
+				yarn build 打包
+
+			更改react环境配置:
+			1.	node_modules\react-scripts\scripts
+			    react/1022/scripts/start.js
+			const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3001;
+
+			2.	npm run eject | yarn eject
+			 修改script/start.js  //配置默认的端口号
+
+			 报git错误时: git add . -> git commit -m 'init' -> yarn eject
+			 报缺少babel 包: 安装一下
+
+
+			本地资源导入(import) 不可以导入src之外的包
+
+			问题: 前景图片, 相对 和 绝对路径 都指向了 public目录
+			解决：1.模块化导入 src目录里 要在jsx里src的图片
+				  2.相对或者绝对导入public目录下的图片
+
+
+			去除eslint 警告：
+				yarn  eject
+				找到项目下config/webpack.config.js
+				注释关于eslint的导入和rules规则
+
+			打包 + 预览：
+				npm run build | yarn build
+				serve -s build --port 端口 --open
+				serve 服务器命令行工具（npm i serve -g)
+
+				public目录里面的资源会直接copy到build目录，src里面的资源会打包模块化
+
+			help: https://github.com/facebook/create-react-app
+
+
+		c) 第三方脚手架 (yeomen/dva/umi)
+
+	------------------------------------------
+
+	ES6 创建组件：es6+类 |  函数
+
+		import React from 'react';
+
+		class 组件名 extends React.Component{
+			state={}
+			constrctor(props){ //组件有状态 constrctor就出现
+				super(props) //类如果有继承 super就要出现
+					需要在组件构造器内处理传递过来的props时，props参数就出现
+
+				this.state={ // 本地状态
+
+				}
+			}
+			render(){
+				return jsx|string|number|null
+			}
+			方法1(){} 自定义的方法
+			方法2(){}
+		}
+
+	ES5 创建组件： react版本  15
+		
+		var React = require('react');
+		let 组件名 = React.createClass({
+		  getInitialState:function(){  //组件状态
+		  	return {
+		  		数据:值
+		  	}
+		  }
+		  render:function(){
+		    return jsx
+		  }
+		});
+	
+	使用组件：
+		<HelloWorld/>
+		<HelloWorld></HelloWorld>
+
+	渲染（描画）页面
+		import ReactDom from 'react-dom';
+		var RactDom = require('react-dom');
+
+		ReactDom.render(jsx,插入点)
+	------------------------------------------
+
+	组件属性(props)：
+
+		调用组件：<组件名 属性名=值 属性名2=值2 .. />	传递属性
+		组件内部: {this.props.属性名}   jsx表达式  使用属性
+				  this 代表的是组件本身
+
+		值类型：字符||{表达式}
+		this.props.属性名==array 需要循环
+		arr值：this.props.属性名.map(function(){
+			return html
+		})
+		json {json} 报错， 对象无法直接通过{obj}展示->{obj.key}
+
+	props类型检查
+
+		需要安装  import propsTypes from 'prop-types'
+
+		默认值:		组件.defaultProps={propName:值}
+		类型约定:	组件.propTypes={propsName:使用propsTypes库.类型名}
+
+			propsTypes库.类型名
+			propName: propsTypes.array/bool/func/number/object/string
+		必传参数: propName: propsTypes库.类型名.isRequired
+	------------------------------------------
+	事件:驼峰命名  es6 事件函数内部this会丢失
+		
+		<JSX元素 onClick={this.实例方法|函数体}
+
+		修正this的指向
+		
+			onClick={this.方法.bind(this,值)}
+			onClick={()=>{this.方法()}}
+			构造器： this.方法=this.方法.bind(this)  √
+			this.方法=()=>{箭头函数定义方法}  √√
+
+		方法(ev)	ev 代理事件对象 ev.target 返回虚拟Vdom √
+	------------------------------------------
+
+	组件状态 (state|数据|私有状态|本地状态)
+		定义：
+			es7：实例属性:state    class App{propname:value}
+			es6：构造器 this.state  
+			ES5：getInitialState:fn(){return {状态名:值,xx:oo}}   
+		使用： this.state.xxx
+		修改: this.setState(对象|函数)
+
+	列表渲染/条件渲染(可以写表达式(三目,&&,||),但是不可以写语句)
+
+	10.13
+
+    yarn add node-sass --save

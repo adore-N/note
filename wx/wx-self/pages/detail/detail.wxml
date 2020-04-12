@@ -1,0 +1,40 @@
+<!--pages/detail/detail.wxml-->
+
+<view class="container1">
+  <block wx:if="{{detail.cover_img}}">
+    <image class="background" src="{{detail.cover_img}}" mode="aspectFill"/>
+    <view class="container1">
+      <view class="meta">
+        <image class="poster" src="{{detail.cover_img}}" mode="aspectFit"/>
+        <text class="title">{{detail.title}}({{detail.data}})</text>
+        <text class="info">评分：{{detail.rate}}</text>
+        <text class="info">导演：<block wx:for="{{detail.director}}" wx:key="{{item.id}}"> {{item}} </block></text>
+        <text class="info">主演：<block wx:for="{{detail.author}}" wx:key="{{item.id}}"> {{item}} </block></text>
+      </view>
+      <view class="summary">
+        <text class="label">摘要：</text>
+        <text class="content">{{detail.desc}}</text>
+      </view>
+    </view>
+  </block>
+
+  <block wx:if="{{detail.id}}">
+      <image class="background" src="{{detail.image}}" mode="aspectFill"/>
+    <view class="container1">
+      <view class="meta">
+        <image class="poster" src="{{detail.image}}" mode="aspectFit"/>
+        <text class="title">{{detail.alt_title}}</text>
+        <text class="info">评分：{{detail.rating.average}}</text>
+        <text class="info">导演：<block wx:for="{{detail.author}}" wx:key="{{item.id}}"> {{item.name}} </block></text>
+      </view>
+      <view class="summary">
+        <text class="label">摘要：</text>
+        <text class="content">{{detail.summary}}</text>
+      </view>
+    </view>
+  </block>
+  <view wx:else>骨架屏</view>
+  
+</view>
+
+
