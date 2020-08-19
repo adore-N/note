@@ -1,0 +1,727 @@
+------------------------VUE------------------------
+	官网：https://cn.vuejs.org
+	API：https://cn.vuejs.org/v2/api/
+
+	Vue是一套用于构建用户界面的渐进式框架。
+
+	思想：
+		框架：改变了编码思想   VUE: 数据驱动，一切都是数据,面向数据
+			面向  事件
+			面向  对象
+			面向  数据
+		MVC：html页面里面会出现<%=后台属性%>  {$后台属性$} {{后台属性}} mustache
+			一个思想、是后端产物,是为了前后端分离
+			1. 后台 java(jsp+html)  php(php+html+js)  nodejs(nodejs+ejs)
+			2. 前台 (html+css+js)
+			3. 编辑 (拿着后台给他开发的后台管理页面xxx.com:8008/admin.php)
+			4. 设计
+
+		前端MVC(分离js)：   数据、表现、业务分离
+			
+			model		M  数据  ajax/jsonp/数据解析  可以复用
+				| xx.js
+				...
+			view	    V  视图表现层 展示数据、创建元素，变色，运动 可以复用
+				...
+			control		C  控制层(串业务,事件驱动)  一般不复用
+				...
+		VUE: 是个M V VM框架
+			MVC:衍生出很多变体  MVP MVVM MV*
+			mv  vm~C
+			MVVM M  <-> VM <-> V
+	------------------------------------------------------------
+	基本使用：
+
+		new出来一个Vue的实例，传一堆配置参数，控制一片html
+
+		VM:		响应系统 - > vDOM做标记 ->一个循环周期结束后->操作DOM
+			new Vue   返回  VM
+			new Vue({
+				el:'选择器'  要控制的那片html代码
+				data:{key:value}数据
+				methods:{fnName:fn} 方法
+			})
+		M:	初始化数据
+			data 选项   number/string/boolean/array/json/undefined/null
+		V:  数据绑定   插值表达式|指令|属性
+			{{数据名}}	模板 mustche  插值表达式  声明式渲染
+			v-text="数据名"		vue特有的属性(指令)
+			v-html="strong"		非转义输出
+			v-for="(val,index) in 数据"		val值  index索引	变量数组、对象
+				默认 :key="index"  指定key 是个bmw字符 vue是认得 修改VDom的key值
+				:key="item.id"  指定key 是数据id（唯一性） 修改VDom的key值
+
+				key的优势:  避免数据错乱导致的视图问题,提供性能 
+			属性绑定:
+			v-bind:html属性="数据"	普通的html属性绑定数据
+				:html属性="数据"  简写   title/src/url/.....
+
+			事件：
+				v-on:事件名="方法"
+				   @事件名="方法"	简写
+				   @事件名="方法(参数)"
+				   @事件名="方法($event,参数)"		methods:{方法:function(ev,参数){ev/event}}
+
+				注意：vue提供的选项的值如果是函数时，不可用箭头函数
+
+    ------------------------------------------------------------
+	单向绑定模拟双向绑定:
+		:value="...."   model->view
+		v-on:input="fn($event.value)"  输入时把事件对象的value携带到方法，方法修改了model
+
+	双向绑定：
+		v-model:	创建双向数据绑定(M<->V) , 用在能生产数据的表单元素
+			input/radio/select/.....  绑定的是表单元素的  value值 checked 
+
+	非响应式情况
+
+		数组数据变化：
+			问题:	对数组使用了 非变异 (non-mutating method) 方法（返回的了新数组）
+			解决：   对象合并  
+
+			问题：利用索引直接设置一个根项|修改数组的长度时
+			解决：Vue.set(数组对象, index, value) | vm|this.$set(数组对象, key, value)
+				强制刷新 所有 dom
+		对象的数据变化：
+			问题：data:{a:1}
+					a 数据是响应式的
+					vm.b='qq';  b 属性不是响应式的
+			解决：Vue.set(对象, key, value) | vm|this.$set(对象, key, value)
+				  this.$forceUpdate() //强制刷新
+		如何避免非响应:
+			数据一开始都应该出现在data里面,数组里面永远不要放置简单型数据
+
+	------------------------------------------------------------
+
+	类属性|方法  和 实例属性|方法
+
+		Vue == 类|静态
+			Vue.protoname
+			Vue.api()  Vue.set(target,key,val)
+
+		vm ==  new Vue({配置}) 返回  实例
+			vm.$protoname
+			vm.$api()
+			vm.show()
+			vm.iptName
+
+		在配置内部  的  this == vm 实例
+			Vue.类方法|类属性
+			vm.$实例方法()|$实例属性  == this.$实例方法()|$实例属性
+			vm==this   this.$set/Vue.set
+
+	------------------------------------------------------------
+
+模板表达式:
+
+	{{数据本身|data的属性|实例属性|变量|表达式}}
+	v-指令名="数据|data的属性|变量|表达式|语句"
+	
+------------------------------------------------------------
+计算属性:  是一个函数,所依赖的元数据变化时，会再次执行，平时会缓存，是响应式的，需要在模板中渲染才可调用
+	computed:{
+		计算属性: function(){return 返回值}		使用:	{{计算属性}}
+	}
+	
+
+	与methods的区别:	方法会每次调用，计算属性不会
+		计算属性的性能高: 适合做筛选，基于它们的响应式依赖进行缓存的
+		方法：适合在列表渲染使用，强制渲染执行
+
+------------------------------------------------------------
+
+属性检测|数据观测： 需要在数据变化时执行异步或开销较大的操作时
+
+	watch:{
+		数据名:'methods函数名'    数据名==data的数据
+		数据名:函数体(new,old)
+		数据名:{
+			handler:fn(new,old),
+			deep: true 深度检测  默认 false
+			immediate: true 首次运行  默认false
+		}
+	}
+
+计算属性 vs 属性检测
+
+	计算属性computed: 	首次运行   		调用时需要在模板中渲染，修改计算所依赖元数据		默认深度依赖		适合做筛选，不可异步
+	属性检测watch: 		首次不运行		调用时只需修改元数据								默认浅度观测		适合做执行异步或开销较大的操作
+
+
+------------------------------------------------------------
+
+样式操作|属性绑定
+	v-bind:class="数据|属性|变量|表达式"
+		  :class/style = " 数据 "		数据类型：字符/对象 / 数组
+		  :class="{类名:true,类名2:false}"  布尔值决定样式是否使用
+		  :style="[{css属性名:值},{css属性名小驼峰：值}]"
+
+------------------------------------------------------------
+指令:  扩展了html语法功能,区别了普通的html属性
+	vue自带的指令:	v-text/v-html/v-bind/v-for/v-model/v-on
+
+			v-show="布尔" 			v-if="布尔"
+	区别:	操作css					操作dom
+	场景:	适合频繁切换		    适合不频繁切换
+	性能:	初始渲染消耗			频繁切换回有消耗
+
+	其他指令: https://cn.vuejs.org/v2/api/#指令
+
+	指令(directive):
+		v-once 渲染一次
+		v-pre  原样输出，不编译
+		v-cloak 防闪烁
+
+	自定义指令: 指令是个函数|对象,用来操作dom的, 里面的this 返回window
+
+		a)全局:	Vue.directive('指令名不带v-',函数(el,binding))
+			el == 使用指令的DOM元素
+			binding 是个对象 含有传入的 参数(binding.value)
+		b)局部:  定义在选项里面
+			directives:{
+				指令名不带v-	: 函数(el,binding){}
+			}
+
+		指令是个函数(简写)，可以是个对象
+
+		{
+			钩子函数
+			inserted:fn(el,binding)		绑定指令的元素插入到父节点时调用
+			bind:fn	指令第一次绑定到元素时调用
+			update:fn	指令所在的元素的model层的数据，view有更新请求时
+			componentUpdated:fn	更新完成时
+		}
+
+		简写方式: bind + update
+
+	------------------------------------------------------------
+过滤器(filter) | 管道： 就是个函数
+
+	场景： 格式数据
+
+	currency / number / date/...   vue1.x
+
+	vue2.x 取消了自带过滤器,  需要用户自行封装
+
+	使用：	{{ 数据名 | 过滤器名(参数1,参数2)}}             |  == 管道符
+			v-xxx="数据名 | 过滤器名(参数1,参数2)"
+			:属性="数据| ... "
+	定义:
+			a) Vue.filter('过滤器名称',函数(要过滤的元数据,参数1,参数n))
+			b) 选项
+				filters:{
+					过滤器名称:函数
+					过滤器名称2:函数(要过滤的元数据,参数)
+				}
+
+--------------------------------------------------------------
+
+数据交互解决方案：
+
+	ajax函数 | $.ajax()
+		XMLHttpRequest | ActiveXObject
+
+	promise
+		
+		promise 封装 XMLHttpRequest
+
+		vue-resource axios 
+			resource 自带jsonp的
+			axios 没有jsonp
+
+	fetch()  返回 是一个promise
+
+	vue-resource   下载安装引入   vue1.x 推荐	支持jsonp
+		使用:	返回的是promise对象
+		this.$http.get('url地址?key=value&key=value').then(succFN,errorFn)
+		this.$http.get('url地址',{配置}).then(succFN,errorFn)
+		this.$http.post('url地址',{数据},{配置}).then(succFN,errorFn)
+		this.$http.jsonp('url地址',{配置}).then(succFN,errorFn)
+
+			配置:
+				params: {key:value}  携带数据  get
+				headers: {}  携带请求头
+				method：'get' get/post/.....   string
+				timeout: number  超时
+				progress：fn   进度
+				credentials: false  是否携带跨源凭证
+				emulateJSON：true post请求是需要携带的请求头
+				jsonp:'回调函数键' 默认是callback
+			响应：
+				body      返回的数据  对象  (JSONP.parse)
+				bodyText  返回的数据  文本格式  toString
+
+	axios	下载安装引入	vue2.x推荐	
+
+		希望可以this.$http 去使用axios，需要 配置: Vue.prototype.$http=axios;
+
+		this.$http|axios({配置}).then(成功回调(res)).catch(失败回调(res))
+		this.$http|axios.get(url,{配置}).then(成功回调(res)).catch(失败回调(res))
+		this.$http|axios.post(url,pollfill).then(成功回调(res)).catch(失败回调(res))
+		...
+		this.$http|axios.api(url,pollfill).then(成功回调(res)).catch(失败回调(res))
+
+
+		post请求:
+			pollfill = new URLSearchParams() -> params.append('a', 111);
+			this.$http|axios.post(url,pollfill).then(成功回调(res)).catch(失败回调(res))
+
+			this.$http|axios({
+				url:'',
+				method:'post',
+				data:pollfill
+			})
+
+		配置:
+			url:'' 地址
+			method: '' 提交姿势
+			params：{} 数据携带在地址栏里面
+			data:{} 非地址栏数据
+		res:
+			data:  数据  string|objct|UrlSearchParams|formData
+
+
+vue-dev-tools
+	https://github.com/vuejs/vue-devtools
+	1. 	Clone this repo  downloadzip 到桌面
+	2.	npm install  安装依赖
+	3.	npm run build	build目录项目就有各种浏览器的安装包
+	4.	打开 chrome -> 设置->更多工具->扩展应用->开发者模式->加载扩展程序->指向->build目录项目下的chrome
+
+------------------------------------------------------------------------------
+组件：
+
+	Vue根实例表示1个应用，一个应用有若干个组件拼装而成
+
+	使用组件
+
+		<组件名></组件名>
+		<组件名/>  需要模块化环境支持
+
+		<Header></Header>脚手架环境下webpack协助解决了，调用时依然不能小写header
+
+	定义组件
+		定义:
+			a) 	  let 组件变量名= Vue.extend({
+			        template:'<div class="header">我是header组件</div>'
+			      });
+			b)	 let 组件变量名={};		√
+		注册(拼装)
+				a)	Vue.component('组件名',组件变量名);
+					全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生
+			b)	选项
+				components:{
+					组件名：组件变量名	√
+				}
+
+	组件数据
+		data 要是个函数，且要有返回值 object
+		
+		一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝，否则组件复用时，数据相互影响
+
+	单文件组件(.vue)
+		script + template + style
+
+	注意:
+		组件名不可和html同名
+		组件没有el选项，只有根实例存在el
+		组件的模板一定要有根元素
+		组件的data是个函数
+
+	推荐:
+		组件变量名: 大驼峰  XxxXxx
+		组件名:  xx-xx | 大驼峰(模块化环境)
+
+------------------------------------------------------------------------------
+
+vue 工程化模块化自动化开发环境
+	
+	底层： webpack  
+
+	webpack开发命令行工具(node/npm/bower/yarn/nodemon/supervisor)
+
+	vue-cli | 命令行工具 | 脚手架
+
+	vue-cli版本:  vue-cli1.x/2.x      @vue/cli  3.x
+
+cli3 项目环境安装
+
+	vue -V  查看版本 
+	npm unstall vue-cli -g  		非3.x时卸载
+	npm install -g @vue/cli  		装3
+	npm install -g @vue/cli-init 	桥接2 
+
+
+	创建vue项目 (SPA单页面 MPA多页面)
+
+		SPA单页项目:
+			vue create 项目目录
+			选择:
+				https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create
+			cd 项目目录
+			npm run serve
+
+------------------------------------------------------------------------------
+
+es6
+
+	输出
+
+		export default any      默认输出
+		export const 变量 = 值   批量输出
+		export {变量:值,变量n:值}   批量输出
+
+	输入
+
+		import 模块名 from 'address'        模块名 == any
+		import {属性1,属性n} from 'address'  属性 == any
+		import * as 变量 from 'address'     变量 == 对象
+
+	import 会提升， 会预编译（首先运行)
+
+------------------------------------------------------------------------------
+
+vue组件通讯
+
+	父->子  props		√
+		<子组件 :自定义属性="父数据"></..>
+		子组件:
+			选项
+			props:['自定义属性']   props:{自定义属性:{type/default/required/...}}
+		展示:	子模板	{{自定义属性}}
+			    js:  this.自定义属性   this==当前组件
+
+		注意: props是只读的
+
+			特例： 在 JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变这个对象或数组本身将会影响到父组件的状态
+
+		props命名：
+			props: ['postTitle']
+			<xx :post-title="hello!"></xx>
+
+		单向下行绑定: 父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+			
+
+	实例属性 $root 
+			子组件内部直接找到根实例，访问，操作根data数据
+			this.$root == vm
+			this.$root.实例属性
+			this.$root.$data.实例属性
+			
+------------------------------------------------------------------------------
+路由
+	SPA: single page application   单页面应用
+	特点： 速度快，数据ajax请求，通过路由，页面不会整体重载
+	实现:  路由 ->  根据url的不同，加载组件
+	区别：https://www.cnblogs.com/nangezi/p/9201226.html
+	使用流程：
+		-1. 安装 : npm i vue-router -S
+		0.	import VueRouter from 'vue-router' -> Vue.use(VueRouter) 安装|注册到全局
+		1. 使用路由 (去哪)
+			<router-link to="/home">首页</router-link>
+	  		<router-view>展示区</router-view>
+	  		router-link 组件属性
+	  			to="/home" 
+				tag='li' 指定编译后的标签
+				active-class='类名' 指定激活后的样式
+		2. 配置路由(建立组件和请求的对应关系)	数组
+			[{path:'/home',component:home},,{}]
+			path 路径
+			component: 指向的组件变量名
+		3. 创建路由(传递配置)
+			router = new VueRouter(配置)
+			配置:	{routes:数组}
+		4. 顶层|根组件，注册路由 （路由控制页面组件的加载）
+			选项
+				router(选项):router (router对象)
+		子路由：children
+			routes=[
+				{},
+				{
+					path:xx
+					component:xx
+					children:[  子路由
+						{}
+						..
+					]
+				},
+				{}
+			]
+
+		动态路由配置:
+			{path:'xx/:参数变量',component:xx}
+
+		传递参数和数据
+		router-link to='xx/参数?a=1&b=2'
+		router-link :to='{name:'xx',params:{id:1},query:{a:2,b:3}}'
+
+		接收参数和数据
+			模板:	{{$route.params|query|path}} 
+			组件: this.$route.xxx
+		
+		编程式跳转:
+
+			this.$router.push({name:'...'})   添加一个路由 （记录到历史记录)
+			this.$router.replace({name:'...'})   替换一个路由 （不记录到历史记录)
+			this.$router.go(-1|1)|goBack()  回退/前进  history.go|goBack
+
+		路由模式:
+			mode:  hash | history
+			new VueRouter({mode:xx})
+
+		导航守卫: 路由授权|守卫
+			全局守卫/路由独享的守卫/组件内的守卫
+			beforeRouteEnter(to,from,next){}	前置守卫,进入
+				to 目标路由
+				from 当前路由
+				next 是个函数  next() == next(true)  运行跳转
+							   next(false) 不让跳转
+							   next('字符路径')/next({对象路径}) 重定向
+
+			beforeRouteLeave(to,from,next){}  后置守卫,离开
+
+		路由数据预载:
+			beforeRouteEnter(to,from,next){
+				1. 数据附加到目标路由上 to.query.数据名=值
+				2. next( _this => _this.属性="拿到的数据")   √
+			}
+---------------------------------------------------------------------------
+事件：
+	绑定行间事件:		<xx v-on:事件名="方法名($event,参数)"
+					<xx @事件名="方法名($event,参数)"
+	原理:
+		<div onclick="事件名()"   行间
+
+		obj.addEventListener('type',fn,false) 绑定
+		obj.attchEvent('type',fn) 绑定
+		obj.onclick=fn2  事件句柄
+
+		vue事件是事件绑定
+
+	绑定行间事件:		<xx v-on:事件名="方法名($event,参数)"
+					<xx @事件名="方法名($event,参数)"
+	绑定自定义事件:
+
+		绑定：vm|组件.$on( '自定义事件名'|['自定义事件名1','自定义事件名2'], 回调(参数) )
+			  <自定义组件  @|v-on:自定义事件
+		销毁：vm.$off( '自定义事件名'|['自定义事件名1','自定义事件名2'])
+		触发: vm.$emit(自定义事件名,参数)
+
+		自定义事件名：	使用 kebab-case 的事件名
+
+		场景： 在一个组件实例上手动侦听事件时
+
+		特点:  只有绑定方才可以触发
+			   自定义的组件 触发自定义的事件需要native修饰符
+			   自定义组件 可以使用v-on或@自定义事件
+
+	事件对象:
+		事件对象可以不传递，需要传递的场景:传参数同时使用事件对象时
+		show($event,参数)
+
+	冒泡：默认冒泡
+		$event   ev|event.cacelBubble=true ev.stopPropagation()
+		@click.stop 修饰符
+	默认行为:
+		event|ev.preventDefault();   @事件.prevent
+
+修饰符：
+	事件|自定义事件修饰符: @click.stop.prevent
+		capture: 使用事件捕获模式
+		self:	点到时才触发，不是从内部元素触发的
+		once：  只会触发一次
+		passive： onScroll事件 结束时触发一次，不会频繁触发，移动端使用
+		native  作用与自定义组件
+
+	按键修饰符:	@keyup.left/13
+		系统键	.ctrl
+				.alt
+				.shift
+				.meta
+				exact 严格默认   @键盘事件.修饰符1.修饰符2.exact    只有1+2才可触发
+
+	鼠标按钮修饰符：
+		.left
+		.right
+		.middle
+
+	表单修饰符: 
+		v-model.lazy   :  	确认时才修改model数据
+		v-model.number :	提取数子
+		v-model.trim :	 删除前后空格
+
+-----------------------------------------------------------------------------
+动态组件:
+	动态组件： 组件动态化(数据化)，在不同组件之间进行动态切换,component自身不会渲染
+	<component is="'组件名'"></component>
+	<component :is="数据"></component>
+
+缓存组件:
+	keep-alive 包裹了目标组件，对目标组件缓存，不会触发卸载挂载，但会触发activated/deactivated
+	keep-alive 不给属性时，默认内部出现过得组件所组成的视图，都会被缓存
+	初始缓存第0个组件
+
+
+	属性:
+		：include: ['组件名','组件名2']  加入一部分
+		：exclude: ['组件名','组件名2']  排除一部分
+		：max = 数字   最多可缓存的组件数
+			最多可以缓存多少组件实例。一旦这个数字达到了，在新实例被创建之前，已缓存组件中最久没有被访问的实例会被销毁掉（卸载挂载）。
+
+	组件钩子:
+		activated  活动组件  被缓存时起效果
+		deactivated 非活动组件
+
+	场景:
+		keep-alive 包裹 component | router-view
+
+------------------------------------------------------------------------
+vue动画
+
+	动画组件: transition|transition-group	谁做动画，就包着谁
+
+	组件属性:
+		name =  "动画名"
+		mode="out-in|in-out"
+		enter-class = "类名"
+		enter-active-class = "类名"
+		leave-class = "类名"
+		leave-active-class = "类名"
+	样式：
+		.动画名-enter{..}  入场前(打哪来)
+		.动画名-enter-active{..} 入场后(来了停哪)
+		.动画名-leave{..} 离场前
+		.动画名-leave-active{..} 离开场后(到哪去)
+
+	事件:
+		@before-enter="方法(el)"   el==做动画的元素(原生)
+		@enter="方法"
+		@after-enter="方法"
+		@before-leave="方法"
+		@leave="方法"
+		@after-leave="方法"
+
+	1) css3
+		transition：无跳变
+			.动画名-enter{..} 打哪来1   +   .动画名-leave-active{..} 到哪去4
+		animation：有跳变
+			.动画名-enter-active{指定入场} 来了停哪2 + .动画名-leave-active{指定离场}到哪去4
+	2) css库 animate.css
+		同 animation 有跳变
+	3) js库 动画名  需要设定初始位置
+		下载 velocity.js   http://velocityjs.org/
+		使用:	Velocity(el,{css属性},{配置})
+				move(obj,{样式},{complete,progress,time,over})
+				$(obj).animate({样式},{配置})
+
+		配置:
+			duration: 毫秒   事件
+			easing: 动画类别 ''
+			Queue
+			complete:fn()
+			progress:fn
+			loop: 1 次  true无限
+			delay: 毫秒 延时
+			display:'none/block' 动画结束时是否可见
+		注意：
+			leave(el,done){}
+
+	transition-group:
+		一组动画
+		transition-group 包着一组元素  ，每个元素要有key  其他的同transition
+状态管理  store
+
+	场景：	打算开发中大型应用
+
+	特点:   集中式数据管理, 一处修改，多处使用
+
+	思维:
+											store
+					this.$store.commit('increment')	-> mutations
+					this.$store.dispatch('jia')		-> actions
+				     mapActions() ->actions							mapGetters('类型')->getters
+				学生			代课老师			校长		 	财务     	版主任		学生
+			components - >  actions		->  mutations -> state  <- getters	<-	components
+				发送请求      处理			修改状态
+							  业务逻辑		修改state			   读取state
+							  异步
+							  							state<-$store.state <-  学生
+	-----------------------------------------------------------------------------
+	配置：
+		1. 安装 vuex 包
+		2. 引入 
+		3. use 插件
+		4. 注册到根
+
+		5. 配置状态管理的角色
+		actions/mutations/state/getters =    {}
+
+	------------------------------------------------------------------------------
+	mapActions/mapGetters  执行后， 返回来的是对象
+		对象:	{incremen:fn,decrement:fn,xx,xx}
+
+		mapGetters 用来接管 computed的
+			computed:mapGetters(['类型1','类型2'])
+		mapActions 用来接管 methods的
+			methods:mapActions(['类型1','类型2'])
+	------------------------------------------------------------------------------
+	this.$store.commit('类型',参数/负载/payload) -> mutations
+	this.$store.dispatch('类型',参数/负载/payload)  -> actions
+	this.$store.dispatch({type:类型,payload:负载})
+	const actions = {
+		类型:({store,commit},负载)=>{}
+	}
+	const mutattions = {
+		类型:(state,负载)=>{}
+	}
+	const getters = {
+		类型:(state)=>{}
+	}
+	const state={}
+
+	<xx @click="请求类型(负载)" 
+
+
+	状态管理 - 项目 
+
+		路由监听：数据观测|检测 watch   找一个根组件
+		拦截器：修改state
+
+	路由守卫
+
+		同步前置守卫条件: user->同步->state
+
+		login: dispatch -> actions -> mutations -> 修改state
+							 ↓ 回执
+						 目标组件
+
+		actions可以返回promise给调用dispatch的组件
+			actions:return axios(..).then(commit(...))
+			组件: this.$dispatch(..).then(()=>{业务})
+
+		注销：
+			删除 cookie
+			清空 状态state.user 数据
+
+
+	状态管理数据永久存储方案
+		
+		与 cookie/localstrage同步
+
+		login -> 写入 状态state|localstrage
+		强刷 -> 读取localsrage | 同步 到 状态state
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
